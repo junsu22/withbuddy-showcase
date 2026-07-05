@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WithBuddy AI — Portfolio Showcase</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d1117; color:#e6edf3; font-family:'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif; line-height:1.7; }
+a { color:#58a6ff; text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* Hero */
+.hero { text-align:center; padding:80px 24px 60px; border-bottom:1px solid #21262d; }
+.hero h1 { font-size:42px; font-weight:800; color:#fff; margin-bottom:12px; }
+.hero .subtitle { font-size:16px; color:#8b949e; margin-bottom:32px; }
+.badges { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:24px; }
+.badge { display:inline-block; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.04em; }
+.b-blue   { background:#1f3d5c; color:#58a6ff; }
+.b-green  { background:#1a3a2a; color:#3fb950; }
+.b-purple { background:#2d1f52; color:#a371f7; }
+.b-orange { background:#3d2200; color:#f0883e; }
+.b-teal   { background:#003d3d; color:#39d3bb; }
+.hero-desc { font-size:15px; color:#8b949e; max-width:600px; margin:0 auto 16px; }
+.portfolio-note { display:inline-block; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 18px; font-size:13px; color:#8b949e; }
+
+/* Section */
+.section { max-width:900px; margin:0 auto; padding:60px 24px; border-bottom:1px solid #21262d; }
+.section:last-child { border-bottom:none; }
+.section h2 { font-size:22px; font-weight:700; color:#fff; margin-bottom:28px; display:flex; align-items:center; gap:10px; }
+
+/* Screenshot */
+.screenshot-wrap { cursor:pointer; border-radius:12px; overflow:hidden; border:1px solid #30363d; transition:transform .2s, box-shadow .2s; }
+.screenshot-wrap:hover { transform:scale(1.01); box-shadow:0 8px 32px rgba(0,0,0,.5); }
+.screenshot-wrap img { width:100%; display:block; }
+.screenshot-caption { text-align:center; color:#8b949e; font-size:13px; margin-top:10px; }
+
+/* Lightbox */
+.lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
+.lightbox.active { display:flex; }
+.lightbox img { max-width:92vw; max-height:90vh; border-radius:8px; box-shadow:0 0 60px rgba(0,0,0,.8); }
+.lightbox-close { position:fixed; top:20px; right:28px; color:#8b949e; font-size:28px; cursor:pointer; line-height:1; }
+.lightbox-close:hover { color:#fff; }
+
+/* Arch links */
+.arch-links { display:flex; gap:12px; flex-wrap:wrap; }
+.arch-link { display:inline-flex; align-items:center; gap:6px; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 18px; font-size:14px; color:#58a6ff; transition:background .15s; }
+.arch-link:hover { background:#21262d; text-decoration:none; }
+
+/* Features */
+.feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:640px){ .feature-grid { grid-template-columns:1fr; } }
+.feature-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:20px; }
+.feature-card h3 { font-size:15px; font-weight:700; color:#fff; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.feature-card ul { list-style:none; }
+.feature-card ul li { font-size:13px; color:#8b949e; padding:3px 0; padding-left:14px; position:relative; }
+.feature-card ul li::before { content:'·'; position:absolute; left:0; color:#58a6ff; }
+
+/* Table */
+table { width:100%; border-collapse:collapse; }
+th { background:#161b22; color:#8b949e; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; padding:10px 16px; text-align:left; border:1px solid #21262d; }
+td { padding:10px 16px; border:1px solid #21262d; font-size:14px; color:#e6edf3; }
+tr:hover td { background:#161b22; }
+td strong { color:#fff; }
+
+/* Contributions */
+.contrib-table td:first-child { font-weight:700; color:#a371f7; width:180px; }
+
+/* Outcomes */
+.outcome-value { color:#3fb950; font-weight:700; }
+
+/* Lessons */
+.lesson { background:#161b22; border:1px solid #30363d; border-left:3px solid #58a6ff; border-radius:0 8px 8px 0; padding:18px 20px; margin-bottom:14px; }
+.lesson h3 { font-size:15px; font-weight:700; color:#fff; margin-bottom:6px; }
+.lesson p { font-size:13px; color:#8b949e; }
+
+/* Footer */
+.footer { text-align:center; padding:40px 24px; color:#484f58; font-size:13px; }
+.footer a { color:#484f58; }
+.footer a:hover { color:#8b949e; }
+</style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>🤝 WithBuddy AI</h1>
+  <p class="subtitle">Enterprise AI Onboarding Assistant powered by LLM, RAG and Multi-Agent Architecture.</p>
+  <div class="badges">
+    <span class="badge b-blue">Python 3.11</span>
+    <span class="badge b-teal">FastAPI · asyncio</span>
+    <span class="badge b-purple">LangGraph · Multi-Agent</span>
+    <span class="badge b-orange">Claude Haiku</span>
+    <span class="badge b-green">ChromaDB · RAG</span>
+  </div>
+  <p class="hero-desc">임직원이 사내 규정·복지·인사 정책을 자연어로 물어보면, 관련 문서를 검색해 근거 있는 답변을 실시간으로 제공하는 AI 어시스턴트입니다.</p>
+  <span class="portfolio-note">📌 This repository is a <strong>portfolio showcase</strong>, not the source code.</span>
+</div>
+
+<!-- Screenshots -->
+<div class="section">
+  <h2>📸 Screenshots</h2>
+  <div class="screenshot-wrap" onclick="openLightbox('images/chat.png')">
+    <img src="images/chat.png" alt="WithBuddy AI 채팅 UI">
+  </div>
+  <p class="screenshot-caption">클릭하면 크게 볼 수 있어요</p>
+</div>
+
+<!-- Architecture -->
+<div class="section">
+  <h2>🗺 System Architecture</h2>
+  <div class="arch-links">
+    <a class="arch-link" href="architecture_flow.html" target="_blank">📊 아키텍처 플로우 보기 →</a>
+    <a class="arch-link" href="withbuddy_ai_report.html" target="_blank">📋 AI 평가 리포트 보기 →</a>
+  </div>
+  <br>
+  <pre style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;font-size:12px;color:#8b949e;overflow-x:auto;line-height:1.8;">User Question
+     │
+     ▼
+[Multi-Agent Orchestrator]  ← LangGraph (Intent 분류)
+     │
+     ├─ RAG ──────────────► [Hybrid Search]  ← BM25 + Vector (asyncio parallel)
+     │                            │
+     │                      [Claude Haiku]   ← SSE Streaming + Prompt Caching
+     │                            │
+     │                      [Quality Gate]   ← Self-Verifier + LLM Judge
+     │
+     ├─ chitchat ──────────► 일상 대화 처리
+     ├─ out_of_scope ──────► 범위 외 안내
+     └─ sensitive ─────────► 민감 질문 필터</pre>
+</div>
+
+<!-- Key Features -->
+<div class="section">
+  <h2>✨ Key Features</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>🔍 RAG — Hybrid Search</h3>
+      <ul>
+        <li>BM25 + 벡터 검색 asyncio 병렬 실행</li>
+        <li>kiwipiepy 한국어 형태소 분석</li>
+        <li>복합 질문 자동 분리 후 병렬 검색</li>
+        <li>쿼리 정규화 · 동의어 확장 · 멀티턴 rewrite</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>🤖 Multi-Agent Orchestration</h3>
+      <ul>
+        <li>LangGraph 기반 Intent 분류기</li>
+        <li>1회 LLM 호출로 Intent + Clarifying 동시 판별</li>
+        <li>고위험 질문은 LLM Judge 에이전트 사후 검증</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>⚡ asyncio — SSE Streaming</h3>
+      <ul>
+        <li>첫 토큰까지 평균 0.7초 (TTFT)</li>
+        <li>120자 선행 버퍼 no_result 조기 감지</li>
+        <li>고위험 질문 스트리밍 억제 후 검증 전송</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>🛡 Quality Assurance</h3>
+      <ul>
+        <li>Self-Verifier: 문서 관련성 LLM 판정</li>
+        <li>LLM Judge: 고위험 답변 문서 대조 검증</li>
+        <li>미답변 감지 → Slack 알림 → 관리자 루프</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>🏢 Multi-Tenant Isolation</h3>
+      <ul>
+        <li>company_code 기반 문서 공간 완전 격리</li>
+        <li>법령(공통) / 사규(회사 전용) 구분 저장</li>
+        <li>동일 인프라에서 복수 기업 독립 운영</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>💾 Prompt Caching</h3>
+      <ul>
+        <li>정적 프롬프트 블록 cache_control: ephemeral</li>
+        <li>동적 부분(날짜·컨텍스트) 캐시 제외</li>
+        <li>반복 요청 시 입력 토큰 비용 절감</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- My Contributions -->
+<div class="section">
+  <h2>👤 My Contributions</h2>
+  <p style="color:#8b949e;font-size:14px;margin-bottom:16px;border-left:3px solid #a371f7;padding-left:12px;">AI 파트 전담 — 설계부터 배포까지 단독 구현</p>
+  <table class="contrib-table">
+    <tr><th>영역</th><th>내용</th></tr>
+    <tr><td>RAG 파이프라인</td><td>문서 인덱싱, 하이브리드 검색, 답변 생성 전체 설계 및 구현</td></tr>
+    <tr><td>Multi-Agent</td><td>LangGraph Orchestrator, Self-Verifier, LLM Judge 구현</td></tr>
+    <tr><td>Prompt Engineering</td><td>멀티테넌트 시스템 프롬프트, Prompt Caching, 답변 품질 규칙 설계</td></tr>
+    <tr><td>Async API</td><td>FastAPI SSE 스트리밍 엔드포인트, 선행 버퍼 로직</td></tr>
+    <tr><td>평가 시스템</td><td>RAGAS 자동 평가, LangSmith 트레이싱, E2E 회귀 테스트 설계</td></tr>
+    <tr><td>미답변 관리</td><td>감지 → 저장 → 군집화 → Slack 알림 → 관리자 루프 전체</td></tr>
+    <tr><td>문서 인덱싱</td><td>content_hash 변경 감지 기반 자동 재인덱싱, 버전 관리</td></tr>
+  </table>
+</div>
+
+<!-- Tech Stack -->
+<div class="section">
+  <h2>🛠 Tech Stack</h2>
+  <table>
+    <tr><th>Category</th><th>Technology</th></tr>
+    <tr><td>Language</td><td>Python 3.11</td></tr>
+    <tr><td>LLM</td><td>Claude Haiku (Anthropic)</td></tr>
+    <tr><td>Embedding</td><td>Google Gemini Embedding 2 · 3072d</td></tr>
+    <tr><td>RAG Framework</td><td>LangChain, LangGraph</td></tr>
+    <tr><td>Vector DB</td><td>ChromaDB</td></tr>
+    <tr><td>Keyword Search</td><td>BM25 + kiwipiepy (Korean NLP)</td></tr>
+    <tr><td>API Server</td><td>FastAPI + asyncio</td></tr>
+    <tr><td>Caching</td><td>Anthropic Prompt Caching · Redis</td></tr>
+    <tr><td>Evaluation</td><td>RAGAS · E2E Python</td></tr>
+    <tr><td>Monitoring</td><td>LangSmith</td></tr>
+    <tr><td>Notification</td><td>Slack SDK</td></tr>
+  </table>
+</div>
+
+<!-- Outcomes -->
+<div class="section">
+  <h2>📊 Project Outcomes</h2>
+  <table>
+    <tr><th>지표</th><th>결과</th></tr>
+    <tr><td>E2E 정답률</td><td><span class="outcome-value">97.5%</span> (39/40, 통합 테스트셋)</td></tr>
+    <tr><td>BM25 도입 효과</td><td><span class="outcome-value">82.5% → 87.5%</span> (+5%p)</td></tr>
+    <tr><td>TTFT</td><td><span class="outcome-value">평균 0.7초</span></td></tr>
+    <tr><td>LLM 호출 최적화</td><td>Intent + Clarifying 통합으로 <span class="outcome-value">2 → 1회</span></td></tr>
+    <tr><td>지원 기업 수</td><td>멀티테넌트 구조로 <span class="outcome-value">복수 기업</span> 동시 운영</td></tr>
+  </table>
+</div>
+
+<!-- Lessons Learned -->
+<div class="section">
+  <h2>💡 Lessons Learned</h2>
+  <div class="lesson">
+    <h3>RAG는 검색이 전부다</h3>
+    <p>초기에는 프롬프트 튜닝에 집중했지만, 정답률 병목은 항상 검색 품질이었습니다. BM25 하이브리드 도입 후 키워드 매칭이 약한 케이스가 크게 줄었고, 한국어 형태소 분석이 BM25 성능에 직접적인 영향을 준다는 걸 체감했습니다.</p>
+  </div>
+  <div class="lesson">
+    <h3>Prompt Engineering은 규칙이 아니라 제약이다</h3>
+    <p>"~하세요" 식 지시보다 "~는 절대 금지입니다 + 올바른 형태 예시 제시"가 훨씬 효과적이었습니다. LLM은 금지 규칙만 있으면 비슷한 패턴을 변형해서 우회하지만, 정답 형태를 명시하면 수렴합니다.</p>
+  </div>
+  <div class="lesson">
+    <h3>비결정성을 다루는 법</h3>
+    <p>동일 질문이 어떤 날은 정답, 어떤 날은 no_result로 분류되는 문제를 겪었습니다. 원인은 LLM 온도와 누적된 conversationHistory였고, temperature=0 고정과 히스토리 10턴 제한으로 안정화했습니다.</p>
+  </div>
+  <div class="lesson">
+    <h3>스트리밍과 품질 검증의 충돌</h3>
+    <p>SSE 스트리밍은 이미 나간 토큰을 회수할 수 없어서, 고위험 질문의 품질 검증과 정면으로 충돌했습니다. 스트리밍 억제 → 전체 누적 → LLM Judge → 단일 전송 방식으로 해결했지만, UX와 안전성의 트레이드오프를 직접 설계하는 경험이었습니다.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>WithBuddy AI · Built with ❤️ · 2026.03 – 2026.07</p>
+  <p style="margin-top:6px;"><a href="https://github.com/junsu22/withbuddy-showcase">github.com/junsu22/withbuddy-showcase</a></p>
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
