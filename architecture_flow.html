@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>With Buddy AI — 입력·처리·출력 구조</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:52px 44px; min-width:960px; }
+
+h1 { font-size:26px; font-weight:900; color:#fff; margin-bottom:6px; }
+.subtitle { color:#64748b; font-size:13px; margin-bottom:52px; }
+
+/* 3단 레이아웃 */
+.flow { display:grid; grid-template-columns:1fr 60px 2fr 60px 1fr; gap:0; align-items:start; }
+
+/* 열 헤더 */
+.col-header { text-align:center; margin-bottom:20px; }
+.col-label { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; padding:5px 14px; border-radius:20px; }
+.lbl-in  { background:#1a2e1a; color:#4ade80; }
+.lbl-proc{ background:#1a1f35; color:#818cf8; }
+.lbl-out { background:#1a2535; color:#38bdf8; }
+
+/* 화살표 열 */
+.arrow-col { display:flex; align-items:center; justify-content:center; padding-top:60px; }
+.arrow { font-size:28px; color:#2d3f55; }
+
+/* 카드 */
+.card { background:#1a2235; border:1px solid #243048; border-radius:14px; padding:18px 20px; margin-bottom:14px; }
+.card-icon { font-size:20px; margin-bottom:8px; }
+.card-title { font-size:14px; font-weight:700; color:#e2e8f0; margin-bottom:4px; }
+.card-desc { font-size:12px; color:#94a3b8; line-height:1.6; }
+.card-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; margin-top:6px; }
+
+/* 카드 색상 테마 */
+.card.green  { border-color:#1a3d25; }
+.card.purple { border-color:#2a1f4a; }
+.card.blue   { border-color:#1a2f45; }
+.card.yellow { border-color:#3d3010; }
+.card.pink   { border-color:#3d1a2a; }
+
+.tag-green  { background:#0a2e14; color:#4ade80; }
+.tag-purple { background:#1a0f38; color:#a78bfa; }
+.tag-blue   { background:#0a1f35; color:#38bdf8; }
+.tag-yellow { background:#2e2000; color:#fbbf24; }
+.tag-pink   { background:#2e0a18; color:#f472b6; }
+.tag-indigo { background:#0f1538; color:#818cf8; }
+
+/* 처리 파이프라인 (가운데) */
+.pipeline { display:flex; flex-direction:column; gap:0; }
+.pipe-step { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:14px 18px; position:relative; }
+.pipe-step + .pipe-step { margin-top:0; }
+.pipe-connector { width:2px; height:20px; background:linear-gradient(#2d3f55,#2d3f55); margin:0 auto; }
+.pipe-label { font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+.pipe-title { font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:3px; }
+.pipe-desc  { font-size:11px; color:#94a3b8; line-height:1.5; }
+.pipe-tags  { margin-top:6px; display:flex; gap:5px; flex-wrap:wrap; }
+
+/* 보안 배지 */
+.security-wrap { background:linear-gradient(135deg,#1a2e1a,#1a2535); border:1px solid #2d4a3a; border-radius:12px; padding:12px 16px; margin-bottom:14px; }
+.security-title { font-size:11px; font-weight:700; color:#4ade80; margin-bottom:4px; }
+.security-desc { font-size:11px; color:#64748b; }
+
+/* 출력 카드 강조 */
+.card.highlight { border-color:#1e3a5a; background:linear-gradient(135deg,#1a2235,#1a2a3a); }
+
+.footer { text-align:center; color:#374151; font-size:11px; margin-top:52px; }
+</style>
+</head>
+<body>
+
+<h1>With Buddy AI — 입력 · 처리 · 출력 구조</h1>
+<p class="subtitle">사내 문서가 AI 답변으로 변환되는 전체 파이프라인</p>
+
+<div class="flow">
+
+  <!-- 입력 -->
+  <div>
+    <div class="col-header"><span class="col-label lbl-in">📥 입력</span></div>
+
+    <div class="card green">
+      <div class="card-icon">📄</div>
+      <div class="card-title">사내 문서</div>
+      <div class="card-desc">PDF · DOCX · HWP · TXT<br>인사 규정 · 복지 · IT · 총무</div>
+      <span class="card-tag tag-green">회사별 격리 저장</span>
+    </div>
+
+    <div class="card green">
+      <div class="card-icon">💬</div>
+      <div class="card-title">임직원 질문</div>
+      <div class="card-desc">채팅 UI → SSE 스트리밍<br>멀티턴 대화 컨텍스트 유지</div>
+      <span class="card-tag tag-green">실시간 스트리밍</span>
+    </div>
+
+    <div class="card green">
+      <div class="card-icon">🏢</div>
+      <div class="card-title">멀티테넌트</div>
+      <div class="card-desc">company_code 기반 격리<br>회사별 독립 문서 공간</div>
+      <span class="card-tag tag-green">데이터 완전 격리</span>
+    </div>
+  </div>
+
+  <!-- 화살표 1 -->
+  <div class="arrow-col"><div class="arrow">→</div></div>
+
+  <!-- 처리 파이프라인 -->
+  <div>
+    <div class="col-header"><span class="col-label lbl-proc">⚙️ 처리</span></div>
+
+    <div class="security-wrap">
+      <div class="security-title">🔒 Cloudflare Tunnel + OCI 3중 방어</div>
+      <div class="security-desc">외부 노출 없이 암호화 터널로 내부 서버 접근</div>
+    </div>
+
+    <div class="pipeline">
+
+      <div class="pipe-step">
+        <div class="pipe-label">Step 1 · 문서 인덱싱</div>
+        <div class="pipe-title">텍스트 추출 → 청킹 → 임베딩</div>
+        <div class="pipe-desc">파일 형식별 파서 → Markdown 구조 보존 청킹<br>content_hash 변경 감지 → 변경 시만 재인덱싱</div>
+        <div class="pipe-tags">
+          <span class="card-tag tag-indigo">Gemini Embedding 2</span>
+          <span class="card-tag tag-purple">3072차원 벡터</span>
+          <span class="card-tag tag-purple">ChromaDB</span>
+        </div>
+      </div>
+
+      <div class="pipe-connector"></div>
+
+      <div class="pipe-step">
+        <div class="pipe-label">Step 2 · Intent 분류</div>
+        <div class="pipe-title">LangGraph Orchestrator</div>
+        <div class="pipe-desc">질문 유형 자동 판별 (1회 LLM 호출)</div>
+        <div class="pipe-tags">
+          <span class="card-tag tag-yellow">RAG</span>
+          <span class="card-tag tag-yellow">chitchat</span>
+          <span class="card-tag tag-yellow">out_of_scope</span>
+          <span class="card-tag tag-pink">sensitive</span>
+        </div>
+      </div>
+
+      <div class="pipe-connector"></div>
+
+      <div class="pipe-step">
+        <div class="pipe-label">Step 3 · 하이브리드 검색</div>
+        <div class="pipe-title">BM25 + 벡터 병렬 검색</div>
+        <div class="pipe-desc">키워드 매칭 + 의미 유사도 병합<br>복합 질문 → 자동 분리 후 병렬 검색<br>법령 전용 컬렉션 분리 운용</div>
+        <div class="pipe-tags">
+          <span class="card-tag tag-blue">BM25</span>
+          <span class="card-tag tag-blue">cosine similarity</span>
+          <span class="card-tag tag-blue">dedup 후처리</span>
+        </div>
+      </div>
+
+      <div class="pipe-connector"></div>
+
+      <div class="pipe-step">
+        <div class="pipe-label">Step 4 · 답변 생성</div>
+        <div class="pipe-title">Claude Haiku · SSE 스트리밍</div>
+        <div class="pipe-desc">검색된 문서 컨텍스트 기반 답변 생성<br>Prompt Caching 적용 → 비용 절감<br>평균 응답속도 0.7초 (TTFT)</div>
+        <div class="pipe-tags">
+          <span class="card-tag tag-purple">Claude Haiku</span>
+          <span class="card-tag tag-purple">SSE 스트리밍</span>
+          <span class="card-tag tag-purple">Prompt Caching</span>
+        </div>
+      </div>
+
+      <div class="pipe-connector"></div>
+
+      <div class="pipe-step">
+        <div class="pipe-label">Step 5 · 품질 검증</div>
+        <div class="pipe-title">Self-Verifier + LLM Judge</div>
+        <div class="pipe-desc">답변 근거 문서 존재 여부 자동 검증<br>할루시네이션 구조적 차단<br>미답변 감지 → Slack 알림 + 관리자 루프</div>
+        <div class="pipe-tags">
+          <span class="card-tag tag-green">Self-Verifier</span>
+          <span class="card-tag tag-green">LLM Judge</span>
+          <span class="card-tag tag-green">미답변 자동 감지</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 화살표 2 -->
+  <div class="arrow-col"><div class="arrow">→</div></div>
+
+  <!-- 출력 -->
+  <div>
+    <div class="col-header"><span class="col-label lbl-out">📤 출력</span></div>
+
+    <div class="card blue highlight">
+      <div class="card-icon">✅</div>
+      <div class="card-title">정확한 답변 + 출처</div>
+      <div class="card-desc">문서 기반 근거 있는 답변<br>출처 문서명 · 섹션 함께 제공</div>
+      <span class="card-tag tag-blue">E2E 97.5% 정답률</span>
+    </div>
+
+    <div class="card blue">
+      <div class="card-icon">👤</div>
+      <div class="card-title">담당자 추천 카드</div>
+      <div class="card-desc">질문 유형별 담당 부서·담당자<br>동적 라우팅으로 회사별 다르게 제공</div>
+      <span class="card-tag tag-blue">멀티테넌트 담당자</span>
+    </div>
+
+    <div class="card blue">
+      <div class="card-icon">📋</div>
+      <div class="card-title">관련 서식·템플릿</div>
+      <div class="card-desc">관련 양식 파일 다운로드 링크<br>회사별 전용 서식 격리 제공</div>
+      <span class="card-tag tag-blue">회사별 서식 격리</span>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-icon">📊</div>
+      <div class="card-title">관리자 인사이트</div>
+      <div class="card-desc">미답변 질문 군집화 분석<br>TOP 5 보강 영역 AI 요약<br>문서 보강 우선순위 제안</div>
+      <span class="card-tag tag-yellow">구현 완료</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">With Buddy AI · AI 파이프라인 구조 · 2026</div>
+
+</body>
+</html>
