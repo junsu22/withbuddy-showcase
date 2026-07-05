@@ -20,9 +20,7 @@
 
 ## 📸 Screenshots
 
-| 채팅 UI | 담당자 추천 카드 | 관리자 대시보드 |
-|---------|----------------|----------------|
-| ![Chat](images/chat.png) | ![Contact](images/contact_card.png) | ![Admin](images/admin_dashboard.png) |
+![Chat](images/chat.png)
 
 ---
 
