@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>With Buddy AI — 기술 보고서</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:52px 44px; min-width:960px; }
+
+/* ── 공통 ── */
+.section { margin-bottom:64px; }
+.section-title { font-size:13px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:.12em; margin-bottom:6px; }
+.section-line { height:1px; background:#1a2235; margin-bottom:28px; }
+
+/* ── 1. 커버 ── */
+.cover { margin-bottom:56px; }
+.cover h1 { font-size:34px; font-weight:900; color:#fff; margin-bottom:8px; line-height:1.2; }
+.cover .tagline { font-size:15px; color:#64748b; margin-bottom:32px; }
+.cover-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.cover-card { background:#1a2235; border:1px solid #243048; border-radius:14px; padding:22px 24px; }
+.cover-card-title { font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+.cover-card-body { font-size:13px; color:#94a3b8; line-height:1.8; }
+.cover-card-body strong { color:#e2e8f0; }
+
+/* ── 2. KPI ── */
+.kpi-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:0; }
+.kpi { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:18px 20px; }
+.kpi-label { font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.kpi-value { font-size:30px; font-weight:900; line-height:1; }
+.kpi-sub { font-size:10px; color:#64748b; margin-top:5px; }
+.c-pink{color:#f472b6} .c-orange{color:#fb923c} .c-yellow{color:#fbbf24} .c-green{color:#34d399} .c-blue{color:#60a5fa} .c-purple{color:#a78bfa}
+
+/* ── 3. 아키텍처 ── */
+.flow { display:grid; grid-template-columns:1fr 48px 2fr 48px 1fr; gap:0; align-items:start; }
+
+.col-header { text-align:center; margin-bottom:18px; }
+.col-label { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; padding:5px 14px; border-radius:20px; }
+.lbl-in  { background:#1a2e1a; color:#4ade80; }
+.lbl-proc{ background:#1a1f35; color:#818cf8; }
+.lbl-out { background:#1a2535; color:#38bdf8; }
+
+.arrow-col { display:flex; align-items:center; justify-content:center; padding-top:56px; }
+.arrow { font-size:26px; color:#2d3f55; }
+
+.card { background:#1a2235; border:1px solid #243048; border-radius:14px; padding:16px 18px; margin-bottom:12px; }
+.card-icon { font-size:18px; margin-bottom:7px; }
+.card-title { font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:4px; }
+.card-desc { font-size:11.5px; color:#94a3b8; line-height:1.6; }
+.card-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; margin-top:6px; }
+
+.card.green  { border-color:#1a3d25; }
+.card.blue   { border-color:#1a2f45; }
+.card.yellow { border-color:#3d3010; }
+.card.highlight { border-color:#1e3a5a; background:linear-gradient(135deg,#1a2235,#1a2a3a); }
+
+.tag-green  { background:#0a2e14; color:#4ade80; }
+.tag-purple { background:#1a0f38; color:#a78bfa; }
+.tag-blue   { background:#0a1f35; color:#38bdf8; }
+.tag-yellow { background:#2e2000; color:#fbbf24; }
+.tag-pink   { background:#2e0a18; color:#f472b6; }
+.tag-indigo { background:#0f1538; color:#818cf8; }
+
+.pipeline { display:flex; flex-direction:column; }
+.pipe-step { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:13px 16px; }
+.pipe-connector { width:2px; height:16px; background:#2d3f55; margin:0 auto; }
+.pipe-label { font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+.pipe-title { font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:3px; }
+.pipe-desc  { font-size:11px; color:#94a3b8; line-height:1.5; }
+.pipe-tags  { margin-top:5px; display:flex; gap:4px; flex-wrap:wrap; }
+
+.security-wrap { background:linear-gradient(135deg,#1a2e1a,#1a2535); border:1px solid #2d4a3a; border-radius:12px; padding:11px 15px; margin-bottom:12px; }
+.security-title { font-size:11px; font-weight:700; color:#4ade80; margin-bottom:3px; }
+.security-desc  { font-size:11px; color:#64748b; }
+
+/* ── 4. 타임라인 ── */
+.banner { background:linear-gradient(135deg,#1a2d4d,#231a4d); border:1px solid #2d3f60; border-radius:14px; padding:20px 26px; margin-bottom:36px; }
+.banner-title { font-size:14px; font-weight:800; color:#fff; margin-bottom:10px; }
+.banner-points { display:flex; gap:28px; flex-wrap:wrap; }
+.bp { font-size:12.5px; color:#94a3b8; line-height:1.6; }
+.bp strong { color:#e2e8f0; }
+
+.phase-hd { display:flex; align-items:center; gap:12px; margin-bottom:10px; margin-top:36px; }
+.phase-hd h3 { font-size:14px; font-weight:800; color:#e2e8f0; }
+.phase-badge { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+.ph1 { background:#3d2555; color:#d8b4fe; }
+.ph2 { background:#0a3d1e; color:#6ee7b7; }
+.ph3 { background:#162456; color:#93c5fd; }
+.phase-desc { font-size:12px; color:#94a3b8; margin-bottom:14px; line-height:1.6; }
+
+.tbl-wrap { background:#1a2235; border:1px solid #243048; border-radius:12px; overflow:hidden; margin-bottom:8px; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead tr { background:#131e30; }
+thead th { padding:10px 13px; text-align:left; font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.08em; font-weight:700; border-bottom:1px solid #243048; white-space:nowrap; }
+tbody tr { border-bottom:1px solid #1f2d42; }
+tbody tr:last-child { border-bottom:none; }
+tbody tr:hover { background:#1f2d42; }
+tbody td { padding:10px 13px; vertical-align:middle; }
+tbody tr.milestone { background:#162033; }
+tbody tr.fail-row td { opacity:.55; }
+
+.date-col { color:#64748b; font-size:11px; white-space:nowrap; font-family:monospace; }
+.score-col { font-size:17px; font-weight:900; white-space:nowrap; }
+.delta { font-size:11px; font-weight:700; white-space:nowrap; }
+.up{color:#34d399} .dn{color:#f87171} .eq{color:#64748b}
+.desc { color:#94a3b8; font-size:12px; line-height:1.5; }
+.desc strong { color:#e2e8f0; }
+
+.tb { display:inline-block; padding:2px 7px; border-radius:4px; font-size:10px; font-weight:700; white-space:nowrap; }
+.tb-ragas  { background:#1f0d33; color:#c084fc; }
+.tb-e2ev1  { background:#042010; color:#4ade80; }
+.tb-e2eall { background:#051a35; color:#60a5fa; }
+.tb-e2ev2  { background:#0c102a; color:#818cf8; }
+.tb-inscope{ background:#1c1500; color:#fbbf24; }
+
+.chart-card { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:22px 24px; margin-top:28px; }
+.chart-title { font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:18px; }
+.chart-wrap { position:relative; height:200px; }
+
+/* ── 푸터 ── */
+.footer { text-align:center; color:#374151; font-size:11px; margin-top:52px; padding-top:24px; border-top:1px solid #1a2235; }
+
+/* ── Print ── */
+@media print {
+  body { background:#0f1623 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; padding:32px 32px; }
+  .section { page-break-inside:avoid; }
+  .tbl-wrap { page-break-inside:auto; }
+  tbody tr { page-break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     1. 커버
+════════════════════════════════════════════ -->
+<div class="cover">
+  <h1>With Buddy AI<br>기술 보고서</h1>
+  <p class="tagline">임직원 HR 질문에 문서 기반으로 즉시 답변하는 AI 어시스턴트 · 2026</p>
+
+  <div class="cover-grid">
+    <div class="cover-card">
+      <div class="cover-card-title">해결한 문제</div>
+      <div class="cover-card-body">
+        임직원이 연차·복지·사내 규정을 물어볼 때마다 <strong>HR 담당자에게 직접 연락</strong>해야 했음.<br>
+        문서가 있어도 어디 있는지 모르고, 담당자도 반복 질문 응대로 업무 부하 발생.
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-card-title">구현한 해결책</div>
+      <div class="cover-card-body">
+        사내 규정 문서를 AI가 실시간 검색하여 <strong>근거 있는 답변 즉시 제공</strong>.<br>
+        담당자 추천 카드, 관련 서식 첨부, 미답변 질문 자동 감지·알림까지 포함.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     2. KPI
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">핵심 성과 지표</div>
+  <div class="section-line"></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">최초 측정 (RAGAS)</div>
+      <div class="kpi-value c-pink">2.63<span style="font-size:15px;font-weight:600;color:#64748b"> / 5점</span></div>
+      <div class="kpi-sub">2026-04-16 LLM Judge</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">E2E 첫 측정</div>
+      <div class="kpi-value c-orange">64%</div>
+      <div class="kpi-sub">2026-05-10 IN SCOPE</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">5일 만에 달성</div>
+      <div class="kpi-value c-green">97.5%</div>
+      <div class="kpi-sub">2026-05-27 E2E v1</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">100문항 최고</div>
+      <div class="kpi-value c-blue">99%</div>
+      <div class="kpi-sub">2026-06-04</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">총 실험 횟수</div>
+      <div class="kpi-value c-purple">63회</div>
+      <div class="kpi-sub">4월 ~ 7월</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     3. 아키텍처 플로우
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">입력 · 처리 · 출력 구조</div>
+  <div class="section-line"></div>
+
+  <div class="flow">
+
+    <!-- 입력 -->
+    <div>
+      <div class="col-header"><span class="col-label lbl-in">📥 입력</span></div>
+
+      <div class="card green">
+        <div class="card-icon">📄</div>
+        <div class="card-title">사내 문서</div>
+        <div class="card-desc">PDF · DOCX · HWP · TXT<br>인사 규정 · 복지 · IT · 총무</div>
+        <span class="card-tag tag-green">회사별 격리 저장</span>
+      </div>
+
+      <div class="card green">
+        <div class="card-icon">💬</div>
+        <div class="card-title">임직원 질문</div>
+        <div class="card-desc">채팅 UI → SSE 스트리밍<br>멀티턴 대화 컨텍스트 유지</div>
+        <span class="card-tag tag-green">실시간 스트리밍</span>
+      </div>
+
+      <div class="card green">
+        <div class="card-icon">🏢</div>
+        <div class="card-title">멀티테넌트</div>
+        <div class="card-desc">company_code 기반 격리<br>회사별 독립 문서 공간</div>
+        <span class="card-tag tag-green">데이터 완전 격리</span>
+      </div>
+    </div>
+
+    <!-- 화살표 1 -->
+    <div class="arrow-col"><div class="arrow">→</div></div>
+
+    <!-- 처리 -->
+    <div>
+      <div class="col-header"><span class="col-label lbl-proc">⚙️ 처리</span></div>
+
+      <div class="security-wrap">
+        <div class="security-title">🔒 Cloudflare Tunnel + OCI 3중 방어</div>
+        <div class="security-desc">외부 노출 없이 암호화 터널로 내부 서버 접근</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pipe-label">Step 1 · 문서 인덱싱</div>
+          <div class="pipe-title">텍스트 추출 → 청킹 → 임베딩</div>
+          <div class="pipe-desc">파일 형식별 파서 → Markdown 구조 보존 청킹<br>content_hash 변경 감지 → 변경 시만 재인덱싱</div>
+          <div class="pipe-tags">
+            <span class="card-tag tag-indigo">Gemini Embedding 2</span>
+            <span class="card-tag tag-purple">3072차원 벡터</span>
+            <span class="card-tag tag-purple">ChromaDB</span>
+          </div>
+        </div>
+        <div class="pipe-connector"></div>
+        <div class="pipe-step">
+          <div class="pipe-label">Step 2 · Intent 분류</div>
+          <div class="pipe-title">LangGraph Orchestrator</div>
+          <div class="pipe-desc">질문 유형 자동 판별 (1회 LLM 호출로 통합)<br>sensitive는 LLM 호출 전 선제 차단</div>
+          <div class="pipe-tags">
+            <span class="card-tag tag-yellow">rag · 문서 검색 답변</span>
+            <span class="card-tag tag-yellow">chitchat · 일상 대화</span>
+            <span class="card-tag tag-yellow">company_info · 회사 운영 정보</span>
+            <span class="card-tag tag-yellow">communication · 업무 소통</span>
+            <span class="card-tag tag-yellow">preboarding · 입사 전 안내</span>
+            <span class="card-tag tag-yellow">out_of_scope_internal · 업무 범위 외(내부)</span>
+            <span class="card-tag tag-yellow">out_of_scope_external · 업무 범위 외(외부)</span>
+            <span class="card-tag tag-pink">sensitive · 민감 질문</span>
+          </div>
+        </div>
+        <div class="pipe-connector"></div>
+        <div class="pipe-step">
+          <div class="pipe-label">Step 3 · 하이브리드 검색</div>
+          <div class="pipe-title">BM25 + 벡터 병렬 검색</div>
+          <div class="pipe-desc">키워드 매칭 + 의미 유사도 병합<br>복합 질문 → 자동 분리 후 병렬 검색<br>법령 전용 컬렉션 분리 운용</div>
+          <div class="pipe-tags">
+            <span class="card-tag tag-blue">BM25</span>
+            <span class="card-tag tag-blue">cosine similarity</span>
+            <span class="card-tag tag-blue">dedup 후처리</span>
+          </div>
+        </div>
+        <div class="pipe-connector"></div>
+        <div class="pipe-step">
+          <div class="pipe-label">Step 4 · 답변 생성</div>
+          <div class="pipe-title">Claude Haiku · SSE 스트리밍</div>
+          <div class="pipe-desc">검색된 문서 컨텍스트 기반 답변 생성<br>Prompt Caching — 시스템 프롬프트 재사용으로 입력 토큰 비용 절감<br>평균 TTFT <strong style="color:#a78bfa">0.75초</strong> · 평균 응답 3.4초</div>
+          <div class="pipe-tags">
+            <span class="card-tag tag-purple">Claude Haiku</span>
+            <span class="card-tag tag-purple">SSE 스트리밍</span>
+            <span class="card-tag tag-purple">Prompt Caching</span>
+          </div>
+        </div>
+        <div class="pipe-connector"></div>
+        <div class="pipe-step">
+          <div class="pipe-label">Step 5 · 품질 검증</div>
+          <div class="pipe-title">Self-Verifier + LLM Judge</div>
+          <div class="pipe-desc">답변 근거 문서 존재 여부 자동 검증<br>할루시네이션 구조적 차단<br>미답변 감지 → Slack 알림 + 관리자 루프</div>
+          <div class="pipe-tags">
+            <span class="card-tag tag-green">Self-Verifier</span>
+            <span class="card-tag tag-green">LLM Judge</span>
+            <span class="card-tag tag-green">미답변 자동 감지</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 화살표 2 -->
+    <div class="arrow-col"><div class="arrow">→</div></div>
+
+    <!-- 출력 -->
+    <div>
+      <div class="col-header"><span class="col-label lbl-out">📤 출력</span></div>
+
+      <div class="card blue highlight">
+        <div class="card-icon">✅</div>
+        <div class="card-title">정확한 답변 + 출처</div>
+        <div class="card-desc">문서 기반 근거 있는 답변<br>출처 문서명·섹션 함께 제공</div>
+        <span class="card-tag tag-blue">E2E 97.5% 정답률</span>
+      </div>
+
+      <div class="card blue">
+        <div class="card-icon">👤</div>
+        <div class="card-title">담당자 추천 카드</div>
+        <div class="card-desc">질문 유형별 담당 부서·담당자<br>회사별 동적 라우팅</div>
+        <span class="card-tag tag-blue">멀티테넌트 담당자</span>
+      </div>
+
+      <div class="card blue">
+        <div class="card-icon">📋</div>
+        <div class="card-title">관련 서식·템플릿</div>
+        <div class="card-desc">관련 양식 파일 다운로드 링크<br>회사별 전용 서식 격리 제공</div>
+        <span class="card-tag tag-blue">회사별 서식 격리</span>
+      </div>
+
+      <div class="card yellow">
+        <div class="card-icon">📊</div>
+        <div class="card-title">관리자 인사이트</div>
+        <div class="card-desc">미답변 질문 군집화 분석<br>TOP 5 보강 영역 AI 요약<br>문서 보강 우선순위 제안</div>
+        <span class="card-tag tag-yellow">자동 감지·알림</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     4. 실시간 모니터링
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">실시간 모니터링</div>
+  <div class="section-line"></div>
+
+  <div style="font-size:11px;color:#64748b;margin-bottom:12px;">2026. 7. 3 오후 기준</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+    <!-- LangSmith -->
+    <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;overflow:hidden;">
+      <div style="padding:12px 18px 10px;border-bottom:1px solid #243048;">
+        <span style="font-size:11px;font-weight:700;color:#a78bfa;">LangSmith</span>
+        <span style="font-size:11px;color:#64748b;margin-left:8px;">AI 품질 · 토큰 · 비용 추적</span>
+      </div>
+      <img src="260703.png" alt="LangSmith 대시보드" style="width:100%;display:block;height:340px;object-fit:cover;object-position:top;">
+      <div style="padding:12px 18px;display:flex;gap:20px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:#94a3b8;">⚡ <strong style="color:#e2e8f0;">TTFT</strong> 평균 0.75초</div>
+        <div style="font-size:12px;color:#94a3b8;">⏱ <strong style="color:#e2e8f0;">평균 응답</strong> 3.4초</div>
+        <div style="font-size:12px;color:#94a3b8;">🔵 <strong style="color:#a78bfa;">Prompt Caching</strong> 적용 중</div>
+      </div>
+    </div>
+
+    <!-- Grafana -->
+    <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;overflow:hidden;">
+      <div style="padding:12px 18px 10px;border-bottom:1px solid #243048;">
+        <span style="font-size:11px;font-weight:700;color:#34d399;">Grafana</span>
+        <span style="font-size:11px;color:#64748b;margin-left:8px;">인프라 · 서버 상태 모니터링</span>
+      </div>
+      <img src="0703_grafana.png" alt="Grafana 대시보드" style="width:100%;display:block;height:340px;object-fit:cover;object-position:top;">
+      <div style="padding:12px 18px;display:flex;gap:20px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:#94a3b8;">✅ <strong style="color:#34d399;">Error Rate</strong> 0.00%</div>
+        <div style="font-size:12px;color:#94a3b8;">🚀 <strong style="color:#34d399;">Stream p95</strong> 95ms</div>
+        <div style="font-size:12px;color:#94a3b8;">🟢 <strong style="color:#e2e8f0;">서버 상태</strong> UP</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     5. 성능 개선 타임라인
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">정확도 개선 전체 이력</div>
+  <div class="section-line"></div>
+
+  <div class="banner">
+    <div class="banner-title">데이터 기반 반복 검증</div>
+    <div class="banner-points">
+      <div class="bp">📊 <strong>63회 이상의 실험</strong><br>매 수정마다 즉시 측정, 수치로 검증</div>
+      <div class="bp">⚡ <strong>당일 최대 6회 연속 측정</strong><br>변경 → 측정 → 재변경 사이클 반복</div>
+      <div class="bp">📈 <strong>3종 평가셋 병행 운용</strong><br>RAGAS / E2E v1(40) / v2 강화셋(40) / 100문항</div>
+      <div class="bp">🎯 <strong>실패도 기록</strong><br>설정 변경 실패 즉시 감지·복구. 낙관적 추측 없음</div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase-hd">
+    <h3>Phase 1 — RAG 품질 고도화</h3>
+    <span class="phase-badge ph1">2026-04-16 ~ 04-30</span>
+  </div>
+  <div class="phase-desc">
+    RAGAS 평가 체계 도입. LLM Judge(5점 만점) + 검색 히트율로 매 수정마다 측정. 총 <strong>29회</strong> 실험.<br>
+    검색 히트율 11% → 100%, Judge 점수 2.63 → 4.75. 평가 인프라 구축과 품질 개선 동시 진행.
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>일시</th><th>평가</th><th>문항</th><th>Judge (5점)</th><th>히트율</th><th>직전 대비</th><th>작업 내용</th>
+      </tr></thead>
+      <tbody>
+        <tr class="milestone"><td class="date-col">04-16 00:40</td><td><span class="tb tb-ragas">RAGAS</span></td><td>19</td><td class="score-col c-pink">2.63</td><td>11%</td><td class="delta eq">— 최초 측정</td><td class="desc"><strong>RAGAS 평가 체계 최초 도입.</strong> Judge JSON 파싱 오류 수정 직후 첫 측정. ChromaDB 연결됐으나 임베딩 불일치로 검색 히트율 11%</td></tr>
+        <tr><td class="date-col">04-16 09:04</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-pink">3.70</td><td>75%</td><td class="delta up">▲ +1.07</td><td class="desc">복합 질문 자동 분리 검색 도입 + 임베딩 모델 교체. 히트율 11% → 75% 급등</td></tr>
+        <tr><td class="date-col">04-16 14:17</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-pink">3.65</td><td>80%</td><td class="delta dn">▼ -0.05</td><td class="desc">프롬프트 조정 테스트 (소폭 하락, 원인 분석)</td></tr>
+        <tr class="milestone"><td class="date-col">04-16 15:44</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-orange">4.38</td><td>100%</td><td class="delta up">▲ +0.73</td><td class="desc"><strong>당일 최고 — 검색 히트율 100% 달성.</strong> RAGAS 테스트셋에서 MVP 범위 외 질문 제거 + OOS 프롬프트 강화 + 복합 질문 병렬 검색 도입</td></tr>
+        <tr class="fail-row"><td class="date-col">04-18 10:40</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-pink">2.76</td><td>0%</td><td class="delta dn">▼ -1.62</td><td class="desc">ReAct 에이전트 + Cross-Encoder 리랭킹 실험 도입 — 벡터 distance metric 충돌로 검색 히트율 0% 붕괴</td></tr>
+        <tr><td class="date-col">04-18 10:51</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-orange">4.48</td><td>100%</td><td class="delta up">▲ +1.72</td><td class="desc">11분 만에 복구. 에이전트 실험 롤백 + 벡터 distance metric cosine 명시 수정으로 히트율 100% 회복</td></tr>
+        <tr><td class="date-col">04-18 11:22</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-orange">4.43</td><td>100%</td><td class="delta eq">▼ -0.05</td><td class="desc">청크 overlap 파라미터 실험</td></tr>
+        <tr><td class="date-col">04-18 11:34</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-orange">4.52</td><td>100%</td><td class="delta up">▲ +0.09</td><td class="desc">chunk_size 최적화</td></tr>
+        <tr class="milestone"><td class="date-col">04-18 16:13</td><td><span class="tb tb-ragas">RAGAS</span></td><td>21</td><td class="score-col c-yellow">4.67</td><td>100%</td><td class="delta up">▲ +0.15</td><td class="desc"><strong>4/18 최고점.</strong> RAG 검색 k값 최적화로 응답 속도·토큰 비용 동시 개선. 모호한 질문 역질문 조건 정교화</td></tr>
+        <tr><td class="date-col">04-19 00:00</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-yellow">4.50</td><td>90%</td><td class="delta eq">— 야간 검증</td><td class="desc">멀티턴 대화 컨텍스트 주입 테스트</td></tr>
+        <tr><td class="date-col">04-19 01:03</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-yellow">4.60</td><td>90%</td><td class="delta up">▲ +0.10</td><td class="desc">프롬프트 role 정의 강화</td></tr>
+        <tr class="milestone"><td class="date-col">04-19 01:13</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-yellow">4.75</td><td>95%</td><td class="delta up">▲ +0.15</td><td class="desc"><strong>RAGAS 기간 전체 최고점.</strong> 시맨틱 캐시 도입 + 에이전트 스트리밍 추가. 답변 구조 지침 강화로 Faithfulness 향상</td></tr>
+        <tr><td class="date-col">04-19 01:23</td><td><span class="tb tb-ragas">RAGAS</span></td><td>20</td><td class="score-col c-yellow">4.60</td><td>100%</td><td class="delta eq">— 안정 확인</td><td class="desc">변경 없이 재측정 — 점수 안정성 검증</td></tr>
+        <tr><td class="date-col">04-21 23:11</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.42</td><td>100%</td><td class="delta eq">— 규모 확장</td><td class="desc"><strong>50문항으로 테스트셋 확장.</strong> WB0002 company_code 격리 적용 — 회사별 독립 검색 공간 검증. 점수 소폭 하락은 평가 범위 확대 효과</td></tr>
+        <tr><td class="date-col">04-21 23:48</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.34</td><td>100%</td><td class="delta dn">▼ -0.08</td><td class="desc">WB0002 회사코드 격리 적용 후 재측정</td></tr>
+        <tr><td class="date-col">04-22 12:55</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.60</td><td>0%*</td><td class="delta up">▲ +0.26</td><td class="desc">out_of_scope 분류 정확도 개선 (*법률 전용 컬렉션 히트율)</td></tr>
+        <tr><td class="date-col">04-22 14:09</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.27</td><td>0%*</td><td class="delta dn">▼ -0.33</td><td class="desc">민감어 필터 임계값 과도하게 강화 → 급여·복지 등 HR 정상 질문이 sensitive로 차단됨. 즉시 임계값 롤백</td></tr>
+        <tr><td class="date-col">04-22 14:16</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.33</td><td>0%*</td><td class="delta up">▲ +0.06</td><td class="desc">민감어 임계값 조정</td></tr>
+        <tr><td class="date-col">04-22 15:17</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.47</td><td>0%*</td><td class="delta up">▲ +0.14</td><td class="desc">chitchat 분류 정확도 개선</td></tr>
+        <tr><td class="date-col">04-22 15:42</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.42</td><td>100%</td><td class="delta eq">— 안정</td><td class="desc">전체 설정 최종 검증</td></tr>
+        <tr><td class="date-col">04-22 16:47</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.33</td><td>0%*</td><td class="delta dn">▼ -0.09</td><td class="desc">복합 질문 분리 로직 테스트</td></tr>
+        <tr><td class="date-col">04-22 18:01</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.27</td><td>100%</td><td class="delta eq">— 검증</td><td class="desc">병렬 검색 초기 구현 테스트</td></tr>
+        <tr><td class="date-col">04-30 17:47</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.42</td><td>88%</td><td class="delta eq">— 재개</td><td class="desc">1주일 후 회귀 검증. BE Internal API 연동 후 측정</td></tr>
+        <tr><td class="date-col">04-30 18:09</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.44</td><td>94%</td><td class="delta up">▲ +0.02</td><td class="desc">답변 후처리 (이름 오타 수정) 적용</td></tr>
+        <tr><td class="date-col">04-30 18:41</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.22</td><td>98%</td><td class="delta dn">▼ -0.22</td><td class="desc">clarifying 질문 로직 실험 — 일부 케이스 악화</td></tr>
+        <tr><td class="date-col">04-30 18:52</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.42</td><td>92%</td><td class="delta up">▲ +0.20</td><td class="desc">clarifying 임계값 조정 후 복구</td></tr>
+        <tr><td class="date-col">04-30 18:57</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.53</td><td>80%</td><td class="delta up">▲ +0.11</td><td class="desc">no_result 판단 기준 강화</td></tr>
+        <tr><td class="date-col">04-30 19:22</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.44</td><td>94%</td><td class="delta dn">▼ -0.09</td><td class="desc">법령 fallback 로직 추가 후 검증</td></tr>
+        <tr class="milestone"><td class="date-col">04-30 19:27</td><td><span class="tb tb-ragas">RAGAS</span></td><td>50</td><td class="score-col c-yellow">4.60</td><td>87%</td><td class="delta up">▲ +0.16</td><td class="desc"><strong>Phase 1 마무리.</strong> 시맨틱 캐시 제거(멀티테넌트 환경에서 캐시 오염 위험 확인) + 질문 유형별 담당자 동적 추천 카드 구현 + 법령만 히트 시 HR 담당자 안내(Fallback Case A) 완성</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase-hd">
+    <h3>Phase 2 — E2E 정확도 집중 개선</h3>
+    <span class="phase-badge ph2">2026-05-10 ~ 06-04</span>
+  </div>
+  <div class="phase-desc">
+    실서비스 기반 E2E 평가셋 도입. IN SCOPE 50문항(5/10), 40문항 v1(5/22~), 100문항(5/12~) 병행 운용. 총 <strong>22회</strong> 실험.<br>
+    <strong>64% → 97.5%</strong>. 5월 27일 단 5일 만에 목표치 돌파.
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>일시</th><th>평가</th><th>문항</th><th>정답률</th><th>Pass/Total</th><th>직전 대비</th><th>작업 내용</th>
+      </tr></thead>
+      <tbody>
+        <tr class="milestone"><td class="date-col">05-10 (오전)</td><td><span class="tb tb-inscope">IN SCOPE</span></td><td>50</td><td class="score-col c-orange">64%</td><td>32/50</td><td class="delta eq">— 최초 측정</td><td class="desc"><strong>E2E 기반 IN SCOPE 첫 측정.</strong> no_result 오분류 다수 발생</td></tr>
+        <tr class="milestone"><td class="date-col">05-10 (저녁)</td><td><span class="tb tb-inscope">IN SCOPE</span></td><td>50</td><td class="score-col c-green">98%</td><td>49/50</td><td class="delta up">▲ +34%p (당일)</td><td class="desc"><strong>당일 저녁까지 수차례 수정 끝에 98% 달성.</strong> MFA·VPN·Slack 등 IT 환경 질문이 out_of_scope로 잘못 분류되던 문제 발견 → orchestrator 프롬프트에 rag 강제 분류 규칙 2줄 추가. clarifying 과발동 억제(예시 16개 추가)</td></tr>
+        <tr><td class="date-col">05-12 13:29</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta eq">— 새 평가셋</td><td class="desc">100문항 회귀 테스트 최초 도입. TEMPLATE 문서 격리 버그 수정 후</td></tr>
+        <tr class="milestone"><td class="date-col">05-22 10:24</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-orange">72.5%</td><td>29/40</td><td class="delta eq">— 새 평가셋</td><td class="desc"><strong>실서비스 시나리오 기반 E2E v1 첫 측정.</strong> sensitive/oos 오분류 다수</td></tr>
+        <tr><td class="date-col">05-22 12:43</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-orange">75%</td><td>30/40</td><td class="delta up">▲ +2.5%p</td><td class="desc">chitchat 분류 개선, 회사명 멀티테넌트 수정</td></tr>
+        <tr class="fail-row"><td class="date-col">05-22 13:22</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-orange">72.5%</td><td>29/40</td><td class="delta dn">▼ -2.5%p</td><td class="desc">out_of_scope 범위 조정 테스트 — 부작용 확인, 롤백</td></tr>
+        <tr><td class="date-col">05-26 22:01</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-orange">77.5%</td><td>31/40</td><td class="delta up">▲ +5.0%p</td><td class="desc">복합 질문 분리 검색 강화, no_result 키워드 보완</td></tr>
+        <tr class="milestone"><td class="date-col">05-26 22:07</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-orange">82.5%</td><td>33/40</td><td class="delta up">▲ +5.0%p</td><td class="desc"><strong>LLM 호출 2→1 통합 (intent+clarifying 병합 프롬프트).</strong> 번아웃·감정 표현 sensitive 오분류 수정, 단일 HR 키워드 clarifying 생략, 주식 질문 oos 예시 추가</td></tr>
+        <tr><td class="date-col">05-27 13:33</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-yellow">92.5%</td><td>37/40</td><td class="delta up">▲ +10%p</td><td class="desc">sensitive 우선순위 버그 수정, 프롬프트 rule 확장</td></tr>
+        <tr class="milestone"><td class="date-col">05-27 14:21</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta up">▲ +5.0%p</td><td class="desc"><strong>72.5% → 97.5% 달성. 5일 만에 +25%p.</strong> 복합 질문 sensitive 우선순위 버그 수정, 반차·경조사비 단일 키워드 clarifying 절대 금지 명시, no_result 키워드 보완</td></tr>
+        <tr><td class="date-col">06-04 17:38</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-orange">87%</td><td>87/100</td><td class="delta eq">— 회귀 측정</td><td class="desc">BM25 초기 구현 후 회귀 확인</td></tr>
+        <tr><td class="date-col">06-04 18:00</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-yellow">90%</td><td>90/100</td><td class="delta up">▲ +3%p</td><td class="desc">BM25 가중치 조정</td></tr>
+        <tr class="milestone"><td class="date-col">06-04 18:55</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">100%</td><td>100/100</td><td class="delta up">▲ +10%p</td><td class="desc"><strong>100/100 달성.</strong> no_result 판별 키워드 보완, company_info → RAG 라우팅 수정, latencyMs 실계산 적용, 줄바꿈 간격 조정</td></tr>
+        <tr><td class="date-col">06-04 20:07</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">99%</td><td>99/100</td><td class="delta eq">— 안정 확인</td><td class="desc">추가 개선 후 재측정. 99% 안정화</td></tr>
+        <tr><td class="date-col">06-04 17:28</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 안정 유지</td><td class="desc">100문항 개선 후 v1 회귀 확인. 97.5% 유지</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase-hd">
+    <h3>Phase 3 — 안정화 & 고난도 강화셋 도입</h3>
+    <span class="phase-badge ph3">2026-06-05 ~ 07-02</span>
+  </div>
+  <div class="phase-desc">
+    기존 평가셋 안정 유지 확인 후, 더 어려운 v2 강화셋 도입. BM25 하이브리드 검색 적용으로 고난도 케이스 정복. 총 <strong>16회</strong> 실험.
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>일시</th><th>평가</th><th>문항</th><th>정답률</th><th>Pass/Total</th><th>직전 대비</th><th>작업 내용</th>
+      </tr></thead>
+      <tbody>
+        <tr class="milestone"><td class="date-col">06-05 00:55</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">82.5%</td><td>33/40</td><td class="delta eq">— 새 평가셋</td><td class="desc"><strong>고난도 v2 강화셋 도입.</strong> 기존 v1 대비 모호한 질문 다수 포함</td></tr>
+        <tr><td class="date-col">06-05 01:29</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">82.5%</td><td>33/40</td><td class="delta eq">— 동일</td><td class="desc">no_result 키워드 추가 후 재측정 — 효과 미미</td></tr>
+        <tr><td class="date-col">06-05 01:33</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">85%</td><td>34/40</td><td class="delta up">▲ +2.5%p</td><td class="desc">카테고리 분류 수정</td></tr>
+        <tr><td class="date-col">06-12 15:52</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">85%</td><td>34/40</td><td class="delta eq">— 유지</td><td class="desc">Slack 알림 시스템 적용 후 회귀 확인</td></tr>
+        <tr><td class="date-col">06-12 16:01</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">85%</td><td>34/40</td><td class="delta eq">— 유지</td><td class="desc">company_info 멀티테넌트 버그 수정 후 회귀 확인</td></tr>
+        <tr><td class="date-col">06-18 11:33</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">85%</td><td>34/40</td><td class="delta eq">— BM25 Before</td><td class="desc"><strong>BM25 도입 전 베이스라인 측정</strong></td></tr>
+        <tr><td class="date-col">06-18 11:49</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">90%</td><td>36/40</td><td class="delta up">▲ +5%p</td><td class="desc">BM25Retriever + RRF(Reciprocal Rank Fusion)으로 벡터·키워드 결과 병합. company_code별 BM25 인덱스 캐시, 한국어 형태소 분석(kiwipiepy) 적용</td></tr>
+        <tr><td class="date-col">06-18 11:57</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">92.5%</td><td>37/40</td><td class="delta up">▲ +2.5%p</td><td class="desc">BM25 가중치 최적화</td></tr>
+        <tr><td class="date-col">06-18 12:07</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">92.5%</td><td>37/40</td><td class="delta eq">— 안정</td><td class="desc">top_k 파라미터 조정 후 재측정</td></tr>
+        <tr class="fail-row"><td class="date-col">06-18 12:16</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-blue">85%</td><td>34/40</td><td class="delta dn">▼ -7.5%p</td><td class="desc">검색 파라미터 실험 — 부작용 확인, 즉시 롤백</td></tr>
+        <tr><td class="date-col">06-18 12:53</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">92.5%</td><td>37/40</td><td class="delta up">▲ +7.5%p</td><td class="desc">롤백 후 최적 설정 재확인</td></tr>
+        <tr><td class="date-col">06-18 13:04</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">92.5%</td><td>37/40</td><td class="delta eq">— 안정</td><td class="desc">최종 설정 안정성 확인</td></tr>
+        <tr><td class="date-col">06-18 13:20</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">97%</td><td>97/100</td><td class="delta eq">— 회귀 확인</td><td class="desc">BM25 적용 후 100문항 회귀 테스트. 97% 유지</td></tr>
+        <tr><td class="date-col">06-18 13:46</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta up">▲ +1%p</td><td class="desc">소폭 조정 후 98% 안정화</td></tr>
+        <tr class="milestone"><td class="date-col">07-02 14:30</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 최종 안정</td><td class="desc"><strong>최종 확인.</strong> Self-Verifier(문서-질문 관련성 사전 검증으로 할루시네이션 차단) + LLM Judge(연차·급여·수습 등 고위험 질문 사후 품질 검증) 적용. 빈 담당자 자리 자동 치환</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 차트 -->
+  <div class="chart-card">
+    <div class="chart-title">E2E 정답률 전체 추이 — 세 가지 평가셋</div>
+    <div class="chart-wrap">
+      <canvas id="chart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     6. 트러블슈팅 기록
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">트러블슈팅 기록</div>
+  <div class="section-line"></div>
+
+  <!-- Bug 1: case_a 중복 -->
+  <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:20px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span style="background:#f472b620;color:#f472b6;border:1px solid #f472b640;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">BUG #1 · 2026-07-04</span>
+      <span style="font-size:14px;font-weight:700;color:#e2e8f0;">Case A 법령 안내 문구 중복 출력</span>
+      <span style="margin-left:auto;background:#34d39920;color:#34d399;border:1px solid #34d39940;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">FIXED</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px;color:#94a3b8;margin-bottom:14px;">
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">증상</div>
+        <div style="color:#e2e8f0;line-height:1.7;">"참고로 이 답변은 공통 법령 문서를 기준으로..." 안내 문구가 채팅 화면에 두 번 연속 출력됨. 회사 문서 없이 법령 문서만 히트된 경우(Case A)에서 재현.</div>
+      </div>
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">수정 파일</div>
+        <div style="font-family:monospace;color:#a78bfa;">ai/chains/rag_chain.py</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">fix/ai-case-a-duplicate 브랜치</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;">
+      <div style="background:#0f1624;border-radius:8px;padding:12px;">
+        <div style="color:#f472b6;font-weight:700;font-size:10px;margin-bottom:8px;">ROOT CAUSE</div>
+        <div style="color:#94a3b8;line-height:1.7;"><code style="color:#a78bfa;">case_a_msg</code>를 SSE delta로 yield(FE 실시간 수신) 하는 동시에 <code style="color:#a78bfa;">fixed</code>에 append → <code style="color:#a78bfa;">answer_completed.content</code>에 재포함. FE가 두 경로로 동일 문구를 중복 렌더링.</div>
+      </div>
+      <div style="background:#0f1624;border-radius:8px;padding:12px;">
+        <div style="color:#34d399;font-weight:700;font-size:10px;margin-bottom:8px;">FIX</div>
+        <div style="color:#94a3b8;line-height:1.7;">delta yield 제거 후 <strong style="color:#e2e8f0;"><code style="color:#a78bfa;">\x00</code> 스왑 방식</code></strong>으로 교체. <code style="color:#a78bfa;">fixed</code>에 append 후 <code style="color:#a78bfa;">yield "\x00" + fixed</code> → <code style="color:#a78bfa;">answer_completed.content</code>에만 한 번 포함.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bug 2: 월차 no_result 비결정성 -->
+  <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:20px 24px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span style="background:#fb923c20;color:#fb923c;border:1px solid #fb923c40;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">BUG #2 · 2026-07-04</span>
+      <span style="font-size:14px;font-weight:700;color:#e2e8f0;">동일 질문 no_result 비결정성 — 월차 / 연차 개념 불일치</span>
+      <span style="margin-left:auto;background:#34d39920;color:#34d399;border:1px solid #34d39940;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">FIXED</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px;color:#94a3b8;margin-bottom:14px;">
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">증상</div>
+        <div style="color:#e2e8f0;line-height:1.7;">"월차 안 쓰면 수당으로 받을 수 있나요?" 동일 질문이 첫 시도에는 <span style="color:#f472b6;">no_result</span>, 두 번째 시도에는 <span style="color:#34d399;">정상 답변</span>. Redis 캐시·검색 결과 모두 동일 — LLM 비결정성이 원인.</div>
+      </div>
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">수정 파일</div>
+        <div style="font-family:monospace;color:#a78bfa;">ai/utils/prompts.py</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">RAG 시스템 프롬프트 규칙 2개 추가</div>
+      </div>
+    </div>
+    <div style="background:#0f1624;border-radius:8px;padding:14px;font-size:12px;margin-bottom:12px;">
+      <div style="color:#fb923c;font-weight:700;font-size:10px;margin-bottom:10px;">ROOT CAUSE 분석 과정</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div style="border-left:2px solid #374151;padding-left:10px;">
+          <div style="color:#64748b;font-size:10px;font-weight:700;margin-bottom:4px;">가설 1 — 배제</div>
+          <div style="color:#94a3b8;line-height:1.6;">Redis 캐시 오염 → TTFT 2–3초로 실측, 매 호출마다 실제 LLM 호출 확인</div>
+        </div>
+        <div style="border-left:2px solid #374151;padding-left:10px;">
+          <div style="color:#64748b;font-size:10px;font-weight:700;margin-bottom:4px;">가설 2 — 배제</div>
+          <div style="color:#94a3b8;line-height:1.6;">대화 히스토리 기반 검색 편차 → 동일 4개 법령 문서 안정적 반환 확인</div>
+        </div>
+        <div style="border-left:2px solid #fb923c;padding-left:10px;">
+          <div style="color:#fb923c;font-size:10px;font-weight:700;margin-bottom:4px;">가설 3 — 원인 확정</div>
+          <div style="color:#94a3b8;line-height:1.6;"><strong style="color:#e2e8f0;">월차는 2003년 폐지.</strong> LLM이 검색된 "연차 유급휴가" 문서를 다른 개념으로 판단해 헷징 표현 생성 → <code style="color:#a78bfa;">_NO_ANSWER_KEYWORDS</code> "드리기 어렵" 매칭 → <code style="color:#a78bfa;">is_unanswered()</code> True → no_result 오분류</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#0f1624;border-radius:8px;padding:12px;font-size:12px;">
+      <div style="color:#34d399;font-weight:700;font-size:10px;margin-bottom:10px;">FIX — prompts.py RAG 시스템 프롬프트 규칙 2개 추가</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;color:#94a3b8;">
+        <div style="border-left:2px solid #34d399;padding-left:10px;line-height:1.7;">법령 문서가 있는 경우 <strong style="color:#e2e8f0;">"안내드리기 어렵습니다" 등 헷징 표현 절대 금지</strong> — 법령 조항 직접 인용 답변 강제</div>
+        <div style="border-left:2px solid #34d399;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">'월차' = 연차 유급휴가 (근로기준법 제60조)</strong> — 월차 질문 시 연차 유급휴가 문서 내용으로 답변</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">With Buddy AI · AI 기술 보고서 · 2026 · Phase 1~3 총 63회 측정</div>
+
+<script>
+new Chart(document.getElementById('chart'), {
+  type:'line',
+  data:{
+    datasets:[
+      {
+        label:'IN SCOPE / E2E v1 (40문항)',
+        data:[
+          {x:'2026-05-10T09:00',y:64},{x:'2026-05-10T18:00',y:98},
+          {x:'2026-05-22T10:24',y:72.5},{x:'2026-05-22T12:43',y:75},{x:'2026-05-22T13:22',y:72.5},
+          {x:'2026-05-26T22:01',y:77.5},{x:'2026-05-26T22:07',y:82.5},
+          {x:'2026-05-27T13:33',y:92.5},{x:'2026-05-27T14:21',y:97.5},
+          {x:'2026-06-04T17:28',y:97.5},{x:'2026-07-02T14:30',y:97.5}
+        ],
+        borderColor:'#34d399',backgroundColor:'rgba(52,211,153,0.06)',
+        borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#34d399',fill:true,tension:0.3
+      },
+      {
+        label:'E2E 100문항',
+        data:[
+          {x:'2026-05-12T13:29',y:98},
+          {x:'2026-06-04T17:38',y:87},{x:'2026-06-04T18:00',y:90},{x:'2026-06-04T18:55',y:100},{x:'2026-06-04T20:07',y:99},
+          {x:'2026-06-18T13:20',y:97},{x:'2026-06-18T13:46',y:98}
+        ],
+        borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',
+        borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#60a5fa',fill:true,tension:0.3
+      },
+      {
+        label:'v2 강화셋 (40문항, 고난도)',
+        data:[
+          {x:'2026-06-05T00:55',y:82.5},{x:'2026-06-05T01:29',y:82.5},{x:'2026-06-05T01:33',y:85},
+          {x:'2026-06-12T15:52',y:85},{x:'2026-06-12T16:01',y:85},
+          {x:'2026-06-18T11:33',y:85},{x:'2026-06-18T11:49',y:90},{x:'2026-06-18T11:57',y:92.5},
+          {x:'2026-06-18T12:07',y:92.5},{x:'2026-06-18T12:16',y:85},{x:'2026-06-18T12:53',y:92.5},{x:'2026-06-18T13:04',y:92.5}
+        ],
+        borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,0.05)',
+        borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#a78bfa',fill:true,tension:0.3
+      }
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{labels:{color:'#9ca3af',font:{size:12},boxWidth:12}},
+      tooltip:{
+        backgroundColor:'#0f1624',borderColor:'#1a2235',borderWidth:1,
+        titleColor:'#f1f5f9',bodyColor:'#9ca3af',
+        callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}
+      }
+    },
+    scales:{
+      x:{
+        type:'time',
+        time:{tooltipFormat:'MM/dd HH:mm',displayFormats:{day:'M/d',week:'M/d'}},
+        ticks:{color:'#374151',font:{size:10},maxTicksLimit:12},
+        grid:{color:'rgba(255,255,255,0.03)'}
+      },
+      y:{
+        min:55,max:105,
+        ticks:{color:'#374151',font:{size:11},callback:v=>v+'%'},
+        grid:{color:'rgba(255,255,255,0.03)'}
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
