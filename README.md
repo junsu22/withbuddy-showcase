@@ -147,6 +147,6 @@ SSE 스트리밍은 이미 나간 토큰을 회수할 수 없어서, 고위험 �
 
 <div align="center">
 
-**WithBuddy AI** · Built with ❤️ · 2025–2026
+**WithBuddy AI** · Built with ❤️ · 2026.03 – 2026.07
 
 </div>
