@@ -2,7 +2,7 @@
 
 # 🤝 WithBuddy AI
 
-### RAG-powered HR Assistant for Enterprise Onboarding
+### Enterprise AI Onboarding Assistant powered by LLM, RAG and Multi-Agent Architecture.
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-asyncio-009688?style=for-the-badge&logo=fastapi&logoColor=white)
@@ -112,7 +112,7 @@ User Question
 | **API Server** | FastAPI + asyncio |
 | **Caching** | Anthropic Prompt Caching · Redis |
 | **Evaluation** | RAGAS · E2E Python |
-| **Monitoring** | Prometheus · LangSmith |
+| **Monitoring** | LangSmith |
 | **Notification** | Slack SDK |
 
 ---
