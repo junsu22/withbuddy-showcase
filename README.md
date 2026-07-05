@@ -111,8 +111,8 @@ User Question
 | **Keyword Search** | BM25 + kiwipiepy (Korean NLP) |
 | **API Server** | FastAPI + asyncio |
 | **Caching** | Anthropic Prompt Caching · Redis |
-| **Evaluation** | RAGAS · LangSmith |
-| **Monitoring** | Prometheus |
+| **Evaluation** | RAGAS · E2E Python |
+| **Monitoring** | Prometheus · LangSmith |
 | **Notification** | Slack SDK |
 
 ---
