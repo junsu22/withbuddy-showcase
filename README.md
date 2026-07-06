@@ -83,7 +83,7 @@ User Question
 
 ## 👤 My Contributions
 
-> AI 파트 단독 수행
+> AI 파트 수행
 
 | 영역 | 내용 |
 |------|------|
@@ -93,7 +93,7 @@ User Question
 | **Async API** | FastAPI SSE 스트리밍 엔드포인트, 선행 버퍼 로직 |
 | **평가 시스템** | RAGAS 자동 평가, LangSmith 트레이싱, E2E 회귀 테스트 설계 |
 | **미답변 관리** | 감지 → 저장 → 군집화 → Slack 알림 → 관리자 루프 전체 |
-| **문서 인덱싱** | content_hash 변경 감지 기반 자동 재인덱싱, 버전 관리 |
+| **문서 인덱싱** | content_hash 변경 감지 기반 자동 재인덱싱 |
 
 ---
 
