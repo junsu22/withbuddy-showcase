@@ -672,7 +672,7 @@ tbody tr.fail-row td { opacity:.55; }
           borderColor:'#34d399',backgroundColor:g1,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
           pointBackgroundColor:'#34d399',pointBorderColor:'#0d1117',pointBorderWidth:2,
-          fill:true,tension:0.4
+          fill:true,tension:0.4,spanGaps:false
         },
         {
           label:'E2E 100문항',
@@ -684,7 +684,7 @@ tbody tr.fail-row td { opacity:.55; }
           borderColor:'#60a5fa',backgroundColor:g2,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
           pointBackgroundColor:'#60a5fa',pointBorderColor:'#0d1117',pointBorderWidth:2,
-          fill:true,tension:0.4
+          fill:true,tension:0.4,spanGaps:false
         },
         {
           label:'v2 강화셋 (40문항, 고난도)',
@@ -697,7 +697,7 @@ tbody tr.fail-row td { opacity:.55; }
           borderColor:'#a78bfa',backgroundColor:g3,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
           pointBackgroundColor:'#a78bfa',pointBorderColor:'#0d1117',pointBorderWidth:2,
-          fill:true,tension:0.4
+          fill:true,tension:0.4,spanGaps:false
         }
       ]
     },
@@ -715,6 +715,12 @@ tbody tr.fail-row td { opacity:.55; }
         tooltip:{
           backgroundColor:'#0d1829',borderColor:'#1e3a5f',borderWidth:1,
           titleColor:'#f1f5f9',bodyColor:'#94a3b8',padding:14,
+          filter:function(item){
+            var ds=item.chart.data.datasets[item.datasetIndex];
+            var hx=item.parsed.x;
+            var thr=3*24*60*60*1000;
+            return ds.data.some(function(d){return Math.abs(new Date(d.x).getTime()-hx)<thr;});
+          },
           callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}
         }
       },
