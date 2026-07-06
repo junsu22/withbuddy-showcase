@@ -10,7 +10,7 @@
 ![Claude](https://img.shields.io/badge/Claude-Haiku-F59E0B?style=for-the-badge)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-VectorDB-E11D48?style=for-the-badge)
 
-**임직원이 사내 규정·복지·인사 정책을 자연어로 물어보면, 관련 문서를 검색해 근거 있는 답변을 실시간으로 제공하는 AI 어시스턴트입니다.**
+**임직원이 사내 규정·복지·인사 정책을 자연어로 물어보면,**<br>**관련 문서를 검색해 근거 있는 답변을 실시간으로 제공하는 AI 어시스턴트입니다.**
 
 > 📌 This repository is a **portfolio showcase**, not the source code.
 
