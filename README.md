@@ -83,7 +83,7 @@ User Question
 
 ## 👤 My Contributions
 
-> AI 파트 전담 — 설계부터 구현까지 단독으로 진행
+> AI 파트 단독 수행
 
 | 영역 | 내용 |
 |------|------|
