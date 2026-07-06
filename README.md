@@ -34,18 +34,21 @@ User Question
      ▼
 [Multi-Agent Orchestrator]  ← LangGraph (Intent 분류)
      │
-     ├─ RAG ──────────────► [Hybrid Search]  ← BM25 + Vector (asyncio parallel)
-     │                            │
-     │                      [Claude Haiku]   ← SSE Streaming + Prompt Caching
-     │                            │
-     │                      [Quality Gate]   ← Self-Verifier + LLM Judge
-     │                            ├─ rag_answer ──► 응답 반환
-     │                            └─ no_result ───► [Agent Fallback] → 미답변 감지 → Slack 알림
+     ├─ rag / company_info ───► [Hybrid Search]  ← BM25 + Vector (asyncio parallel)
+     │                                │
+     │                          [Claude Haiku]   ← SSE Streaming + Prompt Caching
+     │                                │
+     │                          [Quality Gate]   ← Self-Verifier + LLM Judge
+     │                                ├─ rag_answer ──► 응답 반환
+     │                                └─ no_result ───► [Agent Fallback] → 미답변 감지 → Slack 알림
      │
-     ├─ chitchat ──────────► 일상 대화 처리
-     ├─ out_of_scope ──────► 범위 외 안내
-     ├─ sensitive ─────────► 민감 질문 필터
-     └─ clarifying ────────► 명확화 질문 요청
+     ├─ chitchat ──────────────► 일상 대화 처리
+     ├─ communication ─────────► 커뮤니케이션 안내
+     ├─ preboarding ───────────► 입사 전 안내
+     ├─ out_of_scope_internal ──► 사내 범위 외 안내
+     ├─ out_of_scope_external ──► 외부 범위 외 안내
+     ├─ sensitive ─────────────► 민감 질문 필터
+     └─ clarifying ────────────► 명확화 질문 요청
 ```
 
 ---
