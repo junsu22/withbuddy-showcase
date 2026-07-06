@@ -26,7 +26,7 @@
 
 ## 🗺 System Architecture
 
-> 📊 [AI 평가 리포트 보기](https://junsu22.github.io/withbuddy-showcase/withbuddy_ai_report.html)
+> 📊 [아키텍처 플로우 & AI 평가 리포트 보기](https://junsu22.github.io/withbuddy-showcase/withbuddy_ai_report.html)
 
 ```
 User Question
