@@ -62,6 +62,7 @@ body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Mal
 .tag-yellow { background:#2e2000; color:#fbbf24; }
 .tag-pink   { background:#2e0a18; color:#f472b6; }
 .tag-indigo { background:#0f1538; color:#818cf8; }
+.tag-orange { background:#2e1500; color:#fb923c; }
 
 .pipeline { display:flex; flex-direction:column; }
 .pipe-step { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:13px 16px; }
@@ -283,11 +284,12 @@ tbody tr.fail-row td { opacity:.55; }
         <div class="pipe-step">
           <div class="pipe-label">Step 4 · 답변 생성</div>
           <div class="pipe-title">Claude Haiku · SSE 스트리밍</div>
-          <div class="pipe-desc">검색된 문서 컨텍스트 기반 답변 생성<br>Prompt Caching — 시스템 프롬프트 재사용으로 입력 토큰 비용 절감<br>평균 TTFT <strong style="color:#a78bfa">0.75초</strong> · 평균 응답 3.4초</div>
+          <div class="pipe-desc">검색된 문서 컨텍스트 기반 답변 생성<br>Prompt Caching — 시스템 프롬프트 재사용으로 입력 토큰 비용 절감<br>평균 TTFT <strong style="color:#a78bfa">0.75초</strong> · 평균 응답 3.4초<br>Anthropic 장애 시 <strong style="color:#fb923c">GPT-4.1-mini 자동 폴백</strong> — max_retries=4 소진 후 전환, 복구 시 자동 복귀</div>
           <div class="pipe-tags">
             <span class="card-tag tag-purple">Claude Haiku</span>
             <span class="card-tag tag-purple">SSE 스트리밍</span>
             <span class="card-tag tag-purple">Prompt Caching</span>
+            <span class="card-tag tag-orange">GPT-4.1-mini Fallback</span>
           </div>
         </div>
         <div class="pipe-connector"></div>
