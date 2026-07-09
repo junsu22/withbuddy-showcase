@@ -833,5 +833,55 @@ tbody tr.fail-row td { opacity:.55; }
   </div>
 </section>
 
+<!-- ── 운영 지속성 ── -->
+<style>
+.cost-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+.cost-card { background:#1a2235; border:1px solid #243048; border-radius:12px; padding:16px 18px; }
+.cost-card .c-label { font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.cost-card .c-item { font-size:13px; font-weight:800; color:#e2e8f0; margin-bottom:4px; }
+.cost-card .c-desc { font-size:11px; color:#94a3b8; line-height:1.6; }
+.cost-card .c-price { font-size:18px; font-weight:900; margin-top:8px; }
+.sustain-note { background:linear-gradient(135deg,#1a2e1a,#1a2535); border:1px solid #2d4a3a; border-radius:12px; padding:16px 20px; font-size:12.5px; color:#94a3b8; line-height:1.8; }
+.sustain-note strong { color:#34d399; }
+</style>
+
+<section class="section">
+  <div class="section-title">Sustainability</div>
+  <div class="section-line"></div>
+
+  <div class="cost-grid">
+    <div class="cost-card" style="border-color:#1a2f45;">
+      <div class="c-label">서버 인프라</div>
+      <div class="c-item">OCI 프리티어</div>
+      <div class="c-desc">영구 무료 인스턴스<br>CPU 4코어 / 메모리 23GB</div>
+      <div class="c-price c-green">₩0 / 월</div>
+    </div>
+    <div class="cost-card" style="border-color:#2d3010;">
+      <div class="c-label">LLM API</div>
+      <div class="c-item">Claude API</div>
+      <div class="c-desc">사용량 기반 과금<br>Prompt Caching으로 비용 절감</div>
+      <div class="c-price c-yellow">사용한 만큼</div>
+    </div>
+    <div class="cost-card" style="border-color:#1a3d25;">
+      <div class="c-label">임베딩</div>
+      <div class="c-item">Google Embedding</div>
+      <div class="c-desc">문서 인덱싱 시에만 호출<br>운영 중 추가 비용 없음</div>
+      <div class="c-price c-green">인덱싱 시만</div>
+    </div>
+    <div class="cost-card" style="border-color:#1a2f45;">
+      <div class="c-label">벡터 DB / 캐시</div>
+      <div class="c-item">ChromaDB · Redis</div>
+      <div class="c-desc">서버 내 로컬 운영<br>외부 서비스 의존 없음</div>
+      <div class="c-price c-blue">₩0 / 월</div>
+    </div>
+  </div>
+
+  <div class="sustain-note">
+    <strong>리그 종료 후에도 지속 운영 가능한 구조입니다.</strong><br>
+    실사용자가 없을 때는 API 비용이 사실상 0이며, 소규모 실사용 환경에서도 월 몇 달러 수준으로 운영할 수 있도록 설계했습니다.
+    서버 인프라는 OCI 프리티어 영구 무료 인스턴스를 기반으로 하며, 벡터 DB와 캐시는 외부 유료 서비스 없이 서버 내에서 직접 운영합니다.
+  </div>
+</section>
+
 </body>
 </html>
