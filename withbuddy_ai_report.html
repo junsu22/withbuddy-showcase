@@ -217,7 +217,7 @@ tbody tr.fail-row td { opacity:.55; }
 
       <div class="card green">
         <div class="card-icon">💬</div>
-        <div class="card-title">임직원 질문</div>
+        <div class="card-title">신입사원 질문</div>
         <div class="card-desc">채팅 UI → SSE 스트리밍<br>멀티턴 대화 컨텍스트 유지</div>
         <span class="card-tag tag-green">실시간 스트리밍</span>
       </div>
@@ -339,6 +339,13 @@ tbody tr.fail-row td { opacity:.55; }
         <div class="card-title">관리자 인사이트</div>
         <div class="card-desc">미답변 질문 군집화 분석<br>TOP 5 보강 영역 AI 요약<br>문서 보강 우선순위 제안</div>
         <span class="card-tag tag-yellow">자동 감지·알림</span>
+      </div>
+
+      <div class="card blue">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">PRE 온보딩 퀵탭</div>
+        <div class="card-desc">입사 예정자(PRE 계정) 전용<br>첫 출근 시간·장소·준비물 즉시 답변<br>회사 전용 문서만 격리 검색</div>
+        <span class="card-tag tag-blue">account_status 기반 격리</span>
       </div>
     </div>
 
@@ -490,7 +497,7 @@ tbody tr.fail-row td { opacity:.55; }
   <!-- Phase 3 -->
   <div class="phase-hd">
     <h3>Phase 3 — 안정화 & 고난도 강화셋 도입</h3>
-    <span class="phase-badge ph3">2026-06-05 ~ 07-02</span>
+    <span class="phase-badge ph3">2026-06-05 ~ 07-09</span>
   </div>
   <div class="phase-desc">
     기존 평가셋 안정 유지 확인 후, 더 어려운 v2 강화셋 도입. BM25 하이브리드 검색 적용으로 고난도 케이스 정복. 총 <strong>16회</strong> 실험.
@@ -516,6 +523,7 @@ tbody tr.fail-row td { opacity:.55; }
         <tr><td class="date-col">06-18 13:20</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">97%</td><td>97/100</td><td class="delta eq">— 회귀 확인</td><td class="desc">BM25 적용 후 100문항 회귀 테스트. 97% 유지</td></tr>
         <tr><td class="date-col">06-18 13:46</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta up">▲ +1%p</td><td class="desc">소폭 조정 후 98% 안정화</td></tr>
         <tr class="milestone"><td class="date-col">07-02 14:30</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 최종 안정</td><td class="desc"><strong>최종 확인.</strong> Self-Verifier(문서-질문 관련성 사전 검증으로 할루시네이션 차단) + LLM Judge(연차·급여·수습 등 고위험 질문 사후 품질 검증) 적용. 빈 담당자 자리 자동 치환</td></tr>
+        <tr class="milestone"><td class="date-col">07-09</td><td><span class="tb tb-e2ev1">신규 기능</span></td><td>—</td><td class="score-col c-purple">—</td><td>—</td><td class="delta up">기능 확장</td><td class="desc"><strong>PRE 온보딩 퀵탭 답변 개선.</strong> 입사 예정자(PRE 계정) 전용 문서 격리 강화 — pre_onboarding_tag 기반 ChromaDB 인덱싱. BM25 동의어 확장(첫 출근·준비물·지참물·반차·반반차) → 동의어 불일치로 인한 no_result 오답 제거</td></tr>
       </tbody>
     </table>
   </div>
