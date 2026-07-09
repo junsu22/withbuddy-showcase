@@ -20,7 +20,7 @@
 
 ## 📸 Screenshots
 
-[![Chat](images/chat.png)](https://junsu22.github.io/withbuddy-showcase/)
+[![Chat](images/chat.png)](images/chat.png)
 
 ---
 
