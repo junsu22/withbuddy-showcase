@@ -987,6 +987,88 @@ fallback = ChatOpenAI(<span class="hl2">model="gpt-4.1-mini"</span>, ...)
 <span class="comment"># 한 줄로 멀티 프로바이더 완성</span>
 return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_handle=_ANTHROPIC_SERVER_ERRORS)</pre>
   </div>
+
+  <!-- 실제 답변 사례 -->
+  <style>
+  .qa-header { display:flex; align-items:center; gap:12px; margin:28px 0 16px; }
+  .qa-header-title { font-size:13px; font-weight:700; color:#e2e8f0; }
+  .qa-badge { display:inline-flex; align-items:center; gap:6px; background:#0a2e14; border:1px solid #166534; border-radius:20px; padding:4px 12px; font-size:11px; font-weight:700; color:#34d399; }
+  .qa-scrum { display:inline-block; background:#1a1035; border:1px solid #4c1d95; border-radius:4px; padding:2px 8px; font-size:10px; font-weight:700; color:#a78bfa; }
+  .qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .qa-card { background:#0d1117; border:1px solid #1e2d3d; border-radius:14px; padding:18px 20px; }
+  .qa-card-q { font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:10px; }
+  .qa-card-q span { color:#38bdf8; font-size:11px; font-weight:700; margin-right:8px; }
+  .qa-refs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .qa-ref { font-size:10px; background:#1a2235; border:1px solid #243048; border-radius:4px; padding:2px 7px; color:#64748b; }
+  .qa-ans { font-size:11.5px; color:#94a3b8; line-height:1.8; }
+  .qa-ans strong { color:#fbbf24; }
+  .qa-ans .hl-purple { color:#a78bfa; font-weight:700; }
+  .qa-ans .hl-green { color:#34d399; font-weight:700; }
+  .qa-ans .hl-red { color:#f87171; font-weight:700; }
+  .qa-ans ul { margin:6px 0 0 14px; }
+  .qa-ans ul li { margin-bottom:3px; }
+  </style>
+
+  <div class="qa-header">
+    <div class="qa-badge">✅ 4 / 4 정확</div>
+    <div class="qa-scrum">SCRUM-595</div>
+    <div class="qa-header-title">실제 폴백 모델 답변 검증 — 실사 문서 기반, 프롬프트 튜닝 없음</div>
+  </div>
+
+  <div class="qa-grid">
+    <div class="qa-card">
+      <div class="qa-card-q"><span>Q1</span>연차는 언제부터 발생하나요?</div>
+      <div class="qa-refs">
+        <span class="qa-ref">근로기준법.txt</span>
+        <span class="qa-ref">남녀고용평등.txt</span>
+      </div>
+      <div class="qa-ans">
+        근로기준법 <strong>제60조</strong>에 따르면 연차 유급휴가는 다음과 같이 발생해요.<br><br>
+        1. 1년간 <span class="hl-green">80% 이상 출근</span>한 근로자 → <span class="hl-green">15일</span> 유급휴가<br>
+        2. 근로 기간이 <span class="hl-purple">1년 미만</span>이거나 80% 미만 출근 → <span class="hl-purple">1개월 개근 시 1일</span>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-card-q"><span>Q2</span>수습기간 중 급여는 어떻게 되나요?</div>
+      <div class="qa-refs">
+        <span class="qa-ref">techco_ONBOARDING_v2_0.md</span>
+        <span class="qa-ref">techco_HR_규정_v4_2.txt</span>
+      </div>
+      <div class="qa-ans">
+        수습 기간은 입사일로부터 <span class="hl-purple">3개월</span>이며, 수습 기간 중에도 급여는 정규 급여의 <span class="hl-green">100%</span>를 지급합니다.<br><br>
+        감액이 전혀 없으니 안심하셔도 됩니다.
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-card-q"><span>Q3</span>퇴직금은 언제 받을 수 있나요?</div>
+      <div class="qa-refs">
+        <span class="qa-ref">퇴직급여법.txt</span>
+        <span class="qa-ref">근로기준법.txt</span>
+      </div>
+      <div class="qa-ans">
+        퇴직급여법 <strong>제9조</strong>에 따르면, 사용자는 근로자 퇴직 시 지급 사유 발생일로부터 <span class="hl-green">14일 이내</span>에 퇴직금을 지급해야 합니다.<br><br>
+        다만 특별한 사정이 있는 경우 당사자 간 합의로 지급기일을 연장할 수 있습니다.
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-card-q"><span>Q4</span>복지카드는 어떻게 사용하나요?</div>
+      <div class="qa-refs">
+        <span class="qa-ref">WELFARE.txt</span>
+        <span class="qa-ref">techco_ONBOARDING_v2_0.md</span>
+      </div>
+      <div class="qa-ans">
+        복지카드는 월 <span class="hl-green">20만원</span> 한도(식대 10만원 포함)로 제공되며, 도서·헬스장·문화생활·의료비 등에 사용 가능해요.
+        <ul>
+          <li><strong>신청:</strong> 입사 1개월 후 Flex &gt; 복지 메뉴</li>
+          <li><strong>수령:</strong> 영업일 기준 3~5일 이내 경영지원팀</li>
+          <li><span class="hl-red">주의:</span> 미사용 잔액 매월 말일 소멸 (이월 불가)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
 </body>
