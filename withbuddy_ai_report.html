@@ -1224,7 +1224,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
   <div class="ext-hero">
     <div class="ext-hero-label">Multi-Provider Architecture</div>
     <div class="ext-hero-title">모델이 죽어도 서비스는 살아있다</div>
-    <div class="ext-hero-sub">Anthropic 장애 감지 시 OpenAI로 자동 전환 — 코드 한 줄 없이</div>
+    <div class="ext-hero-sub">Anthropic 장애 감지 시 OpenAI로 자동 전환 — 추가 구현 없이</div>
   </div>
 
   <div class="ext-flow">
@@ -1255,9 +1255,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
       <div class="ext-point-desc"><code>get_llm()</code> 함수 한 곳만 바꾸면 전체 시스템에 즉시 반영. 체인·프롬프트 수정 불필요.</div>
     </div>
     <div class="ext-point blue">
-      <div class="ext-point-num">0초</div>
-      <div class="ext-point-title">장애 대응 시간</div>
-      <div class="ext-point-desc">LangChain <code>with_fallbacks()</code>로 장애 감지 즉시 자동 전환. 운영자 개입 없음.</div>
+      <div class="ext-point-num">자동</div>
+      <div class="ext-point-title">장애 전환 방식</div>
+      <div class="ext-point-desc">LangChain <code>with_fallbacks()</code>로 에러 감지 즉시 GPT로 전환. 운영자 개입 없음.</div>
     </div>
     <div class="ext-point green">
       <div class="ext-point-num">∞</div>
