@@ -1096,6 +1096,37 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
       </div>
     </div>
 
+    <!-- 카드 4 -->
+    <div class="pivot-card" style="grid-column:1/-1;">
+      <div class="pivot-card-header">
+        <div class="pivot-badge pivot-badge-try">④ Try</div>
+        <h4>최신 기술을 쌓으면<br>동의어 문제도 해결될 거라 기대했다</h4>
+      </div>
+      <div class="pivot-card-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
+        <div class="pivot-row" style="padding-right:20px;border-right:1px solid #1e2d42;">
+          <div class="pivot-row-icon wall">✕</div>
+          <div class="pivot-row-text">
+            <strong>막혀서 깨달은 것</strong><br>
+            BM25 하이브리드 검색을 도입하고, 최신 다국어 임베딩 모델(Gemini Embedding 2)로 교체했다. 그래도 "월급명세서 = 급여명세서 = 페이슬립" 같은 HR 동의어는 AI가 완벽하게 처리하지 못했다.
+          </div>
+        </div>
+        <div class="pivot-row" style="padding:0 20px;border-right:1px solid #1e2d42;">
+          <div class="pivot-row-icon pivot">→</div>
+          <div class="pivot-row-text">
+            <strong>전환</strong><br>
+            동의어 사전을 직접 만들어 넣었다가, 검증 불가로 당일 롤백. 결국 실제로 미스매치가 발견된 용어만 <code style="color:#a78bfa;">_QUERY_EXPANSIONS</code>에 케이스별로 수동 추가하는 방식으로 돌아왔다.
+          </div>
+        </div>
+        <div class="pivot-row" style="padding-left:20px;">
+          <div class="pivot-row-icon result">↑</div>
+          <div class="pivot-row-text">
+            <strong>깨달은 것</strong><br>
+            <strong style="color:#e2e8f0;">기술 스택이 도메인 지식을 대신해주지 않는다.</strong> 어떤 용어가 어떤 맥락에서 혼용되는지는 직접 발굴해야 했다. 좋은 도구를 쓰더라도 그 위에 쌓이는 건 결국 사람의 관찰이었다.
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
