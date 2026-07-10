@@ -216,6 +216,47 @@ tbody tr.fail-row td { opacity:.55; }
 </div>
 
 <!-- ══════════════════════════════════════════
+     2.5 기존 챗봇과 다른 점
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">기존 챗봇과 다른 점</div>
+  <div class="section-line"></div>
+
+  <p style="font-size:14px;color:#94a3b8;margin-bottom:28px;line-height:1.8;">HR 챗봇이 현장에서 신뢰를 잃는 순간은 공통적이다. 세 가지 문제를 기술 선택으로 직접 해결했다.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+    <div style="background:#1a2235;border:1px solid #243048;border-top:3px solid #f87171;border-radius:14px;padding:22px 24px;">
+      <div style="font-size:10px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">문제 01</div>
+      <div style="font-size:15px;font-weight:800;color:#e2e8f0;margin-bottom:8px;line-height:1.45;">틀린 답을<br>자신있게 말한다</div>
+      <div style="font-size:11.5px;color:#64748b;margin-bottom:18px;line-height:1.7;">모르는 질문에도 그럴듯한 답을 생성 → 직원이 잘못된 HR 정보로 의사결정</div>
+      <div style="height:1px;background:#1f2d42;margin-bottom:18px;"></div>
+      <div style="font-size:10px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">WithBuddy 선택</div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.8;">문서 근거 없으면 <strong style="color:#e2e8f0;">no_result 선언</strong><br>→ Slack 알림 → 관리자 문서 추가 → 다음 질문엔 답 가능<br><span style="color:#34d399;font-weight:700;font-size:11px;">자동 개선 루프</span></div>
+    </div>
+
+    <div style="background:#1a2235;border:1px solid #243048;border-top:3px solid #fbbf24;border-radius:14px;padding:22px 24px;">
+      <div style="font-size:10px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">문제 02</div>
+      <div style="font-size:15px;font-weight:800;color:#e2e8f0;margin-bottom:8px;line-height:1.45;">검색 한 번<br>실패하면 포기한다</div>
+      <div style="font-size:11.5px;color:#64748b;margin-bottom:18px;line-height:1.7;">단일 검색 방식 → 질문 표현이 조금만 달라도 관련 문서를 못 찾음</div>
+      <div style="height:1px;background:#1f2d42;margin-bottom:18px;"></div>
+      <div style="font-size:10px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">WithBuddy 선택</div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.8;"><strong style="color:#e2e8f0;">BM25 + 벡터 하이브리드</strong> 1차 검색<br>→ 실패 시 <strong style="color:#e2e8f0;">Agent 폴백</strong> 재시도<br><span style="color:#fbbf24;font-weight:700;font-size:11px;">검색 정확도 82.5% → 93.3%</span></div>
+    </div>
+
+    <div style="background:#1a2235;border:1px solid #243048;border-top:3px solid #60a5fa;border-radius:14px;padding:22px 24px;">
+      <div style="font-size:10px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">문제 03</div>
+      <div style="font-size:15px;font-weight:800;color:#e2e8f0;margin-bottom:8px;line-height:1.45;">생성된 답변을<br>검증하지 않는다</div>
+      <div style="font-size:11.5px;color:#64748b;margin-bottom:18px;line-height:1.7;">LLM 출력을 그대로 전달 → 문서와 무관한 내용이 섞여도 감지 불가</div>
+      <div style="height:1px;background:#1f2d42;margin-bottom:18px;"></div>
+      <div style="font-size:10px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">WithBuddy 선택</div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.8;"><strong style="color:#e2e8f0;">Self-Verifier</strong>가 답변 후 문서 근거 재검증<br>+ Prompt Caching으로 추가 비용 최소화<br><span style="color:#60a5fa;font-weight:700;font-size:11px;">질문당 ₩3~6원 유지</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
      3. 아키텍처 플로우
 ════════════════════════════════════════════ -->
 <div class="section">
