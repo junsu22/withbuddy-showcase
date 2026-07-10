@@ -196,9 +196,10 @@ tbody tr.fail-row td { opacity:.55; }
 
   <div class="kpi-row" style="margin-top:12px;grid-template-columns:repeat(3,1fr);">
     <div class="kpi">
-      <div class="kpi-label">첫 글자 응답 속도 (TTFT)</div>
+      <div class="kpi-label">첫 토큰 도착 속도 (TTFT)</div>
       <div class="kpi-value c-blue">0.75<span style="font-size:15px;font-weight:600;color:#64748b"> 초</span></div>
-      <div class="kpi-sub">유저가 스트리밍 첫 글자 받기까지 걸리는 시간 · 서버 정상 가동 기준 · LangSmith 실측 평균</div>
+      <div style="font-size:11px;font-weight:700;color:#60a5fa;margin-top:6px;line-height:1.6;">첫 글자까지 0.75초 → 이후 타이핑되듯 실시간 출력</div>
+      <div class="kpi-sub">전체 답변 완료 평균 3.4초 · 0.75초 = 유저 체감 대기시간 · LangSmith 실측 · 서버 정상 가동 기준</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">AI 비용 (질문 1건당 · 원화)</div>
