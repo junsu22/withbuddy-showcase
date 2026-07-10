@@ -830,7 +830,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
       <div style="color:#60a5fa;font-weight:700;font-size:10px;margin-bottom:8px;">완화 조치 (근본 해결 아님)</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;color:#94a3b8;">
         <div style="border-left:2px solid #60a5fa;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">RRF 가중치 조정</strong> — BM25가 미스매치 시 벡터 검색 결과가 순위를 보완하도록 벡터 비중 상향. 구어체 변형은 임베딩 모델이 의미 기반으로 처리하므로 대부분의 케이스 커버 가능.</div>
-        <div style="border-left:2px solid #60a5fa;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">근본 해결 방향</strong> — 입력 전처리 단계에서 구어체 정규화(어떡해→어떻게) 또는 HR 도메인 파인튜닝된 임베딩 모델 도입 필요. 현 서비스 규모에서는 RRF 완화로 충분하여 보류 중.</div>
+        <div style="border-left:2px solid #60a5fa;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">근본 해결 방향</strong> — 인덱싱·검색 전 용어 전처리 정규화 (월급명세서→급여명세서 등 통일). 현 서비스 규모에서는 RRF 완화 + 케이스별 <code style="color:#a78bfa;">_QUERY_EXPANSIONS</code> 추가로 충분하여 보류 중.</div>
       </div>
     </div>
   </div>
