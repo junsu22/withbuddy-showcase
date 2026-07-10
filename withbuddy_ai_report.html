@@ -819,63 +819,82 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
   const h = ctx.canvas.offsetHeight || 260;
 
   new Chart(ctx, {
-    type:'bar',
+    type:'scatter',
     data:{
-      labels:['5/10\n첫 측정','5/27\n브레이크스루','6/4\n최고점 달성','6/18\nv2 강화셋 도입','7/10\n최종 검증'],
       datasets:[
         {
           label:'E2E v1 (40문항)',
-          data:[64, 97.5, 97.5, null, 97.5],
-          backgroundColor:'rgba(52,211,153,0.75)',
-          borderColor:'#34d399',
-          borderWidth:1,borderRadius:5,order:1
+          data:[
+            {x:'2026-05-10',y:64},{x:'2026-05-10',y:98},
+            {x:'2026-05-22',y:72.5},{x:'2026-05-22',y:75},{x:'2026-05-22',y:72.5},
+            {x:'2026-05-26',y:77.5},{x:'2026-05-26',y:82.5},
+            {x:'2026-05-27',y:92.5},{x:'2026-05-27',y:97.5},
+            {x:'2026-06-04',y:97.5},
+            {x:'2026-07-02',y:97.5},
+            {x:'2026-07-10',y:97.5}
+          ],
+          backgroundColor:'rgba(52,211,153,0.85)',
+          pointRadius:7,pointHoverRadius:10
         },
         {
           label:'E2E 100문항',
-          data:[null, null, 100, 98, 98],
-          backgroundColor:'rgba(96,165,250,0.75)',
-          borderColor:'#60a5fa',
-          borderWidth:1,borderRadius:5,order:1
+          data:[
+            {x:'2026-05-12',y:98},
+            {x:'2026-06-04',y:87},{x:'2026-06-04',y:90},{x:'2026-06-04',y:100},{x:'2026-06-04',y:99},
+            {x:'2026-06-18',y:97},{x:'2026-06-18',y:98},
+            {x:'2026-07-10',y:98}
+          ],
+          backgroundColor:'rgba(96,165,250,0.85)',
+          pointRadius:7,pointHoverRadius:10
         },
         {
           label:'v2 강화셋 (고난도)',
-          data:[null, null, null, 92.5, 87.5],
-          backgroundColor:'rgba(167,139,250,0.75)',
-          borderColor:'#a78bfa',
-          borderWidth:1,borderRadius:5,order:1
+          data:[
+            {x:'2026-06-05',y:82.5},{x:'2026-06-05',y:82.5},{x:'2026-06-05',y:85},
+            {x:'2026-06-12',y:85},{x:'2026-06-12',y:85},
+            {x:'2026-06-18',y:85},{x:'2026-06-18',y:90},{x:'2026-06-18',y:92.5},
+            {x:'2026-06-18',y:92.5},{x:'2026-06-18',y:85},{x:'2026-06-18',y:92.5},{x:'2026-06-18',y:92.5},
+            {x:'2026-07-10',y:87.5}
+          ],
+          backgroundColor:'rgba(167,139,250,0.85)',
+          pointRadius:7,pointHoverRadius:10
         },
         {
           label:'목표 기준 (95%)',
-          data:[95, 95, 95, 95, 95],
           type:'line',
+          data:[{x:'2026-05-08',y:95},{x:'2026-07-12',y:95}],
           borderColor:'rgba(251,191,36,0.85)',
           borderWidth:2,
           borderDash:[6,4],
           pointRadius:0,
-          fill:false,
-          order:0
+          fill:false
         }
       ]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{
           labels:{
             color:'#cbd5e1',font:{size:12,weight:'500'},
-            boxWidth:16,boxHeight:10,
-            usePointStyle:false,padding:20
+            boxWidth:14,boxHeight:14,
+            usePointStyle:true,padding:20
           }
         },
         tooltip:{
           backgroundColor:'#0d1829',borderColor:'#1e3a5f',borderWidth:1,
           titleColor:'#f1f5f9',bodyColor:'#94a3b8',padding:14,
-          callbacks:{label:c=>c.parsed.y!=null?` ${c.dataset.label}: ${c.parsed.y}%`:null}
+          callbacks:{
+            title:c=>{const d=new Date(c[0].parsed.x);return `${d.getMonth()+1}/${d.getDate()}`;},
+            label:c=>` ${c.dataset.label}: ${c.parsed.y}%`
+          }
         }
       },
       scales:{
         x:{
+          type:'time',
+          time:{tooltipFormat:'M/d',displayFormats:{day:'M/d',week:'M/d'}},
+          min:'2026-05-08',max:'2026-07-12',
           ticks:{color:'#64748b',font:{size:10},maxTicksLimit:10},
           grid:{color:'rgba(255,255,255,0.06)'},
           border:{display:false}
