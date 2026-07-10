@@ -877,7 +877,13 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
         legend:{
           labels:{
             color:'#cbd5e1',font:{size:12,weight:'500'},
-            usePointStyle:false,boxWidth:24,boxHeight:3,padding:20
+            usePointStyle:false,boxWidth:24,boxHeight:3,padding:20,
+            generateLabels:function(chart){
+              const items=Chart.defaults.plugins.legend.labels.generateLabels(chart);
+              const t=items[items.length-1];
+              if(t){t.lineDash=[];t.fillStyle='rgba(251,191,36,0.75)';t.strokeStyle='rgba(251,191,36,0.75)';}
+              return items;
+            }
           }
         },
         tooltip:{
