@@ -259,7 +259,7 @@ tbody tr.fail-row td { opacity:.55; }
       <div style="font-size:11.5px;color:#64748b;margin-bottom:18px;line-height:1.7;">단일 LLM에만 의존 → 모델 API 장애 = 챗봇 전면 중단, 복구까지 대응 불가</div>
       <div style="height:1px;background:#1f2d42;margin-bottom:18px;"></div>
       <div style="font-size:10px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">WithBuddy 선택</div>
-      <div style="font-size:12px;color:#cbd5e1;line-height:1.8;"><strong style="color:#e2e8f0;">폴백 모델 자동 전환</strong>으로 주 모델 장애 시에도 서비스 연속성 유지<br><span style="color:#a78bfa;font-weight:700;font-size:11px;">단일 장애점 제거</span></div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.8;">매 요청마다 <strong style="color:#e2e8f0;">Claude Haiku 먼저 시도</strong> → 장애 시 <strong style="color:#e2e8f0;">GPT-4.1-mini 자동 전환</strong> → 다음 요청도 Haiku 먼저 재시도<br><span style="color:#a78bfa;font-weight:700;font-size:11px;">단일 장애점 제거 · 복구도 자동</span></div>
     </div>
 
     <div style="grid-column:1/-1;background:linear-gradient(135deg,#0f2820,#0f1e35);border:1px solid #1e4d35;border-top:3px solid #34d399;border-radius:14px;padding:28px 32px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;">
