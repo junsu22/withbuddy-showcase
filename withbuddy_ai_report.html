@@ -999,9 +999,13 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 <section class="section">
   <div class="section-title">막혔던 순간들</div>
   <div class="section-line"></div>
-  <p style="font-size:13px;color:#64748b;margin:0 0 24px;line-height:1.9;">
+  <p style="font-size:13px;color:#64748b;margin:0 0 16px;line-height:1.9;">
     가장 크게 배운 것은, AI 개발은 모델을 연결하는 기술이 아니라는 점이었다.<br>
     모든 가능성을 의심하고, 원인을 추적하며, 재발을 막기 위해 끊임없이 가설을 세우는 탐정의 일이었다.
+  </p>
+  <p style="font-size:13px;color:#64748b;margin:0 0 24px;line-height:1.9;">
+    AI 파트 단독 개발이었다. 기능을 만들고, 직접 테스트하고, 모니터링하고, 의도적으로 틀린 답변을 유도해 취약점을 찾고, 다시 고치는 사이클을 혼자 돌렸다.<br>
+    그 과정에서 느낀 건 두 가지였다. 하나는, API를 여러 개 붙인다고 에이전트가 되는 게 아니라는 것 — 소위 에이전트라 부를 수 있는 수준은 AI 단독으로는 도달할 수 없었다. 기획과 검증, UI/UX, 인프라, 데이터베이스 — 팀 전체가 함께 움직여야 했다. 다른 하나는, 개발자가 혼자 레드팀과 품질 검토를 감당하는 데는 한계가 있다는 것 — HR 도메인을 잘 아는 사람이 함께라면 놓치는 케이스를 더 빠르게 잡을 수 있겠다는 걸 실감했다.
   </p>
 
   <div class="pivot-grid">
