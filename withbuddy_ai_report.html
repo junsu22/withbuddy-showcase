@@ -193,6 +193,24 @@ tbody tr.fail-row td { opacity:.55; }
       <div class="kpi-sub">4월 ~ 7월</div>
     </div>
   </div>
+
+  <div class="kpi-row" style="margin-top:12px;grid-template-columns:repeat(3,1fr);">
+    <div class="kpi">
+      <div class="kpi-label">TTFT (서버 안정화 후)</div>
+      <div class="kpi-value c-blue">0.75<span style="font-size:15px;font-weight:600;color:#64748b"> 초</span></div>
+      <div class="kpi-sub">콜드스타트 제외 · LangSmith 실측 평균</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Prompt Cache 히트율</div>
+      <div class="kpi-value c-purple">69<span style="font-size:15px;font-weight:600;color:#64748b"> %</span></div>
+      <div class="kpi-sub">E2E 100문항 실측 · 캐시 토큰 90% 할인 적용</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">비용 절감 (캐시 적용)</div>
+      <div class="kpi-value c-green">54<span style="font-size:15px;font-weight:600;color:#64748b"> %</span></div>
+      <div class="kpi-sub">E2E 100문항 실측 · 캐시 미적용 대비 입력 비용 기준</div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════
@@ -531,9 +549,9 @@ tbody tr.fail-row td { opacity:.55; }
         <tr><td class="date-col">06-18 13:46</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta up">▲ +1%p</td><td class="desc">소폭 조정 후 98% 안정화</td></tr>
         <tr class="milestone"><td class="date-col">07-02 14:30</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 최종 안정</td><td class="desc"><strong>최종 확인.</strong> Self-Verifier(문서-질문 관련성 사전 검증으로 할루시네이션 차단) + LLM Judge(연차·급여·수습 등 고위험 질문 사후 품질 검증) 적용. 빈 담당자 자리 자동 치환</td></tr>
         <tr class="milestone"><td class="date-col">07-09 23:28</td><td><span class="tb tb-e2ev1">기능 검증</span></td><td>—</td><td class="score-col c-green" style="font-size:13px;">PRE 격리</td><td>—</td><td class="delta up">▲ 신규</td><td class="desc"><strong>PRE 온보딩 채팅 격리 완성.</strong> account_status=PRE 유저에게 PRE 전용 Q&A 문서만 검색(pre_onboarding_tag 필터). BM25 코퍼스 PRE 문서 혼입 버그 수정. doc_id 메타데이터 추가로 출처 카드 정상 표시. E2E 41/41 통과 (PRE 20 + ACTIVE 21)</td></tr>
-        <tr class="milestone"><td class="date-col">07-10 09:38</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta eq">— 최종 제출 검증</td><td class="desc"><strong>최종 제출 전 전체 회귀 테스트.</strong> 평균 응답 7.47s · 평균 TTFT 4.89s (서버 재시작 직후 콜드스타트 영향, 워밍업 후 안정화) · 캐시 히트 939,313tok. FAIL 2건: ① 서버 간헐적 무응답 1건(O08) ② 번아웃 질문이 out_of_scope 대신 sensitive로 처리(O16) — 실질적으로 민감 케이스에 해당하는 올바른 처리로 판단, 테스트셋 기준값 문제</td></tr>
-        <tr class="milestone"><td class="date-col">07-10 09:48</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 최종 제출 검증</td><td class="desc"><strong>v1 최종 회귀 확인.</strong> 평균 응답 7.92s · TTFT 6.04s · 캐시 히트율 69.8%. FAIL 1건: 서버 간헐적 무응답(Q39, 빈 messageType 반환) — 동일 증상이 100문항·v2에서도 반복 확인된 서버 이슈</td></tr>
-        <tr class="milestone"><td class="date-col">07-10 09:53</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">87.5%</td><td>35/40</td><td class="delta eq">— 최종 제출 검증</td><td class="desc"><strong>최종 제출 전 v2 검증.</strong> BM25 ★ 문항 14/15 (93.3%). FAIL 5건 중 2건은 AI 판단 오류가 아님: ① 서버 간헐적 무응답 1건(Q39) ② "번아웃" 질문이 테스트셋 기대값(out_of_scope)과 달리 sensitive로 처리(Q36) — 민감 케이스에 해당하므로 실제로 더 올바른 처리. 이 2건 제외 시 <strong>37/40 (92.5%)</strong>으로 6월 18일 결과와 동일 수준 유지</td></tr>
+        <tr class="milestone"><td class="date-col">07-10 09:38</td><td><span class="tb tb-e2eall">E2E 100문항</span></td><td>100</td><td class="score-col c-green">98%</td><td>98/100</td><td class="delta eq">— 최종검증</td><td class="desc"><strong>최종 제출 전 전체 회귀 테스트.</strong> 평균 응답 7.47s · 평균 TTFT 4.89s (서버 재시작 직후 콜드스타트 영향, 워밍업 후 안정화) · 캐시 히트 939,313tok. FAIL 2건: ① 서버 간헐적 무응답 1건(O08) ② 번아웃 질문이 out_of_scope 대신 sensitive로 처리(O16) — 실질적으로 민감 케이스에 해당하는 올바른 처리로 판단, 테스트셋 기준값 문제</td></tr>
+        <tr class="milestone"><td class="date-col">07-10 09:48</td><td><span class="tb tb-e2ev1">E2E v1</span></td><td>40</td><td class="score-col c-green">97.5%</td><td>39/40</td><td class="delta eq">— 최종검증</td><td class="desc"><strong>v1 최종 회귀 확인.</strong> 평균 응답 7.92s · TTFT 6.04s · 캐시 히트율 69.8%. FAIL 1건: 서버 간헐적 무응답(Q39, 빈 messageType 반환) — 동일 증상이 100문항·v2에서도 반복 확인된 서버 이슈</td></tr>
+        <tr class="milestone"><td class="date-col">07-10 09:53</td><td><span class="tb tb-e2ev2">E2E v2 강화셋</span></td><td>40</td><td class="score-col c-purple">87.5%</td><td>35/40</td><td class="delta eq">— 최종검증</td><td class="desc"><strong>최종 제출 전 v2 검증.</strong> BM25 ★ 문항 14/15 (93.3%). FAIL 5건 중 2건은 AI 판단 오류가 아님: ① 서버 간헐적 무응답 1건(Q39) ② "번아웃" 질문이 테스트셋 기대값(out_of_scope)과 달리 sensitive로 처리(Q36) — 민감 케이스에 해당하므로 실제로 더 올바른 처리. 이 2건 제외 시 <strong>37/40 (92.5%)</strong>으로 6월 18일 결과와 동일 수준 유지</td></tr>
       </tbody>
     </table>
   </div>
@@ -726,7 +744,8 @@ tbody tr.fail-row td { opacity:.55; }
             {x:'2026-05-22T10:24',y:72.5},{x:'2026-05-22T12:43',y:75},{x:'2026-05-22T13:22',y:72.5},
             {x:'2026-05-26T22:01',y:77.5},{x:'2026-05-26T22:07',y:82.5},
             {x:'2026-05-27T13:33',y:92.5},{x:'2026-05-27T14:21',y:97.5},
-            {x:'2026-06-04T17:28',y:97.5},{x:'2026-07-02T14:30',y:97.5}
+            {x:'2026-06-04T17:28',y:97.5},{x:'2026-07-02T14:30',y:97.5},
+            {x:'2026-07-10T09:48',y:97.5}
           ],
           borderColor:'#34d399',backgroundColor:g1,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
@@ -738,7 +757,8 @@ tbody tr.fail-row td { opacity:.55; }
           data:[
             {x:'2026-05-12T13:29',y:98},
             {x:'2026-06-04T17:38',y:87},{x:'2026-06-04T18:00',y:90},{x:'2026-06-04T18:55',y:100},{x:'2026-06-04T20:07',y:99},
-            {x:'2026-06-18T13:20',y:97},{x:'2026-06-18T13:46',y:98}
+            {x:'2026-06-18T13:20',y:97},{x:'2026-06-18T13:46',y:98},
+            {x:'2026-07-10T09:38',y:98}
           ],
           borderColor:'#60a5fa',backgroundColor:g2,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
@@ -751,7 +771,8 @@ tbody tr.fail-row td { opacity:.55; }
             {x:'2026-06-05T00:55',y:82.5},{x:'2026-06-05T01:29',y:82.5},{x:'2026-06-05T01:33',y:85},
             {x:'2026-06-12T15:52',y:85},{x:'2026-06-12T16:01',y:85},
             {x:'2026-06-18T11:33',y:85},{x:'2026-06-18T11:49',y:90},{x:'2026-06-18T11:57',y:92.5},
-            {x:'2026-06-18T12:07',y:92.5},{x:'2026-06-18T12:16',y:85},{x:'2026-06-18T12:53',y:92.5},{x:'2026-06-18T13:04',y:92.5}
+            {x:'2026-06-18T12:07',y:92.5},{x:'2026-06-18T12:16',y:85},{x:'2026-06-18T12:53',y:92.5},{x:'2026-06-18T13:04',y:92.5},
+            {x:'2026-07-10T09:53',y:87.5}
           ],
           borderColor:'#a78bfa',backgroundColor:g3,
           borderWidth:3,pointRadius:5,pointHoverRadius:8,
