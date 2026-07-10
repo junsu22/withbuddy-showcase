@@ -809,6 +809,58 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     </div>
   </div>
 
+  <!-- BM25 한국어 구어체 토큰 미스매치 -->
+  <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:20px 24px;margin-top:16px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span style="background:#60a5fa20;color:#60a5fa;border:1px solid #60a5fa40;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">INSIGHT · 2026-06~</span>
+      <span style="font-size:14px;font-weight:700;color:#e2e8f0;">BM25 한국어 구어체 토큰 미스매치</span>
+      <span style="margin-left:auto;background:#fbbf2420;color:#fbbf24;border:1px solid #fbbf2440;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">MITIGATED</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px;color:#94a3b8;margin-bottom:14px;">
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">현상</div>
+        <div style="color:#e2e8f0;line-height:1.7;">"급여명세서 어떻게 봐요?" · "월급명세서 확인하고 싶어요" · "페이슬립 어디서 봐요?" — 같은 개념을 다르게 표현한 단어들이 BM25에서 별개의 토큰으로 처리됨. 문서에 "급여명세서"로 저장돼 있으면 "월급명세서"로 검색 시 히트 누락 발생. <strong>동일한 의미라도 표현이 다르면 BM25는 찾지 못하는</strong> 구조적 한계.</div>
+      </div>
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">근본 원인</div>
+        <div style="color:#e2e8f0;line-height:1.7;">BM25는 형태소 단위 exact 매칭. kiwipiepy가 비표준 철자(어떡해, 어케)를 표준 표현과 다른 형태소로 분석해 인덱스 미스매치. <strong>벡터 검색은 의미 유사도 기반이라 이 문제가 없지만 BM25는 어형 변화에 취약</strong>.</div>
+      </div>
+    </div>
+    <div style="background:#0f1624;border-radius:8px;padding:12px;font-size:12px;">
+      <div style="color:#60a5fa;font-weight:700;font-size:10px;margin-bottom:8px;">완화 조치 (근본 해결 아님)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;color:#94a3b8;">
+        <div style="border-left:2px solid #60a5fa;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">RRF 가중치 조정</strong> — BM25가 미스매치 시 벡터 검색 결과가 순위를 보완하도록 벡터 비중 상향. 구어체 변형은 임베딩 모델이 의미 기반으로 처리하므로 대부분의 케이스 커버 가능.</div>
+        <div style="border-left:2px solid #60a5fa;padding-left:10px;line-height:1.7;"><strong style="color:#e2e8f0;">근본 해결 방향</strong> — 입력 전처리 단계에서 구어체 정규화(어떡해→어떻게) 또는 HR 도메인 파인튜닝된 임베딩 모델 도입 필요. 현 서비스 규모에서는 RRF 완화로 충분하여 보류 중.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 동의어 사전 도입 시도 → 당일 롤백 -->
+  <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:20px 24px;margin-top:16px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span style="background:#f472b620;color:#f472b6;border:1px solid #f472b640;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">EXPERIMENT · 2026-07-06</span>
+      <span style="font-size:14px;font-weight:700;color:#e2e8f0;">동의어 사전(_SYNONYMS) 도입 → 당일 롤백</span>
+      <span style="margin-left:auto;background:#64748b20;color:#94a3b8;border:1px solid #64748b40;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;">REVERTED</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px;color:#94a3b8;margin-bottom:14px;">
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">배경 및 시도</div>
+        <div style="color:#e2e8f0;line-height:1.7;">급여명세서 검색 개선 작업 직후, BM25 토큰 미스매치의 근본 해결책으로 HR 용어 동의어 사전 도입 시도. <code style="color:#a78bfa;">retriever.py</code>에 <code style="color:#a78bfa;">_SYNONYMS</code> 딕셔너리 추가 (연차·휴가·급여 등 40개+ HR 용어 매핑). <code style="color:#a78bfa;">_expand_query()</code>로 BM25 검색 시 동의어를 쿼리에 자동 주입하는 방식.</div>
+      </div>
+      <div>
+        <div style="color:#64748b;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">제거 이유</div>
+        <div style="color:#e2e8f0;line-height:1.7;">40개+ 용어 전체에 대해 <strong>동의어 확장이 기존 답변에 미치는 영향을 검증하는 것이 현실적으로 불가</strong>. 어떤 질문에서 어떤 동의어가 의도치 않게 확장되어 할루시네이션이나 오답을 유발할지 E2E 테스트로 모두 커버할 수 없었음. 검증 불가 상태로 운영하는 것보다 제거가 안전하다고 판단.</div>
+      </div>
+    </div>
+    <div style="background:#0f1624;border-radius:8px;padding:12px;font-size:12px;">
+      <div style="color:#f472b6;font-weight:700;font-size:10px;margin-bottom:8px;">롤백 후 채택한 방향 — 케이스별 수동 대응</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;color:#94a3b8;">
+        <div style="border-left:2px solid #f472b6;padding-left:10px;line-height:1.7;">동의어 사전 전체 제거 후, 실제로 미스매치가 발견된 용어만 <strong style="color:#e2e8f0;"><code style="color:#a78bfa;">_QUERY_EXPANSIONS</code>에 케이스별로 추가</strong>하는 방식 유지. 이미 급여명세서·임금명세서 등 확인된 케이스는 이 방식으로 처리 중.</div>
+        <div style="border-left:2px solid #f472b6;padding-left:10px;line-height:1.7;">HR 핵심 용어 전체를 선제적으로 커버하려다 검증 범위가 폭발한 케이스. <strong style="color:#e2e8f0;">"수동 발견 → 핀포인트 추가"</strong>가 "전체 매핑 → 영향 불명"보다 안전하다는 교훈.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="footer">With Buddy AI · AI 기술 보고서 · 2026 · Phase 1~3 총 70회 측정</div>
