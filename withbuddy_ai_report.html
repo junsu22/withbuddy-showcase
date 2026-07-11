@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:120px 56px 64px; min-width:960px; line-height:1.7; }
+body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:72px 48px 80px 248px; min-width:1060px; line-height:1.7; }
 
 /* ── 공통 ── */
 .section { margin-bottom:88px; }
@@ -137,10 +137,14 @@ tbody tr.fail-row td { opacity:.55; }
 .acc-toggle-inner { display:flex; flex-direction:column; gap:4px; }
 .acc-toggle-meta { font-size:11px; color:#4a5a70; font-weight:400; text-transform:none; letter-spacing:0; }
 .acc-arrow { font-size:12px; color:#4a5a70; flex-shrink:0; margin-left:12px; }
+.phase-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.phase-tab { cursor:pointer; padding:6px 18px; border-radius:20px; font-size:12px; font-weight:700; border:1px solid #243048; color:#64748b; background:#1a2235; transition:all 0.15s; letter-spacing:.04em; }
+.phase-tab.active { background:#3b82f6; border-color:#3b82f6; color:#fff; }
+.phase-tab:hover:not(.active) { border-color:#60a5fa; color:#93c5fd; }
 
 /* ── Sticky header ── */
 html{scroll-behavior:smooth;}
-.sticky-header{position:fixed;top:0;left:0;right:0;height:48px;background:#0f1623;border-bottom:1px solid #1a2235;display:flex;align-items:center;justify-content:space-between;padding:0 56px;z-index:1000;opacity:0;transform:translateY(-100%);transition:opacity 0.3s,transform 0.3s;}
+.sticky-header{position:fixed;top:0;left:200px;right:0;height:48px;background:#0f1623;border-bottom:1px solid #1a2235;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:1000;opacity:0;transform:translateY(-100%);transition:opacity 0.3s,transform 0.3s;}
 .sticky-header.visible{opacity:1;transform:translateY(0);}
 .header-left{display:flex;align-items:center;gap:10px;}
 .header-logo{width:28px;height:28px;background:linear-gradient(135deg,#60a5fa,#a78bfa);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0;}
@@ -152,16 +156,51 @@ html{scroll-behavior:smooth;}
 .header-btn.top-btn{background:transparent;border-color:#1a2235;color:#64748b;}
 .header-btn.top-btn:hover{color:#e2e8f0;border-color:#243048;}
 
-/* ── Right nav ── */
-.right-nav{position:fixed;right:24px;top:50%;transform:translateY(-50%);width:160px;z-index:900;display:none;}
-@media(min-width:1300px){.right-nav{display:block;}}
-.right-nav ul{list-style:none;}
-.right-nav ul li a{display:block;padding:5px 10px;font-size:11px;color:#4a5a70;border-left:2px solid #1a2235;text-decoration:none;transition:color 0.2s,border-color 0.2s;margin-bottom:2px;}
-.right-nav ul li a:hover,.right-nav ul li a.active{color:#60a5fa;border-left-color:#60a5fa;}
+/* ── Left nav ── */
+.left-nav{position:fixed;left:0;top:0;bottom:0;width:200px;background:#0d121e;border-right:1px solid #1a2235;z-index:999;display:flex;flex-direction:column;overflow-y:auto;}
+.left-nav-brand{height:48px;display:flex;align-items:center;gap:10px;padding:0 18px;border-bottom:1px solid #1a2235;flex-shrink:0;}
+.left-nav-logo{width:26px;height:26px;background:linear-gradient(135deg,#60a5fa,#a78bfa);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;flex-shrink:0;}
+.left-nav-title{font-size:12px;font-weight:700;color:#e2e8f0;}
+.left-nav-sub{font-size:10px;color:#4a5a70;}
+.left-nav-menu{padding:12px 0;flex:1;}
+.left-nav-item{display:flex;align-items:center;gap:9px;padding:8px 18px;font-size:11px;color:#4a5a70;text-decoration:none;border-left:2px solid transparent;transition:all 0.15s;}
+.left-nav-item:hover,.left-nav-item.active{color:#60a5fa;border-left-color:#60a5fa;background:#111d2e;}
+.left-nav-num{font-size:10px;color:#2a3a52;font-family:monospace;flex-shrink:0;min-width:16px;}
+.left-nav-footer{padding:14px 18px;border-top:1px solid #1a2235;font-size:10px;color:#2a3a52;line-height:1.6;}
 
 /* ── Fade-in ── */
 .fade-in{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ── Hero ── */
+.hero-badge{display:inline-block;background:#1a2e4a;color:#60a5fa;font-size:11px;font-weight:700;letter-spacing:.08em;padding:4px 18px;border-radius:20px;border:1px solid #1e3a5a;margin-bottom:22px;}
+.hero-h1{font-size:48px;font-weight:900;color:#fff;letter-spacing:-.025em;line-height:1.08;margin-bottom:14px;}
+.hero-sub{font-size:15px;color:#64748b;line-height:1.8;margin-bottom:34px;}
+.tech-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.tc{display:inline-flex;align-items:center;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.03em;border:1px solid transparent;}
+.tc-blue{background:#1c3051;color:#60a5fa;border-color:#1e3a5a;}
+.tc-green{background:#162c1e;color:#34d399;border-color:#1a3322;}
+.tc-purple{background:#281c47;color:#a78bfa;border-color:#2d2057;}
+.tc-orange{background:#321c00;color:#fb923c;border-color:#3a2000;}
+.tc-teal{background:#003333;color:#39d3bb;border-color:#003d3d;}
+.tc-gray{background:#1c2128;color:#8b949e;border-color:#30363d;}
+
+/* ── Section heading (non-accordion) ── */
+.section-title:not(.acc-toggle){font-size:24px;font-weight:800;color:#fff;text-transform:none;letter-spacing:-.01em;margin-bottom:6px;}
+.section-eyebrow{font-size:11px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+
+/* ── KPI card polish ── */
+.kpi{position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.45);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-row:not(.kpi-row-2) .kpi:nth-child(1)::before{background:#f472b6;}
+.kpi-row:not(.kpi-row-2) .kpi:nth-child(2)::before{background:#fb923c;}
+.kpi-row:not(.kpi-row-2) .kpi:nth-child(3)::before{background:#34d399;}
+.kpi-row:not(.kpi-row-2) .kpi:nth-child(4)::before{background:#60a5fa;}
+.kpi-row:not(.kpi-row-2) .kpi:nth-child(5)::before{background:#a78bfa;}
+.kpi-row-2 .kpi:nth-child(1)::before{background:#60a5fa;}
+.kpi-row-2 .kpi:nth-child(2)::before{background:#fbbf24;}
+.kpi-row-2 .kpi:nth-child(3)::before{background:#34d399;}
 </style>
 </head>
 <body>
@@ -178,27 +217,46 @@ html{scroll-behavior:smooth;}
   </div>
 </div>
 
-<nav class="right-nav" id="rightNav">
-  <ul>
-    <li><a href="#kpi">핵심 성과</a></li>
-    <li><a href="#arch">아키텍처</a></li>
-    <li><a href="#monitoring">모니터링</a></li>
-    <li><a href="#devnote">개발 노트</a></li>
-    <li><a href="#iter">정확도 이력</a></li>
-    <li><a href="#troubleshoot">트러블슈팅</a></li>
-    <li><a href="#retrospective">막혔던 순간들</a></li>
-    <li><a href="#roadmap">고도화 방향</a></li>
-    <li><a href="#sustain">지속 가능성</a></li>
-    <li><a href="#scale">확장 가능성</a></li>
-  </ul>
+<nav class="left-nav" id="leftNav">
+  <div class="left-nav-brand">
+    <div class="left-nav-logo">W</div>
+    <div>
+      <div class="left-nav-title">With Buddy AI</div>
+      <div class="left-nav-sub">기술 보고서</div>
+    </div>
+  </div>
+  <div class="left-nav-menu">
+    <a class="left-nav-item" href="#kpi"><span class="left-nav-num">01</span>핵심 성과</a>
+    <a class="left-nav-item" href="#arch"><span class="left-nav-num">02</span>아키텍처</a>
+    <a class="left-nav-item" href="#monitoring"><span class="left-nav-num">03</span>모니터링</a>
+    <a class="left-nav-item" href="#devnote"><span class="left-nav-num">04</span>개발 노트</a>
+    <a class="left-nav-item" href="#iter"><span class="left-nav-num">05</span>정확도 이력</a>
+    <a class="left-nav-item" href="#troubleshoot"><span class="left-nav-num">06</span>트러블슈팅</a>
+    <a class="left-nav-item" href="#retrospective"><span class="left-nav-num">07</span>막혔던 순간</a>
+    <a class="left-nav-item" href="#roadmap"><span class="left-nav-num">08</span>고도화 방향</a>
+    <a class="left-nav-item" href="#sustain"><span class="left-nav-num">09</span>지속 가능성</a>
+    <a class="left-nav-item" href="#scale"><span class="left-nav-num">10</span>확장 가능성</a>
+  </div>
+  <div class="left-nav-footer">2026 · AI 단독 개발</div>
 </nav>
 
 <!-- ══════════════════════════════════════════
      1. 커버
 ════════════════════════════════════════════ -->
 <div class="cover">
-  <h1>With Buddy AI<br>기술 보고서</h1>
-  <p class="tagline">HR 질문에 문서 기반으로 즉시 답변하는 AI 어시스턴트 · 2026</p>
+  <div style="text-align:center;padding:56px 0 52px;border-bottom:1px solid #1a2235;margin-bottom:48px;">
+    <div class="hero-badge">HR RAG Assistant · 1인 개발 · 2026</div>
+    <h1 class="hero-h1">With Buddy AI</h1>
+    <p class="hero-sub">수습사원의 HR 질문에 사내 문서 기반으로 즉시 답변하는 RAG 어시스턴트.<br>70회 실험을 거쳐 E2E 정확도 97.5%를 달성했습니다.</p>
+    <div class="tech-row">
+      <span class="tc tc-purple">Claude Haiku</span>
+      <span class="tc tc-blue">LangChain · LangGraph</span>
+      <span class="tc tc-green">FastAPI</span>
+      <span class="tc tc-orange">ChromaDB</span>
+      <span class="tc tc-teal">BM25 Hybrid</span>
+      <span class="tc tc-gray">Prompt Caching</span>
+    </div>
+  </div>
 
   <div class="cover-grid">
     <div class="cover-card">
@@ -260,7 +318,7 @@ html{scroll-behavior:smooth;}
     </div>
   </div>
 
-  <div class="kpi-row" style="margin-top:12px;grid-template-columns:repeat(3,1fr);">
+  <div class="kpi-row kpi-row-2" style="margin-top:12px;grid-template-columns:repeat(3,1fr);">
     <div class="kpi">
       <div class="kpi-label">첫 토큰 도착 속도 (TTFT)</div>
       <div class="kpi-value c-blue">0.75<span style="font-size:15px;font-weight:600;color:#64748b"> 초</span></div>
@@ -586,7 +644,14 @@ html{scroll-behavior:smooth;}
     </div>
   </div>
 
+  <div class="phase-tabs">
+    <button class="phase-tab active" data-target="1">Phase 1</button>
+    <button class="phase-tab" data-target="2">Phase 2</button>
+    <button class="phase-tab" data-target="3">Phase 3</button>
+  </div>
+
   <!-- Phase 1 -->
+  <div class="phase-panel" data-phase="1">
   <div class="phase-hd">
     <h3>Phase 1 — RAG 품질 고도화</h3>
     <span class="phase-badge ph1">2026-04-16 ~ 04-30</span>
@@ -634,8 +699,10 @@ html{scroll-behavior:smooth;}
       </tbody>
     </table>
   </div>
+  </div><!-- /phase-panel 1 -->
 
   <!-- Phase 2 -->
+  <div class="phase-panel" data-phase="2" style="display:none">
   <div class="phase-hd">
     <h3>Phase 2 — E2E 정확도 집중 개선</h3>
     <span class="phase-badge ph2">2026-05-10 ~ 06-04</span>
@@ -669,8 +736,10 @@ html{scroll-behavior:smooth;}
       </tbody>
     </table>
   </div>
+  </div><!-- /phase-panel 2 -->
 
   <!-- Phase 3 -->
+  <div class="phase-panel" data-phase="3" style="display:none">
   <div class="phase-hd">
     <h3>Phase 3 — 안정화 & 고난도 강화셋 도입</h3>
     <span class="phase-badge ph3">2026-06-05 ~ 07-10</span>
@@ -711,6 +780,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
       </tbody>
     </table>
   </div>
+  </div><!-- /phase-panel 3 -->
 
   <!-- 차트 -->
   <div class="chart-card">
@@ -1529,9 +1599,9 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
   });
 })();
 
-// Right nav active highlight
+// Left nav active highlight
 (function(){
-  var navLinks = document.querySelectorAll('.right-nav a');
+  var navLinks = document.querySelectorAll('.left-nav-item');
   var sections = Array.from(navLinks).map(function(a){
     return document.querySelector(a.getAttribute('href'));
   }).filter(Boolean);
@@ -1540,11 +1610,11 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
     entries.forEach(function(entry){
       if(entry.isIntersecting){
         navLinks.forEach(function(a){ a.classList.remove('active'); });
-        var active = document.querySelector('.right-nav a[href="#'+entry.target.id+'"]');
+        var active = document.querySelector('.left-nav-item[href="#'+entry.target.id+'"]');
         if(active) active.classList.add('active');
       }
     });
-  }, {rootMargin: '-30% 0px -60% 0px'});
+  }, {rootMargin: '-20% 0px -70% 0px'});
 
   sections.forEach(function(s){ observer.observe(s); });
 })();
@@ -1563,6 +1633,17 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
 
 <script>
 window.addEventListener('load', function() {
+  document.querySelectorAll('.phase-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = this.getAttribute('data-target');
+      this.closest('.phase-tabs').querySelectorAll('.phase-tab').forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelectorAll('.phase-panel').forEach(function(panel) {
+        panel.style.display = panel.getAttribute('data-phase') === target ? '' : 'none';
+      });
+    });
+  });
+
   document.querySelectorAll('.acc-toggle').forEach(function(title) {
     var section = title.parentElement;
     var body = section.querySelector('.acc-body');
