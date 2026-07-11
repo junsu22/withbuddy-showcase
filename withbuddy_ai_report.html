@@ -229,13 +229,12 @@ html{scroll-behavior:smooth;}
     <a class="left-nav-item" href="#kpi"><span class="left-nav-num">01</span>핵심 성과</a>
     <a class="left-nav-item" href="#arch"><span class="left-nav-num">02</span>아키텍처</a>
     <a class="left-nav-item" href="#monitoring"><span class="left-nav-num">03</span>모니터링</a>
-    <a class="left-nav-item" href="#devnote"><span class="left-nav-num">04</span>개발 노트</a>
-    <a class="left-nav-item" href="#iter"><span class="left-nav-num">05</span>정확도 이력</a>
-    <a class="left-nav-item" href="#troubleshoot"><span class="left-nav-num">06</span>트러블슈팅</a>
-    <a class="left-nav-item" href="#retrospective"><span class="left-nav-num">07</span>막혔던 순간</a>
-    <a class="left-nav-item" href="#roadmap"><span class="left-nav-num">08</span>고도화 방향</a>
-    <a class="left-nav-item" href="#sustain"><span class="left-nav-num">09</span>지속 가능성</a>
-    <a class="left-nav-item" href="#scale"><span class="left-nav-num">10</span>확장 가능성</a>
+    <a class="left-nav-item" href="#iter"><span class="left-nav-num">04</span>정확도 이력</a>
+    <a class="left-nav-item" href="#troubleshoot"><span class="left-nav-num">05</span>트러블슈팅</a>
+    <a class="left-nav-item" href="#retrospective"><span class="left-nav-num">06</span>문제 해결</a>
+    <a class="left-nav-item" href="#roadmap"><span class="left-nav-num">07</span>고도화 방향</a>
+    <a class="left-nav-item" href="#sustain"><span class="left-nav-num">08</span>지속 가능성</a>
+    <a class="left-nav-item" href="#scale"><span class="left-nav-num">09</span>확장 가능성</a>
   </div>
   <div class="left-nav-footer">2026 · AI 단독 개발</div>
 </nav>
@@ -246,7 +245,7 @@ html{scroll-behavior:smooth;}
 <div class="cover">
   <div style="text-align:center;padding:56px 0 52px;border-bottom:1px solid #1a2235;margin-bottom:48px;">
     <h1 class="hero-h1">With Buddy AI</h1>
-    <p class="hero-sub">수습사원의 HR 질문에 사내 문서 기반으로 즉시 답변하는 RAG 어시스턴트.<br>70회 실험을 거쳐 E2E 정확도 97.5%를 달성했습니다.</p>
+    <p class="hero-sub">수습사원의 HR 질문에 사내 문서 기반으로 즉시 답변하는 RAG 어시스턴트. E2E 정확도 97.5%.</p>
     <div class="tech-row">
       <span class="tc tc-purple">Claude Haiku</span>
       <span class="tc tc-blue">LangChain · LangGraph</span>
@@ -498,37 +497,12 @@ html{scroll-behavior:smooth;}
 </div>
 
 <!-- ══════════════════════════════════════════
-     4.5 개발 노트
-════════════════════════════════════════════ -->
-<div class="section" id="devnote">
-  <div class="section-title">개발 노트</div>
-  <div class="section-line"></div>
-
-  <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:28px 32px;line-height:2;font-size:13px;color:#cbd5e1;">
-    따뜻하게 대화도 받아주면서 정확한 HR 답변까지 처리하는 챗봇을 만들고 싶었다. 단순한 RAG 하나로는 "오늘 기분 어때요?" 같은 잡담에도 문서를 뒤지다 no_result를 반환했다. <strong style="color:#e2e8f0;">참고할 레퍼런스가 없었다. 직접 부딪히며 고민하던 중 멀티에이전트 아키텍처를 알게 됐다.</strong><br><br>
-    오케스트레이터가 질문의 의도를 먼저 판단하고, 잡담이면 잡담 에이전트에게, HR 질문이면 RAG 에이전트에게 넘겨주는 구조였다.<br><br>
-    문제는 실제로 도입하고 나서였다. 에이전트마다 각자의 프롬프트와 판단 기준이 있다 보니, 같은 질문도 어떤 에이전트가 잡느냐에 따라 답변이 달라졌다. 디버깅을 하려 해도 <strong style="color:#e2e8f0;">"이 답변, 대체 누가 한 거지?"</strong> 를 추적하는 게 쉽지 않았다. 자아가 따로 있는 에이전트들 사이에서 책임 소재가 불분명했다.<br><br>
-    안정화까지 꽤 오랜 시간이 걸렸고, <strong style="color:#e2e8f0;">그 경험이 지금 아키텍처의 근거가 됐다.</strong> 오케스트레이터가 "이 질문은 RAG가 처리해" 라고 결정하면, 그 다음부터는 하나의 명확한 흐름이 처음부터 끝까지 책임진다 — 어떤 경로로 답변이 나왔는지 항상 추적할 수 있는 구조다.
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
      5. 성능 개선 타임라인
 ════════════════════════════════════════════ -->
 <div class="section" id="iter">
-  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>정확도 개선 전체 이력</span><span class="acc-toggle-meta">Phase 1~3 · 70회 반복 실험 · 2026.04–07</span></div><span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>정확도 개선 전체 이력</span><span class="acc-toggle-meta">Phase 1~3 · 2026.04–07</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
-  <div class="banner">
-    <div class="banner-title">데이터 기반 반복 검증</div>
-    <div class="banner-points">
-      <div class="bp">📊 <strong>70회의 실험</strong><br>매 수정마다 즉시 측정, 수치로 검증</div>
-      <div class="bp">⚡ <strong>당일 최대 6회 연속 측정</strong><br>변경 → 측정 → 재변경 사이클 반복</div>
-      <div class="bp">📈 <strong>3종 평가셋 병행 운용</strong><br>RAGAS / E2E v1(40) / v2 강화셋(40) / 100문항</div>
-      <div class="bp">🎯 <strong>실패도 기록</strong><br>설정 변경 실패 즉시 감지·복구. 낙관적 추측 없음</div>
-    </div>
-  </div>
-
   <div class="phase-tabs">
     <button class="phase-tab active" data-target="1">Phase 1</button>
     <button class="phase-tab" data-target="2">Phase 2</button>
@@ -879,7 +853,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </div>
 </div>
 
-<div class="footer">With Buddy AI · AI 기술 보고서 · 2026 · Phase 1~3 총 70회 측정</div>
+<div class="footer">With Buddy AI · AI 기술 보고서 · 2026</div>
 
 <script>
 (function(){
@@ -1013,18 +987,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section" id="retrospective">
-  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>막혔던 순간들</span><span class="acc-toggle-meta">단독 개발의 한계 · 도메인 지식의 중요성 · 팀워크가 만드는 AI</span></div><span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>문제 해결 기록</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
-  <p style="font-size:13px;color:#64748b;margin:0 0 16px;line-height:1.9;">
-    가장 크게 배운 것은, AI 개발은 모델을 연결하는 기술이 아니라는 점이었다.<br>
-    모든 가능성을 의심하고, 원인을 추적하며, 재발을 막기 위해 끊임없이 가설을 세우는 탐정의 일이었다.
-  </p>
-  <p style="font-size:13px;color:#64748b;margin:0 0 24px;line-height:1.9;">
-    AI 파트 단독 개발이었다. 기능을 만들고, 직접 테스트하고, 모니터링하고, 의도적으로 틀린 답변을 유도해 취약점을 찾고, 다시 고치는 사이클을 혼자 돌렸다.<br>
-    그 과정에서 느낀 건 두 가지였다. 하나는, API를 여러 개 붙인다고 에이전트가 되는 게 아니라는 것 — 소위 에이전트라 부를 수 있는 수준은 AI 단독으로는 도달할 수 없었다. 기획과 검증, UI/UX, 인프라, 데이터베이스 — 팀 전체가 함께 움직여야 했다. 다른 하나는, 개발자가 혼자 레드팀과 품질 검토를 감당하는 데는 한계가 있다는 것 — HR 도메인을 잘 아는 사람이 함께라면 놓치는 케이스를 더 빠르게 잡을 수 있겠다는 걸 실감했다.
-  </p>
-
   <div class="pivot-grid">
 
     <!-- 카드 1 -->
