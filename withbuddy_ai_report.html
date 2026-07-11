@@ -130,6 +130,10 @@ tbody tr.fail-row td { opacity:.55; }
   .tbl-wrap { page-break-inside:auto; }
   tbody tr { page-break-inside:avoid; }
 }
+/* ── 아코디언 ── */
+.acc-toggle { cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+.acc-toggle:hover { opacity:0.8; }
+.acc-arrow { font-size:10px; color:#4a5a70; flex-shrink:0; margin-left:8px; }
 </style>
 </head>
 <body>
@@ -514,9 +518,9 @@ tbody tr.fail-row td { opacity:.55; }
      5. 성능 개선 타임라인
 ════════════════════════════════════════════ -->
 <div class="section">
-  <div class="section-title">정확도 개선 전체 이력</div>
+  <div class="section-title acc-toggle">정확도 개선 전체 이력 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
-
+<div class="acc-body">
   <div class="banner">
     <div class="banner-title">데이터 기반 반복 검증</div>
     <div class="banner-points">
@@ -662,14 +666,15 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
   </div>
 
 </div>
+</div>
 
 <!-- ══════════════════════════════════════════
      6. 트러블슈팅 기록
 ════════════════════════════════════════════ -->
 <div class="section">
-  <div class="section-title">트러블슈팅 기록</div>
+  <div class="section-title acc-toggle">트러블슈팅 기록 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
-
+<div class="acc-body">
   <!-- Bug 1: case_a 중복 -->
   <div style="background:#1a2235;border:1px solid #243048;border-radius:14px;padding:20px 24px;margin-bottom:16px;">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -862,6 +867,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
   </div>
 
 </div>
+</div>
 
 <div class="footer">With Buddy AI · AI 기술 보고서 · 2026 · Phase 1~3 총 70회 측정</div>
 
@@ -997,8 +1003,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section">
-  <div class="section-title">막혔던 순간들</div>
+  <div class="section-title acc-toggle">막혔던 순간들 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
+<div class="acc-body">
   <p style="font-size:13px;color:#64748b;margin:0 0 16px;line-height:1.9;">
     가장 크게 배운 것은, AI 개발은 모델을 연결하는 기술이 아니라는 점이었다.<br>
     모든 가능성을 의심하고, 원인을 추적하며, 재발을 막기 위해 끊임없이 가설을 세우는 탐정의 일이었다.
@@ -1132,6 +1139,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     </div>
 
   </div>
+</div>
 </section>
 
 <!-- ── 고도화 방향 ── -->
@@ -1155,9 +1163,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section">
-  <div class="section-title">고도화 방향</div>
+  <div class="section-title acc-toggle">고도화 방향 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
-
+<div class="acc-body">
   <div class="agentic-flow">
     <div class="agentic-box">
       <div class="label">현재</div>
@@ -1214,6 +1222,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     <strong>현재 구현 기반:</strong> BE 내부 API 호출 구조(<code>be_client.py</code>)가 이미 구현되어 있어 확장 가능한 상태입니다.
     Slack 미답변 알림은 AI가 자율 판단 후 외부 시스템에 액션을 취하는 에이전틱 AI의 첫 단계로 구현되었습니다.
   </div>
+</div>
 </section>
 
 <!-- ── 운영 지속성 ── -->
@@ -1229,9 +1238,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section">
-  <div class="section-title">지속 가능성</div>
+  <div class="section-title acc-toggle">지속 가능성 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
-
+<div class="acc-body">
   <div class="cost-grid">
     <div class="cost-card" style="border-color:#1a2f45;">
       <div class="c-label">서버 인프라</div>
@@ -1264,6 +1273,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     실사용자가 없을 때는 API 비용이 사실상 0이며, 소규모 실사용 환경에서도 월 몇 달러 수준으로 운영할 수 있도록 설계했습니다.
     서버 인프라는 OCI 프리티어 영구 무료 인스턴스를 기반으로 하며, 벡터 DB와 캐시는 외부 유료 서비스 없이 서버 내에서 직접 운영합니다.
   </div>
+</div>
 </section>
 
 <!-- ── 확장성 ── -->
@@ -1311,9 +1321,9 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section">
-  <div class="section-title">확장 가능성</div>
+  <div class="section-title acc-toggle">확장 가능성 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
-
+<div class="acc-body">
   <div class="ext-hero">
     <div class="ext-hero-label">Multi-Provider Architecture</div>
     <div class="ext-hero-title">모델이 죽어도 서비스는 살아있다</div>
@@ -1451,7 +1461,28 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
       </div>
     </div>
   </div>
+</div>
 </section>
 
+<script>
+window.addEventListener('load', function() {
+  document.querySelectorAll('.acc-toggle').forEach(function(title) {
+    var section = title.parentElement;
+    var body = section.querySelector('.acc-body');
+    if (!body) return;
+    body.style.display = 'none';
+    title.addEventListener('click', function() {
+      var arrow = this.querySelector('.acc-arrow');
+      if (body.style.display === 'none') {
+        body.style.display = '';
+        if (arrow) arrow.textContent = '▼';
+      } else {
+        body.style.display = 'none';
+        if (arrow) arrow.textContent = '▶';
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
