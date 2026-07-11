@@ -1260,24 +1260,19 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px;">실사용 피드백 반영 이력</div>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">검색 누락</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">특정 키워드 질문에서 관련 문서가 있음에도 검색 히트 실패 → <span style="color:#e2e8f0;font-weight:600;">BM25 + 벡터 하이브리드 검색 도입</span></div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">82.5% → 97.5%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">할루시네이션</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">문서 근거 없는 답변이 자신감 있게 출력됨 → <span style="color:#e2e8f0;font-weight:600;">Self-Verifier 구현</span> — 근거 문서 없으면 no_result로 처리</div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">구조적 차단</span>
-      </div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">반복 미답변</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">같은 질문이 반복 no_result 처리돼도 관리자가 인지 불가 → <span style="color:#e2e8f0;font-weight:600;">미답변 자동 감지 + Slack 알림 + 관리자 루프</span></div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">자동화 완료</span>
-      </div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">PRE 계정 혼용</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">입사 예정자가 일반 채팅 흐름에 진입해 관련 없는 답변 수신 → <span style="color:#e2e8f0;font-weight:600;">PRE 온보딩 퀵탭 격리</span> — account_status 기반 분기</div>
+        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">기능 요청</span>
+        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"메일 초안 써줘, 말투 봐줘" 요청 → <span style="color:#e2e8f0;font-weight:600;">비즈니스 커뮤니케이션 어시스턴트 구현</span> — 업무 메일 초안 생성·말투 검토·채널 추천 one-shot</div>
         <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">배포 완료</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">답변 품질</span>
+        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"AI 답변이 너무 길다" → <span style="color:#e2e8f0;font-weight:600;">프롬프트 구조 개선</span> — 핵심 정보 우선 배치·불필요한 부연 제거</div>
+        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px dashed #2d3f55;border-radius:10px;padding:14px 18px;opacity:.7;">
+        <span style="font-size:10px;font-weight:700;background:#1a2235;color:#f59e0b;border:1px solid #78350f;padding:3px 9px;border-radius:4px;white-space:nowrap;">연동 미검증</span>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.7;">문서 업로드 시 AI 자동 인덱싱 — AI 측 엔드포인트(<code style="color:#a78bfa;">POST /admin/ingest</code>) 구현 완료, BE 연동 후 E2E 테스트 미실시</div>
+        <span style="font-size:11px;color:#f59e0b;font-weight:700;white-space:nowrap;">테스트 대기</span>
       </div>
     </div>
   </div>
