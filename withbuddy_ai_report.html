@@ -1264,15 +1264,22 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
         <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"메일 초안 써줘, 말투 봐줘" 요청 → <span style="color:#e2e8f0;font-weight:600;">비즈니스 커뮤니케이션 어시스턴트 구현</span> — 업무 메일 초안 생성·말투 검토·채널 추천 one-shot</div>
         <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">배포 완료</span>
       </div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">답변 품질</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"AI 답변이 너무 길다" → <span style="color:#e2e8f0;font-weight:600;">프롬프트 구조 개선</span> — 핵심 정보 우선 배치·불필요한 부연 제거</div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
+      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
+          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">답변 품질</span>
+          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"AI 답변이 너무 길다" → <span style="color:#e2e8f0;font-weight:600;">프롬프트 구조 개선</span> — 단순 질문 눈에 띄게 개선, "AI 같다"는 피드백 일부 해소</div>
+          <span style="font-size:11px;color:#fbbf24;font-weight:700;white-space:nowrap;">부분 해소</span>
+        </div>
+        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
+          <span style="color:#94a3b8;font-weight:600;">완전 해소 못 한 이유 —</span>
+          절차가 많은 질문(연차·법인카드 등)은 문서 내용이 많을수록 답변도 길어지는 구조. 문서 자체를 요약본으로 재인덱싱해야 근본 해결되지만 <span style="color:#e2e8f0;">요약 제작 → 재인덱싱 → 품질 테스트</span> 공수로 이번 스프린트 미포함.<br>
+          생성 후 압축(post-processing)은 LLM 1회 추가 호출로 1~2초 지연 발생 + SSE 스트리밍 장점 소멸 — 사용자가 기다리다 짧은 답변이 갑자기 뜨는 경험이라 채택 안 함.
+        </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px dashed #2d3f55;border-radius:10px;padding:14px 18px;opacity:.7;">
-        <span style="font-size:10px;font-weight:700;background:#1a2235;color:#f59e0b;border:1px solid #78350f;padding:3px 9px;border-radius:4px;white-space:nowrap;">연동 미검증</span>
-        <div style="font-size:12px;color:#94a3b8;line-height:1.7;">문서 업로드 시 AI 자동 인덱싱 — AI 측 엔드포인트(<code style="color:#a78bfa;">POST /admin/ingest</code>) 구현 완료, BE 연동 후 E2E 테스트 미실시</div>
-        <span style="font-size:11px;color:#f59e0b;font-weight:700;white-space:nowrap;">테스트 대기</span>
+        <span style="font-size:10px;font-weight:700;background:#1a2235;color:#f59e0b;border:1px solid #78350f;padding:3px 9px;border-radius:4px;white-space:nowrap;">미구현</span>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.7;">Notion·Slack 데이터 자동 인덱싱 — 관리자 페이지 문서 업로드 → 자동 인덱싱은 완료, 외부 협업 툴(Notion·Slack) 문서 자동 수집·인덱싱은 미구현</div>
+        <span style="font-size:11px;color:#f59e0b;font-weight:700;white-space:nowrap;">로드맵</span>
       </div>
     </div>
   </div>
