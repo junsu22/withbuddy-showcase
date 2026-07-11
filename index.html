@@ -3,282 +3,703 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="0; url=withbuddy_ai_report.html">
-<title>WithBuddy AI — Portfolio Showcase</title>
+<title>With Buddy AI — Developer Showcase</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0d1117; color:#e6edf3; font-family:'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif; line-height:1.7; }
-a { color:#58a6ff; text-decoration:none; }
-a:hover { text-decoration:underline; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#0d1117;color:#e6edf3;font-family:'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;line-height:1.7;overflow-x:hidden;}
+a{color:#58a6ff;text-decoration:none;}
+a:hover{text-decoration:underline;}
 
-/* Hero */
-.hero { text-align:center; padding:80px 24px 60px; border-bottom:1px solid #21262d; }
-.hero h1 { font-size:42px; font-weight:800; color:#fff; margin-bottom:12px; }
-.hero .subtitle { font-size:16px; color:#8b949e; margin-bottom:32px; }
-.badges { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:24px; }
-.badge { display:inline-block; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.04em; }
-.b-blue   { background:#1f3d5c; color:#58a6ff; }
-.b-green  { background:#1a3a2a; color:#3fb950; }
-.b-purple { background:#2d1f52; color:#a371f7; }
-.b-orange { background:#3d2200; color:#f0883e; }
-.b-teal   { background:#003d3d; color:#39d3bb; }
-.hero-desc { font-size:15px; color:#8b949e; max-width:600px; margin:0 auto 16px; }
-.portfolio-note { display:inline-block; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 18px; font-size:13px; color:#8b949e; }
+/* STICKY HEADER */
+.sticky-header{position:fixed;top:0;left:0;right:0;height:48px;background:#0d1117;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:1000;opacity:0;transform:translateY(-100%);transition:opacity 0.3s ease,transform 0.3s ease;}
+.sticky-header.visible{opacity:1;transform:translateY(0);}
+.header-left{display:flex;align-items:center;gap:10px;}
+.header-logo{width:28px;height:28px;background:linear-gradient(135deg,#58a6ff,#a371f7);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0;}
+.header-title{font-size:14px;font-weight:700;color:#e6edf3;}
+.header-subtitle{font-size:11px;color:#8b949e;margin-left:2px;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.header-btn{height:28px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #30363d;background:#161b22;color:#e6edf3;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:background 0.15s,border-color 0.15s,color 0.15s;}
+.header-btn:hover{background:#21262d;border-color:#58a6ff;color:#58a6ff;text-decoration:none;}
+.header-btn.top-btn{background:transparent;border-color:#21262d;color:#8b949e;}
+.header-btn.top-btn:hover{color:#e6edf3;border-color:#30363d;}
 
-/* Section */
-.section { max-width:900px; margin:0 auto; padding:60px 24px; border-bottom:1px solid #21262d; }
-.section:last-child { border-bottom:none; }
-.section h2 { font-size:22px; font-weight:700; color:#fff; margin-bottom:28px; display:flex; align-items:center; gap:10px; }
+/* RIGHT NAV */
+.right-nav{position:fixed;right:24px;top:50%;transform:translateY(-50%);width:180px;z-index:900;display:none;}
+@media(min-width:1200px){.right-nav{display:block;}}
+.right-nav ul{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.right-nav ul li a{display:block;padding:6px 12px;font-size:12px;color:#8b949e;border-left:2px solid #21262d;transition:color 0.2s,border-color 0.2s;text-decoration:none;}
+.right-nav ul li a:hover,.right-nav ul li a.active{color:#58a6ff;border-left-color:#58a6ff;text-decoration:none;}
 
-/* Screenshot */
-.screenshot-wrap { cursor:pointer; border-radius:12px; overflow:hidden; border:1px solid #30363d; transition:transform .2s, box-shadow .2s; }
-.screenshot-wrap:hover { transform:scale(1.01); box-shadow:0 8px 32px rgba(0,0,0,.5); }
-.screenshot-wrap img { width:100%; display:block; }
-.screenshot-caption { text-align:center; color:#8b949e; font-size:13px; margin-top:10px; }
+/* MAIN */
+.main-content{max-width:1100px;margin:0 auto;padding:0 24px;}
 
-/* Lightbox */
-.lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:9999; align-items:center; justify-content:center; cursor:zoom-out; }
-.lightbox.active { display:flex; }
-.lightbox img { max-width:92vw; max-height:90vh; border-radius:8px; box-shadow:0 0 60px rgba(0,0,0,.8); }
-.lightbox-close { position:fixed; top:20px; right:28px; color:#8b949e; font-size:28px; cursor:pointer; line-height:1; }
-.lightbox-close:hover { color:#fff; }
+/* HERO */
+.hero{padding:90px 0 64px;text-align:center;border-bottom:1px solid #21262d;}
+.hero-badge{display:inline-block;background:#1f3d5c;color:#58a6ff;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 14px;border-radius:20px;margin-bottom:24px;border:1px solid #1e3a5a;}
+.hero h1{font-size:52px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:10px;line-height:1.1;}
+.hero h2{font-size:19px;font-weight:400;color:#8b949e;margin-bottom:18px;}
+.hero-subtitle{font-size:15px;color:#8b949e;max-width:540px;margin:0 auto 40px;line-height:1.7;}
+.tech-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:48px;}
+.tech-badge{display:inline-flex;align-items:center;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.03em;border:1px solid transparent;}
+.tb-blue{background:#1c3051;color:#58a6ff;border-color:#1e3a5a;}
+.tb-green{background:#162c1e;color:#3fb950;border-color:#1a3322;}
+.tb-purple{background:#281c47;color:#a371f7;border-color:#2d2057;}
+.tb-orange{background:#321c00;color:#f0883e;border-color:#3a2000;}
+.tb-teal{background:#003333;color:#39d3bb;border-color:#003d3d;}
+.tb-gray{background:#1c2128;color:#8b949e;border-color:#30363d;}
 
-/* Arch links */
-.arch-links { display:flex; gap:12px; flex-wrap:wrap; }
-.arch-link { display:inline-flex; align-items:center; gap:6px; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 18px; font-size:14px; color:#58a6ff; transition:background .15s; }
-.arch-link:hover { background:#21262d; text-decoration:none; }
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:580px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+.kpi-card{background:#161b22;border:1px solid #21262d;border-radius:12px;padding:20px 14px;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0;}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+.kpi-purple::before{background:#a371f7;}.kpi-purple:hover{border-color:#a371f7;}
+.kpi-green::before{background:#3fb950;}.kpi-green:hover{border-color:#3fb950;}
+.kpi-blue::before{background:#58a6ff;}.kpi-blue:hover{border-color:#58a6ff;}
+.kpi-orange::before{background:#f0883e;}.kpi-orange:hover{border-color:#f0883e;}
+.kpi-teal::before{background:#39d3bb;}.kpi-teal:hover{border-color:#39d3bb;}
+.kpi-value{font-size:24px;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.2;}
+.kpi-label{font-size:11px;color:#8b949e;margin-bottom:8px;}
+.kpi-chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.chip-purple{background:#281c47;color:#a371f7;}
+.chip-green{background:#162c1e;color:#3fb950;}
+.chip-blue{background:#1c3051;color:#58a6ff;}
+.chip-orange{background:#321c00;color:#f0883e;}
+.chip-teal{background:#003333;color:#39d3bb;}
 
-/* Features */
-.feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-@media(max-width:640px){ .feature-grid { grid-template-columns:1fr; } }
-.feature-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:20px; }
-.feature-card h3 { font-size:15px; font-weight:700; color:#fff; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
-.feature-card ul { list-style:none; }
-.feature-card ul li { font-size:13px; color:#8b949e; padding:3px 0; padding-left:14px; position:relative; }
-.feature-card ul li::before { content:'·'; position:absolute; left:0; color:#58a6ff; }
+/* SECTIONS */
+.section{padding:60px 0;border-bottom:1px solid #21262d;}
+.section-label{font-size:12px;font-weight:700;letter-spacing:0.1em;color:#58a6ff;text-transform:uppercase;margin-bottom:6px;}
+.section-heading{font-size:26px;font-weight:700;color:#fff;margin-bottom:32px;}
 
-/* Table */
-table { width:100%; border-collapse:collapse; }
-th { background:#161b22; color:#8b949e; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; padding:10px 16px; text-align:left; border:1px solid #21262d; }
-td { padding:10px 16px; border:1px solid #21262d; font-size:14px; color:#e6edf3; }
-tr:hover td { background:#161b22; }
-td strong { color:#fff; }
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .fade-in{opacity:1;transform:none;transition:none;}
+  html{scroll-behavior:auto;}
+  .accordion-body{transition:none!important;}
+  .sticky-header{transition:none!important;}
+  .accordion-chevron{transition:none!important;}
+}
 
-/* Contributions */
-.contrib-table td:first-child { font-weight:700; color:#a371f7; width:180px; }
+/* 01 ARCHITECTURE */
+.arch-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+@media(max-width:760px){.arch-cols{grid-template-columns:1fr;}}
+.arch-desc h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;}
+.arch-desc p{font-size:14px;color:#8b949e;margin-bottom:20px;line-height:1.7;}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#8b949e;}
+.check-icon{color:#3fb950;flex-shrink:0;margin-top:2px;font-style:normal;}
+.arch-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;}
+.arch-card h4{font-size:12px;font-weight:700;color:#8b949e;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:20px;}
+.pipeline{display:flex;flex-direction:column;align-items:flex-start;}
+.pipe-row{display:flex;align-items:center;}
+.pipe-box{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;}
+.pipe-vline{width:1px;height:14px;background:#30363d;margin-left:28px;}
+.arch-more{margin-top:18px;padding-top:16px;border-top:1px solid #21262d;}
+.arch-more a{font-size:13px;color:#58a6ff;font-weight:600;}
+.arch-more a:hover{text-decoration:underline;}
 
-/* Outcomes */
-.outcome-value { color:#3fb950; font-weight:700; }
+/* 02 PERFORMANCE */
+.perf-charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:640px){.perf-charts{grid-template-columns:1fr;}}
+.chart-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;}
+.chart-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+.chart-title{font-size:13px;font-weight:700;color:#e6edf3;margin-bottom:14px;}
+.chart-sub{font-size:11px;font-weight:400;color:#8b949e;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:480px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);border-color:#58a6ff;}
+.stat-value{font-size:30px;font-weight:800;color:#58a6ff;margin-bottom:4px;}
+.stat-label{font-size:13px;color:#8b949e;}
 
-/* Lessons */
-.lesson { background:#161b22; border:1px solid #30363d; border-left:3px solid #58a6ff; border-radius:0 8px 8px 0; padding:18px 20px; margin-bottom:14px; }
-.lesson h3 { font-size:15px; font-weight:700; color:#fff; margin-bottom:6px; }
-.lesson p { font-size:13px; color:#8b949e; }
+/* ACCORDION */
+.accordion{background:#161b22;border:1px solid #30363d;border-radius:12px;overflow:hidden;}
+.accordion-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;user-select:none;gap:12px;}
+.accordion-header:hover{background:rgba(255,255,255,0.025);}
+.acc-left{display:flex;align-items:center;gap:12px;flex:1;flex-wrap:wrap;}
+.acc-title{font-size:17px;font-weight:700;color:#fff;}
+.acc-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;background:#1c2128;color:#8b949e;border:1px solid #30363d;}
+.acc-chevron{color:#8b949e;font-size:18px;transition:transform 0.3s ease;flex-shrink:0;line-height:1;}
+.accordion.open .acc-chevron{transform:rotate(180deg);}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+.accordion-body.open{max-height:2000px;}
+.accordion-inner{padding:0 24px 24px;border-top:1px solid #21262d;}
+.accordion-inner>*:first-child{margin-top:20px;}
 
-/* Footer */
-.footer { text-align:center; padding:40px 24px; color:#484f58; font-size:13px; }
-.footer a { color:#484f58; }
-.footer a:hover { color:#8b949e; }
+/* 03 ITERATION */
+.phase-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+.phase-item{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-radius:8px;}
+.phase-num{font-size:11px;font-weight:700;color:#a371f7;background:#281c47;padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:3px;}
+.phase-info h4{font-size:14px;font-weight:700;color:#e6edf3;margin-bottom:3px;}
+.phase-info p{font-size:12px;color:#8b949e;line-height:1.5;}
+
+/* 04 MONITORING */
+.monitor-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.monitor-grid{grid-template-columns:1fr;}}
+.monitor-card{background:#161b22;border:1px solid #30363d;border-radius:12px;overflow:hidden;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;}
+.monitor-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+.mc-purple:hover{border-color:#a371f7;}
+.mc-green:hover{border-color:#3fb950;}
+.monitor-header{padding:14px 20px;border-bottom:1px solid #21262d;display:flex;align-items:center;gap:10px;}
+.mon-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:0.04em;}
+.mb-purple{background:#281c47;color:#a371f7;}
+.mb-green{background:#162c1e;color:#3fb950;}
+.monitor-name{font-size:14px;font-weight:700;color:#fff;}
+.monitor-desc{font-size:11px;color:#8b949e;}
+.monitor-img{aspect-ratio:16/9;overflow:hidden;background:#0d1117;}
+.monitor-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.monitor-stats{padding:14px 20px;display:flex;gap:20px;flex-wrap:wrap;}
+.mstat-val{font-size:13px;font-weight:700;color:#e6edf3;display:block;}
+.mstat-key{font-size:11px;color:#8b949e;display:block;}
+
+/* 05 ENGINEERING */
+.design-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:640px){.design-grid{grid-template-columns:1fr;}}
+.design-card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:18px;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;}
+.design-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);border-color:#58a6ff;}
+.design-card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;}
+.design-card p{font-size:13px;color:#8b949e;line-height:1.6;}
+.result-tag{margin-top:10px;font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:6px;}
+.rt-green{color:#3fb950;background:#162c1e;}
+.rt-orange{color:#f0883e;background:#321c00;}
+.rt-blue{color:#58a6ff;background:#1c3051;}
+
+/* 06 DEV NOTES */
+.bug-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;}
+.bug-card{background:#0d1117;border:1px solid #21262d;border-radius:0 10px 10px 0;padding:16px 18px;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.bug-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}
+.bc-orange{border-left:3px solid #f0883e;}
+.bc-green{border-left:3px solid #3fb950;}
+.bc-gray{border-left:3px solid #484f58;}
+.bug-header{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+.bug-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;letter-spacing:0.04em;}
+.bt-bug{background:#321c00;color:#f0883e;}
+.bt-fixed{background:#162c1e;color:#3fb950;}
+.bt-exp{background:#1c3051;color:#58a6ff;}
+.bt-rev{background:#1c2128;color:#8b949e;}
+.bug-card h4{font-size:14px;font-weight:700;color:#fff;margin:0;}
+.bug-card p{font-size:13px;color:#8b949e;line-height:1.6;margin-top:4px;}
+
+/* 07 RETROSPECTIVE */
+.retro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
+@media(max-width:800px){.retro-grid{grid-template-columns:1fr;}}
+.retro-card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;transition:transform 0.2s ease,box-shadow 0.2s ease,border-color 0.2s ease;}
+.retro-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);border-color:#a371f7;}
+.retro-card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #21262d;line-height:1.45;}
+.retro-card p{font-size:13px;color:#8b949e;line-height:1.7;}
+
+/* LINK CARD */
+.link-card{display:flex;align-items:center;justify-content:space-between;background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:16px 20px;text-decoration:none;transition:border-color 0.2s,background 0.2s;}
+.link-card:hover{border-color:#58a6ff;background:#161b22;text-decoration:none;}
+.lc-sub{font-size:12px;color:#8b949e;margin-bottom:2px;}
+.lc-title{font-size:15px;font-weight:700;color:#58a6ff;}
+.lc-arrow{color:#58a6ff;font-size:20px;flex-shrink:0;}
+
+/* SVG CHARTS */
+.chart-svg{display:block;overflow:visible;}
+.chart-svg text{font-family:'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;}
+
+/* FOOTER */
+.footer{padding:48px 24px;text-align:center;border-top:1px solid #21262d;}
+.footer p{margin-bottom:6px;font-size:13px;}
+.footer-main{color:#8b949e;}
+.footer-tag{color:#484f58;}
+.footer-copy{color:#484f58;font-size:12px;}
 </style>
 </head>
 <body>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
-  <img id="lightbox-img" src="" alt="">
-</div>
-
-<!-- Hero -->
-<div class="hero">
-  <h1>🤝 WithBuddy AI</h1>
-  <p class="subtitle">Enterprise AI Onboarding Assistant powered by LLM, RAG and Multi-Agent Architecture.</p>
-  <div class="badges">
-    <span class="badge b-blue">Python 3.11</span>
-    <span class="badge b-teal">FastAPI · asyncio</span>
-    <span class="badge b-purple">LangGraph · Multi-Agent</span>
-    <span class="badge b-orange">Claude Haiku</span>
-    <span class="badge b-green">ChromaDB · RAG</span>
+<!-- STICKY HEADER -->
+<header class="sticky-header" id="stickyHeader">
+  <div class="header-left">
+    <div class="header-logo">W</div>
+    <span class="header-title">With Buddy AI</span>
+    <span class="header-subtitle">HR RAG Assistant</span>
   </div>
-  <p class="hero-desc">임직원이 사내 규정·복지·인사 정책을 자연어로 물어보면, 관련 문서를 검색해 근거 있는 답변을 실시간으로 제공하는 AI 어시스턴트입니다.</p>
-  <span class="portfolio-note">📌 This repository is a <strong>portfolio showcase</strong>, not the source code.</span>
-</div>
-
-<!-- Screenshots -->
-<div class="section">
-  <h2>📸 Screenshots</h2>
-  <div class="screenshot-wrap" onclick="openLightbox('images/chat.png')">
-    <img src="images/chat.png" alt="WithBuddy AI 채팅 UI">
+  <div class="header-right">
+    <a class="header-btn" href="https://github.com/junsu22/withbuddy-showcase" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a class="header-btn" href="withbuddy_ai_report.html" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      AI Report
+    </a>
+    <button class="header-btn top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
   </div>
-  <p class="screenshot-caption">클릭하면 크게 볼 수 있어요</p>
-</div>
+</header>
 
-<!-- Architecture -->
-<div class="section">
-  <h2>🗺 System Architecture</h2>
-  <div class="arch-links">
-    <a class="arch-link" href="architecture_flow.html" target="_blank">📊 아키텍처 플로우 보기 →</a>
-    <a class="arch-link" href="withbuddy_ai_report.html" target="_blank">📋 AI 평가 리포트 보기 →</a>
-  </div>
-  <br>
-  <pre style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;font-size:12px;color:#8b949e;overflow-x:auto;line-height:1.8;">User Question
-     │
-     ▼
-[Multi-Agent Orchestrator]  ← LangGraph (Intent 분류)
-     │
-     ├─ RAG ──────────────► [Hybrid Search]  ← BM25 + Vector (asyncio parallel)
-     │                            │
-     │                      [Claude Haiku]   ← SSE Streaming + Prompt Caching
-     │                            │
-     │                      [Quality Gate]   ← Self-Verifier + LLM Judge
-     │
-     ├─ chitchat ──────────► 일상 대화 처리
-     ├─ out_of_scope ──────► 범위 외 안내
-     └─ sensitive ─────────► 민감 질문 필터</pre>
-</div>
+<!-- RIGHT NAV -->
+<nav class="right-nav" id="rightNav" aria-label="페이지 내 탐색">
+  <ul>
+    <li><a href="#overview"       data-section="overview">Overview</a></li>
+    <li><a href="#architecture"   data-section="architecture">Architecture</a></li>
+    <li><a href="#performance"    data-section="performance">Performance</a></li>
+    <li><a href="#iteration"      data-section="iteration">Iteration</a></li>
+    <li><a href="#monitoring"     data-section="monitoring">Monitoring</a></li>
+    <li><a href="#engineering"    data-section="engineering">Engineering Notes</a></li>
+    <li><a href="#devnotes"       data-section="devnotes">Dev Notes</a></li>
+    <li><a href="#retrospective"  data-section="retrospective">Retrospective</a></li>
+  </ul>
+</nav>
 
-<!-- Key Features -->
-<div class="section">
-  <h2>✨ Key Features</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <h3>🔍 RAG — Hybrid Search</h3>
-      <ul>
-        <li>BM25 + 벡터 검색 asyncio 병렬 실행</li>
-        <li>kiwipiepy 한국어 형태소 분석</li>
-        <li>복합 질문 자동 분리 후 병렬 검색</li>
-        <li>쿼리 정규화 · 동의어 확장 · 멀티턴 rewrite</li>
-      </ul>
+<div class="main-content">
+
+  <!-- HERO / OVERVIEW -->
+  <section id="overview" class="hero fade-in">
+    <div class="hero-badge">AI PROJECT LEAGUE 6기</div>
+    <h1>With Buddy AI</h1>
+    <h2>HR RAG Assistant for Enterprise Onboarding</h2>
+    <p class="hero-subtitle">70번의 반복 실험을 통해 사용자 신뢰를 만드는 HR 특화 RAG 시스템을 구축했습니다.</p>
+    <div class="tech-badges">
+      <span class="tech-badge tb-purple">Claude 3.7 Sonnet</span>
+      <span class="tech-badge tb-blue">LangGraph</span>
+      <span class="tech-badge tb-teal">ChromaDB</span>
+      <span class="tech-badge tb-green">Spring AI</span>
+      <span class="tech-badge tb-orange">OCI</span>
+      <span class="tech-badge tb-gray">React</span>
     </div>
-    <div class="feature-card">
-      <h3>🤖 Multi-Agent Orchestration</h3>
-      <ul>
-        <li>LangGraph 기반 Intent 분류기</li>
-        <li>1회 LLM 호출로 Intent + Clarifying 동시 판별</li>
-        <li>고위험 질문은 LLM Judge 에이전트 사후 검증</li>
-      </ul>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-purple">
+        <div class="kpi-value">70</div>
+        <div class="kpi-label">Iterations</div>
+        <span class="kpi-chip chip-purple">April – July 2025</span>
+      </div>
+      <div class="kpi-card kpi-green">
+        <div class="kpi-value">64%→98%</div>
+        <div class="kpi-label">Accuracy Improvement</div>
+        <span class="kpi-chip chip-green">+34%p</span>
+      </div>
+      <div class="kpi-card kpi-blue">
+        <div class="kpi-value">0.75s</div>
+        <div class="kpi-label">TTFT (E2E)</div>
+        <span class="kpi-chip chip-blue">Real User Monitoring</span>
+      </div>
+      <div class="kpi-card kpi-orange">
+        <div class="kpi-value">54%</div>
+        <div class="kpi-label">Prompt Caching</div>
+        <span class="kpi-chip chip-orange">Cost Optimization</span>
+      </div>
+      <div class="kpi-card kpi-teal">
+        <div class="kpi-value">$0.19</div>
+        <div class="kpi-label">Per 1K Queries</div>
+        <span class="kpi-chip chip-teal">70% Cost Reduction</span>
+      </div>
     </div>
-    <div class="feature-card">
-      <h3>⚡ asyncio — SSE Streaming</h3>
-      <ul>
-        <li>첫 토큰까지 평균 0.7초 (TTFT)</li>
-        <li>120자 선행 버퍼 no_result 조기 감지</li>
-        <li>고위험 질문 스트리밍 억제 후 검증 전송</li>
-      </ul>
+  </section>
+
+  <!-- 01 ARCHITECTURE -->
+  <section id="architecture" class="section fade-in">
+    <div class="section-label">01 Overview</div>
+    <div class="arch-cols">
+      <div class="arch-desc">
+        <h3>With Buddy AI란?</h3>
+        <p>임직원의 HR 문서 기반 질문에 근거 있는 답변을 실시간으로 제공하는 AI 어시스턴트입니다. 하이브리드 검색, LLM Judge, Self-Verifier를 결합해 신뢰도 높은 응답을 구현합니다.</p>
+        <ul class="checklist">
+          <li><i class="check-icon">✓</i><span>HR 문서 기반 RAG 시스템</span></li>
+          <li><i class="check-icon">✓</i><span>Self-Verify를 통한 답변 신뢰도 향상</span></li>
+          <li><i class="check-icon">✓</i><span>사용자 피드백 기반 지속적 개선</span></li>
+          <li><i class="check-icon">✓</i><span>70회 반복 실험으로 최적의 구조 도출</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="arch-card">
+          <h4>System Architecture</h4>
+          <div class="pipeline">
+            <div class="pipe-row"><div class="pipe-box" style="color:#58a6ff;border-color:#1e3a5a;">Documents</div></div>
+            <div class="pipe-vline"></div>
+            <div class="pipe-row"><div class="pipe-box" style="color:#a371f7;border-color:#2d2057;">Orchestrator</div></div>
+            <div class="pipe-vline"></div>
+            <div class="pipe-row"><div class="pipe-box" style="color:#39d3bb;border-color:#003d3d;">Hybrid Search</div></div>
+            <div class="pipe-vline"></div>
+            <div class="pipe-row"><div class="pipe-box" style="color:#f0883e;border-color:#3a2000;">Claude</div></div>
+            <div class="pipe-vline"></div>
+            <div class="pipe-row"><div class="pipe-box" style="color:#3fb950;border-color:#1a3322;">Self Verify</div></div>
+            <div class="pipe-vline"></div>
+            <div class="pipe-row"><div class="pipe-box" style="color:#e6edf3;">Answer</div></div>
+          </div>
+          <div class="arch-more"><a href="architecture_flow.html" target="_blank">자세히 보기 →</a></div>
+        </div>
+      </div>
     </div>
-    <div class="feature-card">
-      <h3>🛡 Quality Assurance</h3>
-      <ul>
-        <li>Self-Verifier: 문서 관련성 LLM 판정</li>
-        <li>LLM Judge: 고위험 답변 문서 대조 검증</li>
-        <li>미답변 감지 → Slack 알림 → 관리자 루프</li>
-      </ul>
+  </section>
+
+  <!-- 02 PERFORMANCE -->
+  <section id="performance" class="section fade-in">
+    <div class="section-label">02 Performance Highlights</div>
+    <div class="section-heading">성능 지표</div>
+    <div class="perf-charts">
+
+      <!-- Accuracy SVG chart
+           Range 60–100%, chart y=20(top=100%) to y=130(bottom=60%), height=110
+           y = 130 - ((val-60)/40 * 110)
+           64% → 119   71% → 99.75   86% → 58.5   98% → 25.5
+           X: 70, 135, 200, 265
+      -->
+      <div class="chart-card">
+        <div class="chart-title">Accuracy Improvement <span class="chart-sub">— E2E 정답률</span></div>
+        <svg class="chart-svg" viewBox="0 0 300 162" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3fb950" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#3fb950" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- grid -->
+          <line x1="38" y1="20"  x2="278" y2="20"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="47"  x2="278" y2="47"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="75"  x2="278" y2="75"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="102" x2="278" y2="102" stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="130" x2="278" y2="130" stroke="#21262d" stroke-width="1"/>
+          <!-- y labels -->
+          <text x="33" y="24"  text-anchor="end" fill="#484f58" font-size="9">100%</text>
+          <text x="33" y="51"  text-anchor="end" fill="#484f58" font-size="9">90%</text>
+          <text x="33" y="79"  text-anchor="end" fill="#484f58" font-size="9">80%</text>
+          <text x="33" y="106" text-anchor="end" fill="#484f58" font-size="9">70%</text>
+          <text x="33" y="134" text-anchor="end" fill="#484f58" font-size="9">60%</text>
+          <!-- area -->
+          <polygon points="70,119 135,99.75 200,58.5 265,25.5 265,130 70,130" fill="url(#gGreen)"/>
+          <!-- line -->
+          <polyline points="70,119 135,99.75 200,58.5 265,25.5" fill="none" stroke="#3fb950" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- dots + labels -->
+          <circle cx="70"  cy="119"   r="4" fill="#3fb950"/>
+          <text x="70"  y="110"  text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">64%</text>
+          <circle cx="135" cy="99.75" r="4" fill="#3fb950"/>
+          <text x="135" y="91"   text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">71%</text>
+          <circle cx="200" cy="58.5"  r="4" fill="#3fb950"/>
+          <text x="200" y="49"   text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">86%</text>
+          <circle cx="265" cy="25.5"  r="4" fill="#3fb950"/>
+          <text x="265" y="17"   text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">98%</text>
+          <!-- x labels -->
+          <text x="70"  y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 1</text>
+          <text x="135" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 2</text>
+          <text x="200" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 3</text>
+          <text x="265" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 4</text>
+        </svg>
+      </div>
+
+      <!-- TTFT SVG chart
+           Range 0–4s, chart y=20(top=4s) to y=130(bottom=0s), height=110
+           y = 130 - (val/4 * 110)
+           3.50s → 33.75   2.30s → 66.75   1.40s → 91.5   0.75s → 109.4
+           X: 70, 135, 200, 265
+      -->
+      <div class="chart-card">
+        <div class="chart-title">TTFT (Time To First Token) <span class="chart-sub">— 응답 속도</span></div>
+        <svg class="chart-svg" viewBox="0 0 300 162" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- grid -->
+          <line x1="38" y1="20"  x2="278" y2="20"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="47"  x2="278" y2="47"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="75"  x2="278" y2="75"  stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="102" x2="278" y2="102" stroke="#21262d" stroke-width="1"/>
+          <line x1="38" y1="130" x2="278" y2="130" stroke="#21262d" stroke-width="1"/>
+          <!-- y labels (4s at top, 0s at bottom) -->
+          <text x="33" y="24"  text-anchor="end" fill="#484f58" font-size="9">4.0s</text>
+          <text x="33" y="51"  text-anchor="end" fill="#484f58" font-size="9">3.0s</text>
+          <text x="33" y="79"  text-anchor="end" fill="#484f58" font-size="9">2.0s</text>
+          <text x="33" y="106" text-anchor="end" fill="#484f58" font-size="9">1.0s</text>
+          <text x="33" y="134" text-anchor="end" fill="#484f58" font-size="9">0s</text>
+          <!-- area -->
+          <polygon points="70,33.75 135,66.75 200,91.5 265,109.4 265,130 70,130" fill="url(#gBlue)"/>
+          <!-- line -->
+          <polyline points="70,33.75 135,66.75 200,91.5 265,109.4" fill="none" stroke="#58a6ff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- dots + labels -->
+          <circle cx="70"  cy="33.75" r="4" fill="#58a6ff"/>
+          <text x="70"  y="45"   text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700">3.50s</text>
+          <circle cx="135" cy="66.75" r="4" fill="#58a6ff"/>
+          <text x="135" y="58"   text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700">2.30s</text>
+          <circle cx="200" cy="91.5"  r="4" fill="#58a6ff"/>
+          <text x="200" y="83"   text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700">1.40s</text>
+          <circle cx="265" cy="109.4" r="4" fill="#58a6ff"/>
+          <text x="265" y="101"  text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700">0.75s</text>
+          <!-- x labels -->
+          <text x="70"  y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 1</text>
+          <text x="135" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 2</text>
+          <text x="200" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 3</text>
+          <text x="265" y="149" text-anchor="middle" fill="#484f58" font-size="9">Phase 4</text>
+        </svg>
+      </div>
+
     </div>
-    <div class="feature-card">
-      <h3>🏢 Multi-Tenant Isolation</h3>
-      <ul>
-        <li>company_code 기반 문서 공간 완전 격리</li>
-        <li>법령(공통) / 사규(회사 전용) 구분 저장</li>
-        <li>동일 인프라에서 복수 기업 독립 운영</li>
-      </ul>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-value">70회</div><div class="stat-label">Total Iterations</div></div>
+      <div class="stat-card"><div class="stat-value">604회</div><div class="stat-label">Total Tests</div></div>
+      <div class="stat-card"><div class="stat-value">2,836회</div><div class="stat-label">Total Queries</div></div>
+      <div class="stat-card"><div class="stat-value">60일</div><div class="stat-label">Monitoring Period</div></div>
     </div>
-    <div class="feature-card">
-      <h3>💾 Prompt Caching</h3>
-      <ul>
-        <li>정적 프롬프트 블록 cache_control: ephemeral</li>
-        <li>동적 부분(날짜·컨텍스트) 캐시 제외</li>
-        <li>반복 요청 시 입력 토큰 비용 절감</li>
-      </ul>
+  </section>
+
+  <!-- 03 ITERATION HISTORY (ACCORDION, default closed) -->
+  <section id="iteration" class="section fade-in">
+    <div class="accordion" id="acc-iteration">
+      <div class="accordion-header" onclick="toggleAcc('acc-iteration')">
+        <div class="acc-left">
+          <span class="acc-title">03 Full Iteration History (70회 실험 전체)</span>
+          <span class="acc-badge">70개 기록</span>
+        </div>
+        <span class="acc-chevron">&#8964;</span>
+      </div>
+      <div class="accordion-body" id="body-acc-iteration">
+        <div class="accordion-inner">
+          <div class="phase-list">
+            <div class="phase-item">
+              <span class="phase-num">Phase 1</span>
+              <div class="phase-info">
+                <h4>RAG 품질 고도화</h4>
+                <p>2026-04-16 ~ 04-30 &middot; 기초 RAG 구조 정립, 하이브리드 검색 도입, 멀티테넌트 격리 완성</p>
+              </div>
+            </div>
+            <div class="phase-item">
+              <span class="phase-num">Phase 2</span>
+              <div class="phase-info">
+                <h4>E2E 정확도 집중 개선</h4>
+                <p>2026-05-10 ~ 06-04 &middot; LLM 호출 통합, Self-Verifier 도입, 미답변 Slack 루프 구축</p>
+              </div>
+            </div>
+            <div class="phase-item">
+              <span class="phase-num">Phase 3</span>
+              <div class="phase-info">
+                <h4>안정화 &amp; 고난도 강화셋</h4>
+                <p>2026-06-05 ~ 07-10 &middot; LLM Judge, BM25 튜닝, 모니터링 체계화, 98% 정확도 달성</p>
+              </div>
+            </div>
+          </div>
+          <a class="link-card" href="withbuddy_ai_report.html" target="_blank">
+            <div>
+              <div class="lc-sub">전체 실험 기록 보기</div>
+              <div class="lc-title">AI 기술 보고서</div>
+            </div>
+            <span class="lc-arrow">&#8594;</span>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- My Contributions -->
-<div class="section">
-  <h2>👤 My Contributions</h2>
-  <p style="color:#8b949e;font-size:14px;margin-bottom:16px;border-left:3px solid #a371f7;padding-left:12px;">AI 파트 전담 — 설계부터 배포까지 단독 구현</p>
-  <table class="contrib-table">
-    <tr><th>영역</th><th>내용</th></tr>
-    <tr><td>RAG 파이프라인</td><td>문서 인덱싱, 하이브리드 검색, 답변 생성 전체 설계 및 구현</td></tr>
-    <tr><td>Multi-Agent</td><td>LangGraph Orchestrator, Self-Verifier, LLM Judge 구현</td></tr>
-    <tr><td>Prompt Engineering</td><td>멀티테넌트 시스템 프롬프트, Prompt Caching, 답변 품질 규칙 설계</td></tr>
-    <tr><td>Async API</td><td>FastAPI SSE 스트리밍 엔드포인트, 선행 버퍼 로직</td></tr>
-    <tr><td>평가 시스템</td><td>RAGAS 자동 평가, LangSmith 트레이싱, E2E 회귀 테스트 설계</td></tr>
-    <tr><td>미답변 관리</td><td>감지 → 저장 → 군집화 → Slack 알림 → 관리자 루프 전체</td></tr>
-    <tr><td>문서 인덱싱</td><td>content_hash 변경 감지 기반 자동 재인덱싱, 버전 관리</td></tr>
-  </table>
-</div>
+  <!-- 04 MONITORING -->
+  <section id="monitoring" class="section fade-in">
+    <div class="section-label">04 Monitoring &amp; Observability</div>
+    <div class="section-heading">모니터링 체계</div>
+    <div class="monitor-grid">
+      <div class="monitor-card mc-purple">
+        <div class="monitor-header">
+          <span class="mon-badge mb-purple">LangSmith</span>
+          <div>
+            <div class="monitor-name">AI 품질 · 토큰 · 비용 추적</div>
+          </div>
+        </div>
+        <div class="monitor-img">
+          <img src="260703.png" alt="LangSmith 모니터링" loading="lazy">
+        </div>
+        <div class="monitor-stats">
+          <div><span class="mstat-val">0.75초</span><span class="mstat-key">TTFT</span></div>
+          <div><span class="mstat-val">3.4초</span><span class="mstat-key">평균 응답</span></div>
+          <div><span class="mstat-val">적용 중</span><span class="mstat-key">Prompt Caching</span></div>
+        </div>
+      </div>
+      <div class="monitor-card mc-green">
+        <div class="monitor-header">
+          <span class="mon-badge mb-green">Grafana</span>
+          <div>
+            <div class="monitor-name">인프라 · 서버 상태 모니터링</div>
+          </div>
+        </div>
+        <div class="monitor-img">
+          <img src="0703_grafana.png" alt="Grafana 대시보드" loading="lazy">
+        </div>
+        <div class="monitor-stats">
+          <div><span class="mstat-val">0.00%</span><span class="mstat-key">Error Rate</span></div>
+          <div><span class="mstat-val">95ms</span><span class="mstat-key">Stream p95</span></div>
+          <div><span class="mstat-val">UP</span><span class="mstat-key">서버 상태</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Tech Stack -->
-<div class="section">
-  <h2>🛠 Tech Stack</h2>
-  <table>
-    <tr><th>Category</th><th>Technology</th></tr>
-    <tr><td>Language</td><td>Python 3.11</td></tr>
-    <tr><td>LLM</td><td>Claude Haiku (Anthropic)</td></tr>
-    <tr><td>Embedding</td><td>Google Gemini Embedding 2 · 3072d</td></tr>
-    <tr><td>RAG Framework</td><td>LangChain, LangGraph</td></tr>
-    <tr><td>Vector DB</td><td>ChromaDB</td></tr>
-    <tr><td>Keyword Search</td><td>BM25 + kiwipiepy (Korean NLP)</td></tr>
-    <tr><td>API Server</td><td>FastAPI + asyncio</td></tr>
-    <tr><td>Caching</td><td>Anthropic Prompt Caching · Redis</td></tr>
-    <tr><td>Evaluation</td><td>RAGAS · E2E Python</td></tr>
-    <tr><td>Monitoring</td><td>LangSmith</td></tr>
-    <tr><td>Notification</td><td>Slack SDK</td></tr>
-  </table>
-</div>
+  <!-- 05 AI ENGINEERING NOTES (ACCORDION, default closed) -->
+  <section id="engineering" class="section fade-in">
+    <div class="accordion" id="acc-engineering">
+      <div class="accordion-header" onclick="toggleAcc('acc-engineering')">
+        <div class="acc-left">
+          <span class="acc-title">05 AI Engineering Notes</span>
+          <span class="acc-badge">설계 의도와 의사결정</span>
+        </div>
+        <span class="acc-chevron">&#8964;</span>
+      </div>
+      <div class="accordion-body" id="body-acc-engineering">
+        <div class="accordion-inner">
+          <div class="design-grid">
+            <div class="design-card">
+              <h4>BM25 + 벡터 하이브리드</h4>
+              <p>프롬프트 튜닝 한계 → 검색 품질이 병목. 하이브리드 검색 도입으로 키워드 강도와 의미 유사도를 동시에 활용.</p>
+              <span class="result-tag rt-green">82.5% → 87.5%</span>
+            </div>
+            <div class="design-card">
+              <h4>Confidence Gate 보류</h4>
+              <p>임계값 0.60에서 오답 83% 차단 가능하지만 정상 질문 22%도 함께 차단. is_unanswered 후처리로 대체.</p>
+              <span class="result-tag rt-orange">보류 → 후처리 대체</span>
+            </div>
+            <div class="design-card">
+              <h4>LLM 호출 1회 통합</h4>
+              <p>Intent + Clarifying 판별을 단일 LLM 호출로 통합. 2회 → 1회, 응답 속도 및 비용 동시 개선.</p>
+              <span class="result-tag rt-blue">응답속도 개선</span>
+            </div>
+            <div class="design-card">
+              <h4>Self-Verifier + LLM Judge</h4>
+              <p>스트리밍 억제 후 전량 누적 → 검증 → 단일 전송. UX와 안전성의 트레이드오프를 직접 설계.</p>
+              <span class="result-tag rt-green">신뢰도 향상</span>
+            </div>
+          </div>
+          <a class="link-card" href="withbuddy_ai_report.html" target="_blank">
+            <div>
+              <div class="lc-sub">AI 기술 보고서에서 전체 보기</div>
+              <div class="lc-title">전체 설계 의사결정 기록 →</div>
+            </div>
+            <span class="lc-arrow">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Outcomes -->
-<div class="section">
-  <h2>📊 Project Outcomes</h2>
-  <table>
-    <tr><th>지표</th><th>결과</th></tr>
-    <tr><td>E2E 정답률</td><td><span class="outcome-value">97.5%</span> (39/40, 통합 테스트셋)</td></tr>
-    <tr><td>BM25 도입 효과</td><td><span class="outcome-value">82.5% → 87.5%</span> (+5%p)</td></tr>
-    <tr><td>TTFT</td><td><span class="outcome-value">평균 0.7초</span></td></tr>
-    <tr><td>LLM 호출 최적화</td><td>Intent + Clarifying 통합으로 <span class="outcome-value">2 → 1회</span></td></tr>
-    <tr><td>지원 기업 수</td><td>멀티테넌트 구조로 <span class="outcome-value">복수 기업</span> 동시 운영</td></tr>
-  </table>
-</div>
+  <!-- 06 DEVELOPMENT NOTES (ACCORDION, default closed) -->
+  <section id="devnotes" class="section fade-in">
+    <div class="accordion" id="acc-devnotes">
+      <div class="accordion-header" onclick="toggleAcc('acc-devnotes')">
+        <div class="acc-left">
+          <span class="acc-title">06 Development Notes</span>
+          <span class="acc-badge">개발 과정과 트러블슈팅</span>
+        </div>
+        <span class="acc-chevron">&#8964;</span>
+      </div>
+      <div class="accordion-body" id="body-acc-devnotes">
+        <div class="accordion-inner">
+          <div class="bug-grid">
+            <div class="bug-card bc-orange">
+              <div class="bug-header">
+                <span class="bug-tag bt-bug">BUG #1</span>
+                <span class="bug-tag bt-fixed">FIXED</span>
+                <h4>Case A 법령 안내 문구 중복 출력</h4>
+              </div>
+              <p>SSE delta + fixed 이중 렌더링으로 인해 법령 안내 문구가 두 번 출력되는 버그. 완성본에만 안내 문구를 포함하도록 스트리밍 흐름을 수정.</p>
+            </div>
+            <div class="bug-card bc-green">
+              <div class="bug-header">
+                <span class="bug-tag bt-bug">BUG #2</span>
+                <span class="bug-tag bt-fixed">FIXED</span>
+                <h4>동일 질문 no_result 비결정성</h4>
+              </div>
+              <p>월차 개념 불일치로 동일 질문이 어떤 날은 정답, 어떤 날은 no_result로 분류. 법령 문서가 있을 때 헷징 표현 금지 규칙을 추가해 안정화.</p>
+            </div>
+            <div class="bug-card bc-gray">
+              <div class="bug-header">
+                <span class="bug-tag bt-exp">EXPERIMENT</span>
+                <span class="bug-tag bt-rev">REVERTED</span>
+                <h4>동의어 사전(_SYNONYMS) 도입</h4>
+              </div>
+              <p>검증 범위 폭발 문제로 실용성 한계 확인. 케이스별 수동 대응으로 회귀. 도메인 특화 동의어는 별도 체계가 필요함을 확인.</p>
+            </div>
+          </div>
+          <a class="link-card" href="withbuddy_ai_report.html" target="_blank">
+            <div>
+              <div class="lc-sub">전체 트러블슈팅 기록</div>
+              <div class="lc-title">AI 기술 보고서 →</div>
+            </div>
+            <span class="lc-arrow">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Lessons Learned -->
-<div class="section">
-  <h2>💡 Lessons Learned</h2>
-  <div class="lesson">
-    <h3>RAG는 검색이 전부다</h3>
-    <p>초기에는 프롬프트 튜닝에 집중했지만, 정답률 병목은 항상 검색 품질이었습니다. BM25 하이브리드 도입 후 키워드 매칭이 약한 케이스가 크게 줄었고, 한국어 형태소 분석이 BM25 성능에 직접적인 영향을 준다는 걸 체감했습니다.</p>
-  </div>
-  <div class="lesson">
-    <h3>Prompt Engineering은 규칙이 아니라 제약이다</h3>
-    <p>"~하세요" 식 지시보다 "~는 절대 금지입니다 + 올바른 형태 예시 제시"가 훨씬 효과적이었습니다. LLM은 금지 규칙만 있으면 비슷한 패턴을 변형해서 우회하지만, 정답 형태를 명시하면 수렴합니다.</p>
-  </div>
-  <div class="lesson">
-    <h3>비결정성을 다루는 법</h3>
-    <p>동일 질문이 어떤 날은 정답, 어떤 날은 no_result로 분류되는 문제를 겪었습니다. 원인은 LLM 온도와 누적된 conversationHistory였고, temperature=0 고정과 히스토리 10턴 제한으로 안정화했습니다.</p>
-  </div>
-  <div class="lesson">
-    <h3>스트리밍과 품질 검증의 충돌</h3>
-    <p>SSE 스트리밍은 이미 나간 토큰을 회수할 수 없어서, 고위험 질문의 품질 검증과 정면으로 충돌했습니다. 스트리밍 억제 → 전체 누적 → LLM Judge → 단일 전송 방식으로 해결했지만, UX와 안전성의 트레이드오프를 직접 설계하는 경험이었습니다.</p>
-  </div>
-</div>
+  <!-- 07 RETROSPECTIVE (ACCORDION, default closed) -->
+  <section id="retrospective" class="section fade-in">
+    <div class="accordion" id="acc-retrospective">
+      <div class="accordion-header" onclick="toggleAcc('acc-retrospective')">
+        <div class="acc-left">
+          <span class="acc-title">07 Retrospective</span>
+          <span class="acc-badge">개발 회고와 배운 점</span>
+        </div>
+        <span class="acc-chevron">&#8964;</span>
+      </div>
+      <div class="accordion-body" id="body-acc-retrospective">
+        <div class="accordion-inner">
+          <div class="retro-grid">
+            <div class="retro-card">
+              <h4>API를 여러 개 붙인다고 에이전트가 되는 게 아니다</h4>
+              <p>소위 에이전트라 부를 수 있는 수준은 AI 단독으로는 도달할 수 없었다. 기획과 검증, UI/UX, 인프라, 데이터베이스 — 팀 전체가 함께 움직여야 했다.</p>
+            </div>
+            <div class="retro-card">
+              <h4>기술 스택이 도메인 지식을 대신해주지 않는다</h4>
+              <p>BM25 하이브리드 + 최신 임베딩 모델을 써도 HR 동의어 문제는 해결 안 됐다. 어떤 용어가 혼용되는지는 직접 발굴해야 했다.</p>
+            </div>
+            <div class="retro-card">
+              <h4>개발자가 혼자 레드팀과 품질 검토를 감당하는 데는 한계가 있다</h4>
+              <p>HR 도메인을 잘 아는 사람이 함께라면 놓치는 케이스를 더 빠르게 잡을 수 있겠다는 걸 실감했다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="footer">
-  <p>WithBuddy AI · Built with ❤️ · 2026.03 – 2026.07</p>
-  <p style="margin-top:6px;"><a href="https://github.com/junsu22/withbuddy-showcase">github.com/junsu22/withbuddy-showcase</a></p>
-</div>
+</div><!-- /main-content -->
+
+<footer class="footer">
+  <p class="footer-main">With Buddy AI | AI Project League 6기 | Team DANDAN</p>
+  <p class="footer-tag">Made with ❤ and lots of ☕</p>
+  <p class="footer-copy">© 2025. All rights reserved.</p>
+</footer>
 
 <script>
-function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
+// Accordion
+function toggleAcc(id) {
+  var acc = document.getElementById(id);
+  var body = document.getElementById('body-' + id);
+  var open = acc.classList.contains('open');
+  acc.classList.toggle('open', !open);
+  body.classList.toggle('open', !open);
 }
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
-</script>
 
+// Sticky header
+var hdr = document.getElementById('stickyHeader');
+window.addEventListener('scroll', function() {
+  hdr.classList.toggle('visible', window.scrollY > 80);
+}, { passive: true });
+
+// Fade-in
+var fadeEls = document.querySelectorAll('.fade-in');
+var fadeObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.07 });
+fadeEls.forEach(function(el) { fadeObs.observe(el); });
+
+// Right nav active highlight
+var sections = document.querySelectorAll('section[id]');
+var navLinks = document.querySelectorAll('.right-nav ul li a');
+var navObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      var id = e.target.id;
+      navLinks.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('data-section') === id);
+      });
+    }
+  });
+}, { threshold: 0.25, rootMargin: '-10% 0px -60% 0px' });
+sections.forEach(function(s) { navObs.observe(s); });
+</script>
 </body>
 </html>
