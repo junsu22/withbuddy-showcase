@@ -1173,10 +1173,16 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
           <span style="font-size:11px;color:#4a5a70;margin-left:auto;">Self-Verifier · LLM Judge</span>
         </div>
         <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0d1f14;border-radius:0 0 8px 8px;border:1px solid #1a3d25;border-top:none;">
-          <span style="font-size:11px;color:#94a3b8;">📤</span>
-          <span style="font-size:12px;color:#34d399;font-weight:600;">답변 + 담당자 카드 + 서식</span>
-          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">미답변 시 Slack</span>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#0d1f14;border-radius:0 0 8px 8px;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;margin-top:1px;">📤</span>
+          <div style="flex:1;">
+            <div style="font-size:12px;color:#34d399;font-weight:600;margin-bottom:5px;">답변 + 담당자 카드 + 서식</div>
+            <div style="font-size:11px;color:#4a5a70;line-height:1.8;">
+              미답변 → 회사별 Slack 채널 즉시 알림<br>
+              Slack 안에서 직접 답변 → AI 지식 즉시 반영<br>
+              매주 월요일 자동 요약 리포트 발송
+            </div>
+          </div>
         </div>
       </div>
     </div>
