@@ -131,9 +131,12 @@ tbody tr.fail-row td { opacity:.55; }
   tbody tr { page-break-inside:avoid; }
 }
 /* ── 아코디언 ── */
-.acc-toggle { cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
-.acc-toggle:hover { opacity:0.8; }
-.acc-arrow { font-size:10px; color:#4a5a70; flex-shrink:0; margin-left:8px; }
+.acc-toggle { cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; background:#1a2235; border:1px solid #243048; border-radius:10px; padding:14px 18px; margin-bottom:0 !important; transition:border-color 0.2s,background 0.2s; }
+.acc-toggle:hover { background:#1a2a40; border-color:#60a5fa; opacity:1; }
+.acc-toggle + .section-line { display:none; }
+.acc-toggle-inner { display:flex; flex-direction:column; gap:4px; }
+.acc-toggle-meta { font-size:11px; color:#4a5a70; font-weight:400; text-transform:none; letter-spacing:0; }
+.acc-arrow { font-size:12px; color:#4a5a70; flex-shrink:0; margin-left:12px; }
 
 /* ── Sticky header ── */
 html{scroll-behavior:smooth;}
@@ -570,7 +573,7 @@ html{scroll-behavior:smooth;}
      5. 성능 개선 타임라인
 ════════════════════════════════════════════ -->
 <div class="section" id="iter">
-  <div class="section-title acc-toggle">정확도 개선 전체 이력 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>정확도 개선 전체 이력</span><span class="acc-toggle-meta">Phase 1~3 · 70회 반복 실험 · 2026.04–07</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="banner">
@@ -724,7 +727,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
      6. 트러블슈팅 기록
 ════════════════════════════════════════════ -->
 <div class="section" id="troubleshoot">
-  <div class="section-title acc-toggle">트러블슈팅 기록 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>트러블슈팅 기록</span><span class="acc-toggle-meta">버그 수정 8건 · BM25 구어체 이슈 · 동의어 사전 실험 롤백</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <!-- Bug 1: case_a 중복 -->
@@ -1055,7 +1058,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section" id="retrospective">
-  <div class="section-title acc-toggle">막혔던 순간들 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>막혔던 순간들</span><span class="acc-toggle-meta">단독 개발의 한계 · 도메인 지식의 중요성 · 팀워크가 만드는 AI</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <p style="font-size:13px;color:#64748b;margin:0 0 16px;line-height:1.9;">
@@ -1215,7 +1218,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section" id="roadmap">
-  <div class="section-title acc-toggle">고도화 방향 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>고도화 방향</span><span class="acc-toggle-meta">LangGraph Supervisor · 미답변 군집화 · 에이전틱 AI 진화</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="agentic-flow">
@@ -1290,7 +1293,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section" id="sustain">
-  <div class="section-title acc-toggle">지속 가능성 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>지속 가능성</span><span class="acc-toggle-meta">OCI 프리티어 · $0.19/1K 쿼리 · 리그 종료 후도 무기한 운영 가능</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="cost-grid">
@@ -1373,7 +1376,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 </style>
 
 <section class="section" id="scale">
-  <div class="section-title acc-toggle">확장 가능성 <span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>확장 가능성</span><span class="acc-toggle-meta">멀티 프로바이더 · Claude 장애 시 GPT-4.1-mini 자동 폴백</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="ext-hero">
