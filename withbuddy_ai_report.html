@@ -13,7 +13,7 @@ body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Mal
 /* ── 공통 ── */
 .section { margin-bottom:88px; }
 .section-title { font-size:13px; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:.12em; margin-bottom:6px; }
-.section-line { height:1px; background:#1a2235; margin-bottom:28px; }
+.section-line { height:1px; background:#1a2235; margin-bottom:36px; }
 
 /* ── 1. 커버 ── */
 .cover { margin-bottom:56px; }
@@ -137,7 +137,8 @@ tbody tr.fail-row td { opacity:.55; }
 .acc-toggle-inner { display:flex; flex-direction:column; gap:4px; }
 .acc-toggle-meta { font-size:11px; color:#4a5a70; font-weight:400; text-transform:none; letter-spacing:0; }
 .acc-arrow { font-size:12px; color:#4a5a70; flex-shrink:0; margin-left:12px; }
-.phase-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.acc-body { padding-top:28px; }
+.phase-tabs { display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; }
 .phase-tab { cursor:pointer; padding:6px 18px; border-radius:20px; font-size:12px; font-weight:700; border:1px solid #243048; color:#64748b; background:#1a2235; transition:all 0.15s; letter-spacing:.04em; }
 .phase-tab.active { background:#3b82f6; border-color:#3b82f6; color:#fff; }
 .phase-tab:hover:not(.active) { border-color:#60a5fa; color:#93c5fd; }
@@ -967,7 +968,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 
 <!-- ── 결정 일지 ── -->
 <style>
-.pivot-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.pivot-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
 .pivot-card { background:#0f1724; border:1px solid #1e2d42; border-radius:16px; overflow:hidden; }
 .pivot-card-header { padding:16px 20px 14px; border-bottom:1px solid #1e2d42; }
 .pivot-badge { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
