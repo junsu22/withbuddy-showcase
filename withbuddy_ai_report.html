@@ -1140,17 +1140,57 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="agentic-flow">
-    <div class="agentic-box">
-      <div class="label">현재</div>
-      <div class="steps">
-        <span>질문</span> → <span>RAG 검색</span> → <span>답변</span> → <span>Slack 알림</span>
+    <div class="agentic-box" style="border-color:#1a3d25;padding:18px 20px;">
+      <div class="label" style="color:#34d399;margin-bottom:14px;">현재 — 운영 중</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0d1f14;border-radius:8px 8px 0 0;border:1px solid #1a3d25;">
+          <span style="font-size:11px;color:#94a3b8;">💬</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">질문 입력</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">SSE 스트리밍</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0f1f18;border-radius:0;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">⚡</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">Intent 분류</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">LangGraph · 7가지 유형</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0f1f18;border-radius:0;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">🔍</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">하이브리드 검색</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">BM25 + 벡터 · RRF 병합</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0f1f18;border-radius:0;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">🤖</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">답변 생성</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">Claude Haiku · Prompt Caching</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0f1f18;border-radius:0;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">✓</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">품질 검증</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">Self-Verifier · LLM Judge</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1a3d25;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0d1f14;border-radius:0 0 8px 8px;border:1px solid #1a3d25;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">📤</span>
+          <span style="font-size:12px;color:#34d399;font-weight:600;">답변 + 담당자 카드 + 서식</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">미답변 시 Slack</span>
+        </div>
       </div>
     </div>
     <div class="agentic-arrow">→</div>
-    <div class="agentic-box" style="border-color:#1e3a5a;">
-      <div class="label" style="color:#60a5fa;">목표 — Agentic AI</div>
-      <div class="steps">
-        <span>질문</span> → <span>의도 판단</span> → <span>도구 호출</span> → <span>직접 액션</span>
+    <div class="agentic-box" style="border-color:#1e3a5a;padding:18px 20px;">
+      <div class="label" style="color:#60a5fa;margin-bottom:14px;">목표 — Agentic AI</div>
+      <div class="steps" style="line-height:2.2;">
+        <span>질문</span> →<br>
+        <span>의도 판단</span> →<br>
+        <span>도구 호출</span> (연차 API · 체크리스트 · Slack DM) →<br>
+        <span>직접 액션</span> + 결과 확인
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #1e3a5a;font-size:11px;color:#4a5a70;line-height:1.7;">
+        답변을 주는 것에서<br>일을 처리하는 것으로
       </div>
     </div>
   </div>
