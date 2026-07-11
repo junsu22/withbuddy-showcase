@@ -1344,16 +1344,10 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
     </div>
   </div>
 
-  <div class="ext-code">
-    <div class="ext-code-label">실제 구현 — core/llm.py</div>
-    <pre><span class="comment"># Primary: Claude Haiku 4.5</span>
-primary = ChatAnthropic(<span class="hl">model="claude-haiku-4-5-20251001"</span>, ...)
-
-<span class="comment"># Fallback: GPT-4.1-mini (Anthropic 장애 시 자동 전환)</span>
-fallback = ChatOpenAI(<span class="hl2">model="gpt-4.1-mini"</span>, ...)
-
-<span class="comment"># 한 줄로 멀티 프로바이더 완성</span>
-return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_handle=_ANTHROPIC_SERVER_ERRORS)</pre>
+  <div style="display:inline-flex;align-items:center;gap:10px;background:#0d1117;border:1px solid #243048;border-radius:8px;padding:10px 16px;font-size:12px;color:#64748b;margin:20px 0 0;">
+    <code style="color:#a78bfa;">primary.with_fallbacks([gpt-4.1-mini])</code>
+    <span style="color:#1e2d3d;">|</span>
+    <span>Claude 장애 시 자동 전환 · 운영자 개입 없음</span>
   </div>
 
   <!-- 실제 답변 사례 -->
@@ -1379,7 +1373,8 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
 
   <div class="qa-header">
     <div class="qa-badge">✅ 4 / 4 정확</div>
-    <div class="qa-header-title">실제 폴백 모델 답변 검증 — 실사 문서 기반, 답변 품질 우수</div>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:#0a1f35;border:1px solid #0369a1;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:#38bdf8;">GPT-4.1-mini 답변</div>
+    <div class="qa-header-title" style="color:#64748b;font-weight:400;">Claude 장애 상황 실제 문서 기반 검증</div>
   </div>
 
   <div class="qa-grid">
