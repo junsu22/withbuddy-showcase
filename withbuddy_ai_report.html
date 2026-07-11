@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:64px 56px; min-width:960px; line-height:1.7; }
+body { background:#0f1623; color:#e2e8f0; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; padding:120px 56px 64px; min-width:960px; line-height:1.7; }
 
 /* ── 공통 ── */
 .section { margin-bottom:88px; }
@@ -134,9 +134,61 @@ tbody tr.fail-row td { opacity:.55; }
 .acc-toggle { cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
 .acc-toggle:hover { opacity:0.8; }
 .acc-arrow { font-size:10px; color:#4a5a70; flex-shrink:0; margin-left:8px; }
+
+/* ── Sticky header ── */
+html{scroll-behavior:smooth;}
+.sticky-header{position:fixed;top:0;left:0;right:0;height:48px;background:#0f1623;border-bottom:1px solid #1a2235;display:flex;align-items:center;justify-content:space-between;padding:0 56px;z-index:1000;opacity:0;transform:translateY(-100%);transition:opacity 0.3s,transform 0.3s;}
+.sticky-header.visible{opacity:1;transform:translateY(0);}
+.header-left{display:flex;align-items:center;gap:10px;}
+.header-logo{width:28px;height:28px;background:linear-gradient(135deg,#60a5fa,#a78bfa);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0;}
+.header-title{font-size:14px;font-weight:700;color:#e2e8f0;}
+.header-subtitle{font-size:11px;color:#64748b;}
+.header-right{display:flex;gap:8px;}
+.header-btn{height:28px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid #243048;background:#1a2235;color:#e2e8f0;text-decoration:none;display:inline-flex;align-items:center;gap:4px;cursor:pointer;transition:border-color 0.15s,background 0.15s;}
+.header-btn:hover{border-color:#60a5fa;background:#1e2d45;color:#60a5fa;}
+.header-btn.top-btn{background:transparent;border-color:#1a2235;color:#64748b;}
+.header-btn.top-btn:hover{color:#e2e8f0;border-color:#243048;}
+
+/* ── Right nav ── */
+.right-nav{position:fixed;right:24px;top:50%;transform:translateY(-50%);width:160px;z-index:900;display:none;}
+@media(min-width:1300px){.right-nav{display:block;}}
+.right-nav ul{list-style:none;}
+.right-nav ul li a{display:block;padding:5px 10px;font-size:11px;color:#4a5a70;border-left:2px solid #1a2235;text-decoration:none;transition:color 0.2s,border-color 0.2s;margin-bottom:2px;}
+.right-nav ul li a:hover,.right-nav ul li a.active{color:#60a5fa;border-left-color:#60a5fa;}
+
+/* ── Fade-in ── */
+.fade-in{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
+
+<div class="sticky-header" id="stickyHeader">
+  <div class="header-left">
+    <div class="header-logo">W</div>
+    <span class="header-title">With Buddy AI</span>
+    <span class="header-subtitle">HR RAG Assistant</span>
+  </div>
+  <div class="header-right">
+    <a class="header-btn" href="https://github.com/junsu22/withbuddy-showcase" target="_blank">GitHub</a>
+    <a class="header-btn top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+  </div>
+</div>
+
+<nav class="right-nav" id="rightNav">
+  <ul>
+    <li><a href="#kpi">핵심 성과</a></li>
+    <li><a href="#arch">아키텍처</a></li>
+    <li><a href="#monitoring">모니터링</a></li>
+    <li><a href="#devnote">개발 노트</a></li>
+    <li><a href="#iter">정확도 이력</a></li>
+    <li><a href="#troubleshoot">트러블슈팅</a></li>
+    <li><a href="#retrospective">막혔던 순간들</a></li>
+    <li><a href="#roadmap">고도화 방향</a></li>
+    <li><a href="#sustain">지속 가능성</a></li>
+    <li><a href="#scale">확장 가능성</a></li>
+  </ul>
+</nav>
 
 <!-- ══════════════════════════════════════════
      1. 커버
@@ -173,7 +225,7 @@ tbody tr.fail-row td { opacity:.55; }
 <!-- ══════════════════════════════════════════
      2. KPI
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="kpi">
   <div class="section-title">핵심 성과 지표</div>
   <div class="section-line"></div>
 
@@ -297,7 +349,7 @@ tbody tr.fail-row td { opacity:.55; }
 <!-- ══════════════════════════════════════════
      3. 아키텍처 플로우
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="arch">
   <div class="section-title">입력 · 처리 · 출력 구조</div>
   <div class="section-line"></div>
 
@@ -461,7 +513,7 @@ tbody tr.fail-row td { opacity:.55; }
 <!-- ══════════════════════════════════════════
      4. 실시간 모니터링
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="monitoring">
   <div class="section-title">실시간 모니터링</div>
   <div class="section-line"></div>
 
@@ -502,7 +554,7 @@ tbody tr.fail-row td { opacity:.55; }
 <!-- ══════════════════════════════════════════
      4.5 개발 노트
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="devnote">
   <div class="section-title">개발 노트</div>
   <div class="section-line"></div>
 
@@ -517,7 +569,7 @@ tbody tr.fail-row td { opacity:.55; }
 <!-- ══════════════════════════════════════════
      5. 성능 개선 타임라인
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="iter">
   <div class="section-title acc-toggle">정확도 개선 전체 이력 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -671,7 +723,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 <!-- ══════════════════════════════════════════
      6. 트러블슈팅 기록
 ════════════════════════════════════════════ -->
-<div class="section">
+<div class="section" id="troubleshoot">
   <div class="section-title acc-toggle">트러블슈팅 기록 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -1002,7 +1054,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 .pivot-result-chip { display:inline-block; background:#1a2d1a; border:1px solid #1e4d2a; border-radius:6px; padding:3px 10px; font-size:11px; font-weight:700; color:#34d399; margin-top:2px; }
 </style>
 
-<section class="section">
+<section class="section" id="retrospective">
   <div class="section-title acc-toggle">막혔던 순간들 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -1162,7 +1214,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 .agentic-note strong { color:#60a5fa; }
 </style>
 
-<section class="section">
+<section class="section" id="roadmap">
   <div class="section-title acc-toggle">고도화 방향 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -1237,7 +1289,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 .sustain-note strong { color:#34d399; }
 </style>
 
-<section class="section">
+<section class="section" id="sustain">
   <div class="section-title acc-toggle">지속 가능성 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -1320,7 +1372,7 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
 .ext-code .comment { color:#3d5a80; }
 </style>
 
-<section class="section">
+<section class="section" id="scale">
   <div class="section-title acc-toggle">확장 가능성 <span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
@@ -1463,6 +1515,48 @@ return primary.<span class="hl">with_fallbacks</span>([fallback], exceptions_to_
   </div>
 </div>
 </section>
+
+<script>
+// Sticky header
+(function(){
+  var header = document.getElementById('stickyHeader');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 80) header.classList.add('visible');
+    else header.classList.remove('visible');
+  });
+})();
+
+// Right nav active highlight
+(function(){
+  var navLinks = document.querySelectorAll('.right-nav a');
+  var sections = Array.from(navLinks).map(function(a){
+    return document.querySelector(a.getAttribute('href'));
+  }).filter(Boolean);
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        navLinks.forEach(function(a){ a.classList.remove('active'); });
+        var active = document.querySelector('.right-nav a[href="#'+entry.target.id+'"]');
+        if(active) active.classList.add('active');
+      }
+    });
+  }, {rootMargin: '-30% 0px -60% 0px'});
+
+  sections.forEach(function(s){ observer.observe(s); });
+})();
+
+// Fade-in on scroll
+(function(){
+  var els = document.querySelectorAll('.section');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, {threshold: 0.05});
+  els.forEach(function(el){ el.classList.add('fade-in'); obs.observe(el); });
+})();
+</script>
 
 <script>
 window.addEventListener('load', function() {
