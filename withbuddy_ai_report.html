@@ -1276,10 +1276,16 @@ FAIL 5건 중 AI 판단 오류 아닌 것 2건: ① 서버 간헐적 무응답(Q
           생성 후 압축(post-processing)은 LLM 1회 추가 호출로 1~2초 지연 발생 + SSE 스트리밍 장점 소멸 — 사용자가 기다리다 짧은 답변이 갑자기 뜨는 경험이라 채택 안 함.
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#34d399;padding:3px 9px;border-radius:4px;white-space:nowrap;">인덱싱</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"자동 인덱싱 테스트가 필요해" → <span style="color:#e2e8f0;font-weight:600;">관리자 페이지 문서 업로드 시 자동 인덱싱 구현 완료</span> — Notion·Slack 등 외부 소스를 데이터 원천으로 끌어오는 파이프라인은 확장 가능한 구조로 로드맵 반영</div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
+      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
+          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#34d399;padding:3px 9px;border-radius:4px;white-space:nowrap;">인덱싱</span>
+          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"자동 인덱싱 테스트가 필요해" → <span style="color:#e2e8f0;font-weight:600;">관리자 페이지 문서 업로드 시 자동 인덱싱 구현 완료</span></div>
+          <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
+        </div>
+        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
+          <span style="color:#94a3b8;font-weight:600;">Notion·Slack 미연동 이유 —</span>
+          Notion 페이지·Slack 메시지는 실시간으로 변경되는 구조라, 현재 파이프라인(파일 업로드 → 청킹 → 인덱싱)과 달리 <span style="color:#e2e8f0;">변경 감지 + 주기적 재인덱싱</span> 설계가 별도로 필요. 동기화 주기 정책(실시간 웹훅 vs 야간 배치)까지 결정해야 해 이번 스프린트 미포함.
+        </div>
       </div>
     </div>
   </div>
