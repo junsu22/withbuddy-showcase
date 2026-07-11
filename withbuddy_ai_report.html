@@ -406,157 +406,50 @@ html{scroll-behavior:smooth;}
   <div class="section-title">입력 · 처리 · 출력 구조</div>
   <div class="section-line"></div>
 
-  <div class="flow">
+  <div style="display:grid;grid-template-columns:160px 1fr 160px;gap:16px;align-items:start;">
 
-    <!-- 입력 -->
-    <div>
-      <div class="col-header"><span class="col-label lbl-in">📥 입력</span></div>
-
-      <div class="card green">
-        <div class="card-icon">📄</div>
-        <div class="card-title">사내 문서</div>
-        <div class="card-desc">PDF · DOCX · HWP · TXT<br>인사 규정 · 복지 · IT · 총무</div>
-        <span class="card-tag tag-green">회사별 격리 저장</span>
-      </div>
-
-      <div class="card green">
-        <div class="card-icon">💬</div>
-        <div class="card-title">신입사원 질문</div>
-        <div class="card-desc">채팅 UI → SSE 스트리밍<br>멀티턴 대화 컨텍스트 유지</div>
-        <span class="card-tag tag-green">실시간 스트리밍</span>
-      </div>
-
-      <div class="card green">
-        <div class="card-icon">🏢</div>
-        <div class="card-title">멀티테넌트</div>
-        <div class="card-desc">company_code 기반 격리<br>회사별 독립 문서 공간</div>
-        <span class="card-tag tag-green">데이터 완전 격리</span>
+    <!-- Input -->
+    <div style="background:#1a2235;border:1px solid #1a3d25;border-top:3px solid #4ade80;border-radius:12px;padding:18px 16px;">
+      <div style="font-size:10px;font-weight:700;color:#4ade80;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;">Input</div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.9;">
+        📄 사내 문서<br><span style="font-size:11px;color:#64748b;">PDF · DOCX · HWP · TXT</span><br><br>
+        💬 신입사원 질문<br><span style="font-size:11px;color:#64748b;">SSE 스트리밍</span><br><br>
+        🏢 company_code<br><span style="font-size:11px;color:#64748b;">회사별 독립 공간</span>
       </div>
     </div>
 
-    <!-- 화살표 1 -->
-    <div class="arrow-col"><div class="arrow">→</div></div>
-
-    <!-- 처리 -->
-    <div>
-      <div class="col-header"><span class="col-label lbl-proc">⚙️ 처리</span></div>
-
-      <div class="security-wrap">
-        <div class="security-title">🔒 Cloudflare Tunnel + OCI 3중 방어</div>
-        <div class="security-desc">외부 노출 없이 암호화 터널로 내부 서버 접근</div>
+    <!-- Pipeline -->
+    <div style="background:#1a2235;border:1px solid #243048;border-radius:12px;overflow:hidden;">
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid #1f2d42;">
+        <span style="font-size:10px;font-weight:700;background:#281c47;color:#a78bfa;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:2px;">01</span>
+        <div><div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:3px;">문서 인덱싱</div><div style="font-size:11px;color:#64748b;">파일 형식별 파서 → Markdown 청킹 · Gemini Embedding 2 (3072차원) · ChromaDB</div></div>
       </div>
-
-      <div class="pipeline">
-        <div class="pipe-step">
-          <div class="pipe-label">Step 1 · 문서 인덱싱</div>
-          <div class="pipe-title">텍스트 추출 → 청킹 → 임베딩</div>
-          <div class="pipe-desc">파일 형식별 파서 → Markdown 구조 보존 청킹<br>content_hash 변경 감지 → 변경 시만 재인덱싱</div>
-          <div class="pipe-tags">
-            <span class="card-tag tag-indigo">Gemini Embedding 2</span>
-            <span class="card-tag tag-purple">3072차원 벡터</span>
-            <span class="card-tag tag-purple">ChromaDB</span>
-          </div>
-        </div>
-        <div class="pipe-connector"></div>
-        <div class="pipe-step">
-          <div class="pipe-label">Step 2 · Intent 분류</div>
-          <div class="pipe-title">LangGraph Orchestrator</div>
-          <div class="pipe-desc">질문 유형 자동 판별 (1회 LLM 호출로 통합)<br>sensitive는 LLM 호출 전 선제 차단</div>
-          <div class="pipe-tags">
-            <span class="card-tag tag-yellow">rag · 문서 검색 답변</span>
-            <span class="card-tag tag-yellow">chitchat · 일상 대화</span>
-            <span class="card-tag tag-yellow">company_info · 회사 운영 정보</span>
-            <span class="card-tag tag-yellow">communication · 업무 소통</span>
-            <span class="card-tag tag-yellow">preboarding · 입사 전 안내</span>
-            <span class="card-tag tag-yellow">out_of_scope_internal · 업무 범위 외(내부)</span>
-            <span class="card-tag tag-yellow">out_of_scope_external · 업무 범위 외(외부)</span>
-            <span class="card-tag tag-pink">sensitive · 민감 질문</span>
-          </div>
-        </div>
-        <div class="pipe-connector"></div>
-        <div class="pipe-step">
-          <div class="pipe-label">Step 3 · 하이브리드 검색</div>
-          <div class="pipe-title">BM25 + 벡터 병렬 검색</div>
-          <div class="pipe-desc">키워드 매칭 + 의미 유사도 병합<br>복합 질문 → 자동 분리 후 병렬 검색<br>법령 전용 컬렉션 분리 운용</div>
-          <div class="pipe-tags">
-            <span class="card-tag tag-blue">BM25</span>
-            <span class="card-tag tag-blue">cosine similarity</span>
-            <span class="card-tag tag-blue">dedup 후처리</span>
-          </div>
-        </div>
-        <div class="pipe-connector"></div>
-        <div class="pipe-step">
-          <div class="pipe-label">Step 4 · 답변 생성</div>
-          <div class="pipe-title">Claude Haiku · SSE 스트리밍</div>
-          <div class="pipe-desc">검색된 문서 컨텍스트 기반 답변 생성<br>Prompt Caching — 시스템 프롬프트 재사용으로 입력 토큰 비용 절감<br>평균 TTFT <strong style="color:#a78bfa">0.75초</strong> · 평균 응답 3.4초<br>Anthropic 장애 시 <strong style="color:#fb923c">GPT-4.1-mini 자동 폴백</strong> — max_retries=4 소진 후 전환, 복구 시 자동 복귀</div>
-          <div class="pipe-tags">
-            <span class="card-tag tag-purple">Claude Haiku</span>
-            <span class="card-tag tag-purple">SSE 스트리밍</span>
-            <span class="card-tag tag-purple">Prompt Caching</span>
-            <span class="card-tag tag-orange">GPT-4.1-mini Fallback</span>
-          </div>
-        </div>
-        <div class="pipe-connector"></div>
-        <div class="pipe-step">
-          <div class="pipe-label">Step 5 · 품질 검증</div>
-          <div class="pipe-title">Self-Verifier + LLM Judge</div>
-          <div class="pipe-desc">답변 근거 문서 존재 여부 자동 검증<br>할루시네이션 구조적 차단<br>미답변 감지 → Slack 알림 + 관리자 루프</div>
-          <div class="pipe-tags">
-            <span class="card-tag tag-green">Self-Verifier</span>
-            <span class="card-tag tag-green">LLM Judge</span>
-            <span class="card-tag tag-green">미답변 자동 감지</span>
-          </div>
-        </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid #1f2d42;">
+        <span style="font-size:10px;font-weight:700;background:#281c47;color:#a78bfa;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:2px;">02</span>
+        <div><div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:3px;">Intent 분류</div><div style="font-size:11px;color:#64748b;">LangGraph Orchestrator · rag / chitchat / oos / sensitive 등 7가지 유형 · 1회 LLM 호출로 통합</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid #1f2d42;">
+        <span style="font-size:10px;font-weight:700;background:#281c47;color:#a78bfa;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:2px;">03</span>
+        <div><div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:3px;">하이브리드 검색</div><div style="font-size:11px;color:#64748b;">BM25 + 벡터 병렬 검색 → RRF 병합 · 복합 질문 자동 분리 · 법령 전용 컬렉션 분리</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid #1f2d42;">
+        <span style="font-size:10px;font-weight:700;background:#281c47;color:#a78bfa;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:2px;">04</span>
+        <div><div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:3px;">답변 생성</div><div style="font-size:11px;color:#64748b;">Claude Haiku · SSE 스트리밍 · Prompt Caching · TTFT 0.75초 · 장애 시 GPT-4.1-mini 자동 폴백</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;">
+        <span style="font-size:10px;font-weight:700;background:#281c47;color:#a78bfa;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:2px;">05</span>
+        <div><div style="font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:3px;">품질 검증</div><div style="font-size:11px;color:#64748b;">Self-Verifier (근거 문서 재검증) · LLM Judge · 미답변 감지 → Slack 알림 → 관리자 루프</div></div>
       </div>
     </div>
 
-    <!-- 화살표 2 -->
-    <div class="arrow-col"><div class="arrow">→</div></div>
-
-    <!-- 출력 -->
-    <div>
-      <div class="col-header"><span class="col-label lbl-out">📤 출력</span></div>
-
-      <div class="card blue highlight">
-        <div class="card-icon">✅</div>
-        <div class="card-title">정확한 답변 + 출처</div>
-        <div class="card-desc">문서 기반 근거 있는 답변<br>출처 문서명·섹션 함께 제공</div>
-        <span class="card-tag tag-blue">E2E 97.5% 정답률</span>
-      </div>
-
-      <div class="card blue">
-        <div class="card-icon">👤</div>
-        <div class="card-title">담당자 추천 카드</div>
-        <div class="card-desc">질문 유형별 담당 부서·담당자<br>회사별 동적 라우팅</div>
-        <span class="card-tag tag-blue">멀티테넌트 담당자</span>
-      </div>
-
-      <div class="card blue">
-        <div class="card-icon">📋</div>
-        <div class="card-title">관련 서식·템플릿</div>
-        <div class="card-desc">관련 양식 파일 다운로드 링크<br>회사별 전용 서식 격리 제공</div>
-        <span class="card-tag tag-blue">회사별 서식 격리</span>
-      </div>
-
-      <div class="card yellow">
-        <div class="card-icon">📊</div>
-        <div class="card-title">미답변 감지 · 관리자 루프</div>
-        <div class="card-desc">답변 못 한 질문 자동 감지 → Slack DM 즉시 알림<br>LLM이 미답변 패턴 요약 → 보강 문서 우선순위 제안<br>관리자가 문서 추가 → 다음 질문부터 자동 답변</div>
-        <span class="card-tag tag-yellow">Slack 알림 · LLM 요약 · 자동화 루프</span>
-      </div>
-
-      <div class="card blue">
-        <div class="card-icon">🚀</div>
-        <div class="card-title">PRE 온보딩 퀵탭</div>
-        <div class="card-desc">입사 예정자(PRE 계정) 전용<br>첫 출근 시간·장소·준비물 즉시 답변<br>회사 전용 문서만 격리 검색</div>
-        <span class="card-tag tag-blue">account_status 기반 격리</span>
-      </div>
-
-      <div class="card yellow">
-        <div class="card-icon">✉️</div>
-        <div class="card-title">비즈니스 커뮤니케이션</div>
-        <div class="card-desc">MVP 이전 구현 → 피드백 기반 실사용 수준 개선<br>"연차 신청 메일 써줘" → 즉시 초안 생성<br>말투 검토·채널 추천까지 one-shot</div>
-        <span class="card-tag tag-yellow">메일 초안 · 말투 개선 · 채널 추천</span>
+    <!-- Output -->
+    <div style="background:#1a2235;border:1px solid #1a2f45;border-top:3px solid #38bdf8;border-radius:12px;padding:18px 16px;">
+      <div style="font-size:10px;font-weight:700;color:#38bdf8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;">Output</div>
+      <div style="font-size:12px;color:#cbd5e1;line-height:1.9;">
+        ✅ 답변 + 출처<br><span style="font-size:11px;color:#64748b;">E2E 97.5% 정답률</span><br><br>
+        👤 담당자 추천 카드<br><span style="font-size:11px;color:#64748b;">회사별 동적 라우팅</span><br><br>
+        📋 서식·템플릿<br><span style="font-size:11px;color:#64748b;">회사별 격리 제공</span><br><br>
+        📢 미답변 알림<br><span style="font-size:11px;color:#64748b;">Slack 자동 알림</span>
       </div>
     </div>
 
