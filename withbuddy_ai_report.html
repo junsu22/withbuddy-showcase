@@ -1194,6 +1194,44 @@ html{scroll-behavior:smooth;}
     </div>
   </div>
 
+  <!-- 피드백 반영 이력 -->
+  <div style="margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid #1a2235;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <span style="font-size:10px;font-weight:700;color:#60a5fa;background:#0a1f35;border:1px solid #1e3a5a;border-radius:4px;padding:3px 9px;letter-spacing:.08em;">실사용 피드백</span>
+      <span style="font-size:11px;color:#4a5a70;">실제 사용자 피드백 및 반영 결과</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">기능 요청</span>
+        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">신입은 어떻게 써야 할지뿐 아니라 메일·Slack 중 <span style="color:#e2e8f0;font-weight:600;">어떤 채널로 보내야 할지도 모른다</span> → 한 화면에서 이동 없이 채널 추천 + 초안 생성 + 말투 검토까지 one-shot</div>
+        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">배포 완료</span>
+      </div>
+      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
+          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">답변 품질</span>
+          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"AI 답변이 너무 길다" → <span style="color:#e2e8f0;font-weight:600;">프롬프트 구조 개선</span> — 단순 질문 눈에 띄게 개선, "AI 같다"는 피드백 일부 해소</div>
+          <span style="font-size:11px;color:#fbbf24;font-weight:700;white-space:nowrap;">부분 해소</span>
+        </div>
+        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
+          <span style="color:#94a3b8;font-weight:600;">완전 해소 못 한 이유 —</span>
+          절차가 많은 질문(연차·법인카드 등)은 문서 내용이 많을수록 답변도 길어지는 구조. 문서 자체를 요약본으로 재인덱싱해야 근본 해결되지만 <span style="color:#e2e8f0;">요약 제작 → 재인덱싱 → 품질 테스트</span> 공수로 이번 스프린트 미포함.<br>
+          생성 후 압축(post-processing)은 LLM 1회 추가 호출로 1~2초 지연 발생 + SSE 스트리밍 장점 소멸 — 사용자가 기다리다 짧은 답변이 갑자기 뜨는 경험이라 채택 안 함.
+        </div>
+      </div>
+      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
+          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#34d399;padding:3px 9px;border-radius:4px;white-space:nowrap;">인덱싱</span>
+          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"개발자 없이 관리자가 문서를 올리면 AI 답변에 바로 반영돼야 한다" → <span style="color:#e2e8f0;font-weight:600;">관리자 페이지 문서 업로드 시 자동 인덱싱 구현 완료</span></div>
+          <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
+        </div>
+        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
+          <span style="color:#94a3b8;font-weight:600;">Notion·Slack 미연동 이유 —</span>
+          Notion 페이지·Slack 메시지는 실시간으로 변경되는 구조라, 현재 파이프라인(파일 업로드 → 청킹 → 인덱싱)과 달리 <span style="color:#e2e8f0;">변경 감지 + 주기적 재인덱싱</span> 설계가 별도로 필요. 동기화 주기 정책(실시간 웹훅 vs 야간 배치)까지 결정해야 해 이번 스프린트 미포함.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div style="background:#0a1f14;border:1px solid #166534;border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
     <span style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#34d399;white-space:nowrap;">
       <span style="width:8px;height:8px;background:#34d399;border-radius:50%;display:inline-block;box-shadow:0 0 8px #34d399;animation:pulse 2s infinite;"></span>
@@ -1250,41 +1288,6 @@ html{scroll-behavior:smooth;}
         <div class="user">유저: 응</div>
         <div class="action">→ Slack DM API 호출</div>
         <div class="buddy">버디: 담당자에게 메시지를 보냅니다.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 피드백 반영 이력 -->
-  <div style="margin-top:36px;padding-top:28px;border-top:1px solid #1a2235;">
-    <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px;">실사용 피드백 반영 이력</div>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">기능 요청</span>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">신입은 어떻게 써야 할지뿐 아니라 메일·Slack 중 <span style="color:#e2e8f0;font-weight:600;">어떤 채널로 보내야 할지도 모른다</span> → 한 화면에서 이동 없이 채널 추천 + 초안 생성 + 말투 검토까지 one-shot</div>
-        <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">배포 완료</span>
-      </div>
-      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
-          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#60a5fa;padding:3px 9px;border-radius:4px;white-space:nowrap;">답변 품질</span>
-          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"AI 답변이 너무 길다" → <span style="color:#e2e8f0;font-weight:600;">프롬프트 구조 개선</span> — 단순 질문 눈에 띄게 개선, "AI 같다"는 피드백 일부 해소</div>
-          <span style="font-size:11px;color:#fbbf24;font-weight:700;white-space:nowrap;">부분 해소</span>
-        </div>
-        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
-          <span style="color:#94a3b8;font-weight:600;">완전 해소 못 한 이유 —</span>
-          절차가 많은 질문(연차·법인카드 등)은 문서 내용이 많을수록 답변도 길어지는 구조. 문서 자체를 요약본으로 재인덱싱해야 근본 해결되지만 <span style="color:#e2e8f0;">요약 제작 → 재인덱싱 → 품질 테스트</span> 공수로 이번 스프린트 미포함.<br>
-          생성 후 압축(post-processing)은 LLM 1회 추가 호출로 1~2초 지연 발생 + SSE 스트리밍 장점 소멸 — 사용자가 기다리다 짧은 답변이 갑자기 뜨는 경험이라 채택 안 함.
-        </div>
-      </div>
-      <div style="background:#1a2235;border:1px solid #243048;border-radius:10px;padding:14px 18px;">
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:12px;">
-          <span style="font-size:10px;font-weight:700;background:#0a1f35;color:#34d399;padding:3px 9px;border-radius:4px;white-space:nowrap;">인덱싱</span>
-          <div style="font-size:12px;color:#cbd5e1;line-height:1.7;">"개발자 없이 관리자가 문서를 올리면 AI 답변에 바로 반영돼야 한다" → <span style="color:#e2e8f0;font-weight:600;">관리자 페이지 문서 업로드 시 자동 인덱싱 구현 완료</span></div>
-          <span style="font-size:11px;color:#34d399;font-weight:700;white-space:nowrap;">반영 완료</span>
-        </div>
-        <div style="background:#111827;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.8;">
-          <span style="color:#94a3b8;font-weight:600;">Notion·Slack 미연동 이유 —</span>
-          Notion 페이지·Slack 메시지는 실시간으로 변경되는 구조라, 현재 파이프라인(파일 업로드 → 청킹 → 인덱싱)과 달리 <span style="color:#e2e8f0;">변경 감지 + 주기적 재인덱싱</span> 설계가 별도로 필요. 동기화 주기 정책(실시간 웹훅 vs 야간 배치)까지 결정해야 해 이번 스프린트 미포함.
-        </div>
       </div>
     </div>
   </div>
