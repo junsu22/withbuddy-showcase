@@ -1168,7 +1168,7 @@ html{scroll-behavior:smooth;}
 </style>
 
 <section class="section" id="roadmap">
-  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>고도화 방향</span><span class="acc-toggle-meta">LangGraph Supervisor · 미답변 군집화 · 에이전틱 AI 진화</span></div><span class="acc-arrow">▶</span></div>
+  <div class="section-title acc-toggle"><div class="acc-toggle-inner"><span>고도화 방향</span><span class="acc-toggle-meta">미응답 보강 루프 · Notion·Slack 연동 · Pre-온보딩 강화</span></div><span class="acc-arrow">▶</span></div>
   <div class="section-line"></div>
 <div class="acc-body">
   <div class="agentic-flow">
@@ -1219,15 +1219,28 @@ html{scroll-behavior:smooth;}
     </div>
     <div class="agentic-arrow">→</div>
     <div class="agentic-box" style="border-color:#1e3a5a;padding:18px 20px;">
-      <div class="label" style="color:#60a5fa;margin-bottom:14px;">목표 — Agentic AI</div>
-      <div class="steps" style="line-height:2.2;">
-        <span>질문</span> →<br>
-        <span>의도 판단</span> →<br>
-        <span>도구 호출</span> (연차 API · 체크리스트 · Slack DM) →<br>
-        <span>직접 액션</span> + 결과 확인
+      <div class="label" style="color:#60a5fa;margin-bottom:14px;">로드맵 — Next Step</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0a1525;border-radius:8px 8px 0 0;border:1px solid #1e3a5a;">
+          <span style="font-size:11px;color:#94a3b8;">📄</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">문서 연동 자동화</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">Notion · Slack · Drive</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1e3a5a;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0a1525;border-radius:0;border:1px solid #1e3a5a;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">🚀</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">Pre-온보딩 강화</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">입사 전 불안감 해소</span>
+        </div>
+        <div style="width:1px;height:6px;background:#1e3a5a;margin-left:20px;"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0a1525;border-radius:0 0 8px 8px;border:1px solid #1e3a5a;border-top:none;">
+          <span style="font-size:11px;color:#94a3b8;">🔄</span>
+          <span style="font-size:12px;color:#e2e8f0;font-weight:600;">문서 관리 체계화</span>
+          <span style="font-size:11px;color:#4a5a70;margin-left:auto;">버전 관리 · 자동 업데이트</span>
+        </div>
       </div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid #1e3a5a;font-size:11px;color:#4a5a70;line-height:1.7;">
-        단순 답변을 넘어, AI가 직접 일을 처리하는 것을 최종 목표로 한다.
+        미응답 루프로 쌓인 데이터를 기반으로, 팀이 이미 쓰는 도구와 연동해 지식베이스를 자동으로 확장한다.
       </div>
     </div>
   </div>
@@ -1288,44 +1301,41 @@ html{scroll-behavior:smooth;}
   <div class="scenario-grid">
     <div class="scenario-card" style="border:1px dashed #243048;opacity:.8;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div class="s-tag tag-blue" style="margin-bottom:0;">연차 신청</div>
-        <span style="font-size:10px;color:#4a5a70;font-weight:700;">계획</span>
+        <div class="s-tag tag-blue" style="margin-bottom:0;">문서 연동</div>
+        <span style="font-size:10px;color:#4a5a70;font-weight:700;">로드맵</span>
       </div>
-      <div class="s-title">질문 → 신청 처리</div>
+      <div class="s-title">Notion 수정 → 자동 반영</div>
       <div class="s-dialog">
-        <div class="user">유저: 내일 연차 써도 돼?</div>
-        <div class="buddy">버디: 내일(수) 연차 신청할까요?<br>잔여 12일 중 1일 사용 예정이에요.</div>
-        <div class="user">유저: 응</div>
-        <div class="action">→ 연차 API 호출 + 담당자 알림</div>
-        <div class="buddy">버디: 연차 신청 처리됩니다.</div>
+        <div class="action">관리자: Notion 페이지 복지 규정 수정</div>
+        <div class="action">→ 변경 감지 + 자동 재인덱싱</div>
+        <div class="buddy">버디: 업데이트된 규정 기준으로 답변</div>
+        <div style="font-size:10px;color:#4a5a70;margin-top:6px;">Slack · Google Drive도 동일 구조</div>
       </div>
     </div>
     <div class="scenario-card" style="border:1px dashed #243048;opacity:.8;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div class="s-tag tag-green" style="margin-bottom:0;">온보딩 체크리스트</div>
-        <span style="font-size:10px;color:#4a5a70;font-weight:700;">계획</span>
+        <div class="s-tag tag-green" style="margin-bottom:0;">Pre-온보딩</div>
+        <span style="font-size:10px;color:#4a5a70;font-weight:700;">로드맵</span>
       </div>
-      <div class="s-title">안내 → 진행 상태 추적</div>
+      <div class="s-title">입사 전 불안감 해소</div>
       <div class="s-dialog">
-        <div class="user">유저: 오늘 첫날인데 뭐 해야 해?</div>
-        <div class="buddy">버디: ☐ 사원증 수령<br>☐ 노트북 수령<br>☐ Slack 가입<br>☐ 팀 채널 초대</div>
-        <div class="user">유저: 사원증이랑 노트북 받았어</div>
-        <div class="action">→ 체크리스트 API 업데이트</div>
-        <div class="buddy">버디: 2/4 완료로 업데이트됩니다.</div>
+        <div class="action">입사 D-3: 계정 생성 + 위드버디 접속</div>
+        <div class="buddy">버디: 첫날 출근 장소, 복장, 준비물을<br>미리 알려드릴게요 😊</div>
+        <div class="user">유저: 점심은 어떻게 해요?</div>
+        <div class="buddy">버디: 팀 회식은 입사 첫 주에 있고,<br>평소엔 자유롭게 이용하세요.</div>
       </div>
     </div>
     <div class="scenario-card" style="border:1px dashed #243048;opacity:.8;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div class="s-tag tag-purple" style="margin-bottom:0;">담당자 연결</div>
-        <span style="font-size:10px;color:#4a5a70;font-weight:700;">계획</span>
+        <div class="s-tag tag-purple" style="margin-bottom:0;">문서 보강 루프</div>
+        <span style="font-size:10px;color:#4a5a70;font-weight:700;">로드맵</span>
       </div>
-      <div class="s-title">질문 → Slack DM 발송</div>
+      <div class="s-title">미응답 → 보강 제안 자동화</div>
       <div class="s-dialog">
-        <div class="user">유저: 복지카드 신청하고 싶어</div>
-        <div class="buddy">버디: 경영지원팀을 통해야 해요.<br>담당자께 바로 연결해드릴까요?</div>
-        <div class="user">유저: 응</div>
-        <div class="action">→ Slack DM API 호출</div>
-        <div class="buddy">버디: 담당자에게 메시지를 보냅니다.</div>
+        <div class="action">→ 반복 미응답 군집 탐지</div>
+        <div class="buddy">관리자 알림: "복지포인트 사용처"<br>관련 질문 5건 — 문서 보강 필요</div>
+        <div class="action">→ 관리자 승인 시 지식베이스 자동 갱신</div>
+        <div style="font-size:10px;color:#4a5a70;margin-top:6px;">실패를 자산으로 바꾸는 루프</div>
       </div>
     </div>
   </div>
