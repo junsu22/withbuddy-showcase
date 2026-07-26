@@ -214,9 +214,6 @@ html{scroll-behavior:smooth;}
   .pivot-grid, .agentic-flow, .scenario-grid, .cost-grid, .ext-point-grid, .qa-grid,
   [style*="grid-template-columns"] { grid-template-columns:1fr !important; }
   .arrow-col, .pipe-connector, .agentic-arrow { display:none; }
-  .acc-body { display:block !important; }
-  .acc-arrow { display:none; }
-  .acc-toggle { cursor:default; }
   .ext-model { min-width:0; }
   .hero-h1 { font-size:30px; }
   .cover h1 { font-size:24px; }
@@ -1663,13 +1660,17 @@ window.addEventListener('load', function() {
     });
   });
 
+  var accMobile = window.innerWidth <= 768;
   document.querySelectorAll('.acc-toggle').forEach(function(title) {
     var section = title.parentElement;
     var body = section.querySelector('.acc-body');
     if (!body) return;
-    body.style.display = 'none';
+    var arrow = title.querySelector('.acc-arrow');
+    // 모바일에서는 기본 펼침 — 단 일자별 지표(#iter)는 너무 길어 접어둠
+    var startOpen = accMobile && section.id !== 'iter';
+    body.style.display = startOpen ? '' : 'none';
+    if (arrow) arrow.textContent = startOpen ? '▼' : '▶';
     title.addEventListener('click', function() {
-      var arrow = this.querySelector('.acc-arrow');
       if (body.style.display === 'none') {
         body.style.display = '';
         if (arrow) arrow.textContent = '▼';
