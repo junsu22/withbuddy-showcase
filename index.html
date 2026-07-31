@@ -151,6 +151,15 @@ a:hover{text-decoration:underline;}
 .mon-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:0.04em;}
 .mb-purple{background:#281c47;color:#a371f7;}
 .mb-green{background:#162c1e;color:#3fb950;}
+.mc-blue:hover{border-color:#58a6ff;}
+.mb-blue{background:#1c2d47;color:#58a6ff;}
+.mc-orange:hover{border-color:#f0883e;}
+.mb-orange{background:#2d1f0e;color:#f0883e;}
+.hanbeom-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;}
+.hanbeom-img{border-radius:8px;overflow:hidden;border:1px solid #21262d;}
+.hanbeom-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.hanbeom-img.mobile-frame{max-width:240px;margin:0 auto;}
+@media(max-width:640px){.hanbeom-grid{grid-template-columns:1fr;}}
 .monitor-name{font-size:14px;font-weight:700;color:#fff;}
 .monitor-desc{font-size:11px;color:#8b949e;}
 .monitor-img{aspect-ratio:16/9;overflow:hidden;background:#0d1117;}
@@ -170,6 +179,7 @@ a:hover{text-decoration:underline;}
 .rt-green{color:#3fb950;background:#162c1e;}
 .rt-orange{color:#f0883e;background:#321c00;}
 .rt-blue{color:#58a6ff;background:#1c3051;}
+.rt-purple{color:#a371f7;background:#281c47;}
 
 /* 06 DEV NOTES */
 .bug-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;}
@@ -526,6 +536,22 @@ a:hover{text-decoration:underline;}
           <div><span class="mstat-val">UP</span><span class="mstat-key">서버 상태</span></div>
         </div>
       </div>
+      <div class="monitor-card mc-blue" style="grid-column:span 2;">
+        <div class="monitor-header">
+          <span class="mon-badge mb-blue">LangSmith Traces</span>
+          <div>
+            <div class="monitor-name">RAG 체인 트레이싱 · 비용 실측</div>
+          </div>
+        </div>
+        <div class="monitor-img">
+          <img src="images/langsmith_0701.png" alt="LangSmith RAG 트레이싱" loading="lazy">
+        </div>
+        <div class="monitor-stats">
+          <div><span class="mstat-val">$0.006</span><span class="mstat-key">요청당 비용</span></div>
+          <div><span class="mstat-val">−54%</span><span class="mstat-key">비용 절감</span></div>
+          <div><span class="mstat-val">실측</span><span class="mstat-key">LangSmith</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -625,7 +651,33 @@ a:hover{text-decoration:underline;}
     </div>
   </section>
 
-  <!-- 07 RETROSPECTIVE (ACCORDION, default closed) -->
+  <!-- 07 PERSONAL PROJECT -->
+  <section id="hanbeom" class="section fade-in">
+    <div class="section-label">07 Personal Project</div>
+    <div class="section-heading">한범이 — 외국인 대상 한국 생활 AI</div>
+    <p style="color:#8b949e;margin-bottom:24px;">한국을 방문한 외국인을 위한 AI 챗봇. 맛집 GPS 검색, 교통·문화·행정 질문 답변, 5개 언어 지원. 기획·개발·배포 전 과정 단독 진행.</p>
+    <div class="hanbeom-grid">
+      <div class="hanbeom-img mobile-frame">
+        <img src="images/hanbeom_chat.png" alt="한범이 채팅 화면" loading="lazy">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="hanbeom-img">
+          <img src="images/kakao_log.png" alt="카카오 로컬 API 연동 서버 로그" loading="lazy">
+        </div>
+        <div class="hanbeom-img">
+          <img src="images/n8n.png" alt="n8n 자동화 워크플로우" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+      <span class="result-tag rt-blue">FastAPI · Railway</span>
+      <span class="result-tag rt-green">Kakao Local API</span>
+      <span class="result-tag rt-purple">5개 언어 지원</span>
+      <span class="result-tag rt-orange">Paddle 결제 연동</span>
+    </div>
+  </section>
+
+  <!-- 08 RETROSPECTIVE (ACCORDION, default closed) -->
   <section id="retrospective" class="section fade-in">
     <div class="accordion" id="acc-retrospective">
       <div class="accordion-header" onclick="toggleAcc('acc-retrospective')">
